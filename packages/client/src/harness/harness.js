@@ -40,8 +40,8 @@ export default class HarnessPage extends LitElement {
       {
         name: "core-togethr",
         title: "Togethr",
-        description: "DappStarter implementation of Flow sample project.",
-        category: "Foundations",
+        description: "Test harness for togethr project and market place",
+        category: "Kickstarter on blockchain",
         route: "/core-togethr",
       },
     ];

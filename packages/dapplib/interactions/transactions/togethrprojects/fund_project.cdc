@@ -1,10 +1,10 @@
 import TogethrProjects from "../../../contracts/Project/TogethrProjects.cdc"
 import FungibleToken from "../../../contracts/Flow/FungibleToken.cdc"
 
-transaction(creator: Address, name: String) {
+transaction(projectId: UInt32, funder: Address, amount: UInt64) {
     
   prepare(signer: AuthAccount) {
-    TogethrProjects.addProject(creator: creator, name: name)
+    TogethrProjects.fundProject(projectId: projectId, funder: funder, amount: amount)
   }
 
   execute { 

@@ -48,6 +48,30 @@ module.exports = class DappLib {
     };
   }
 
+  static async fundProject(data) {
+    console.log("data", data);
+    let config = DappLib.getConfig();
+    let result = await Blockchain.post(
+      {
+        config: config,
+        roles: {
+          proposer: config.accounts[0],
+        },
+      },
+      "togethrprojects_fund_project",
+      {
+        projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+        funder: { value: data.funder, type: t.Address },
+        amount: { value: parseInt(data.amount), type: t.UInt64 },
+      }
+    );
+    return {
+      type: DappLib.DAPP_RESULT_TX_HASH,
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
+  }
+
   /********** Togethr Market **********/
 
   /*
