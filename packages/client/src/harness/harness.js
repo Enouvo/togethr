@@ -27,8 +27,8 @@ export default class HarnessPage extends LitElement {
   }
   constructor(args) {
     super(args);
-    let page = localStorage.getItem('dappstarter-page');
-    if (page.includes('-')) {
+    let page = localStorage.getItem("dappstarter-page");
+    if (page.includes("-")) {
       setTimeout(() => {
         this.setPageLoader(page);
       }, 0);
@@ -36,20 +36,20 @@ export default class HarnessPage extends LitElement {
   }
 
   getPages() {
-    return[
-    {
-        "name": "core-kitty_items",
-        "title": "Kitty Items",
-        "description": "DappStarter implementation of Flow sample project.",
-        "category": "Foundations",
-        "route": "/core-kitty_items"
-    }
-]; 
+    return [
+      {
+        name: "core-togethr",
+        title: "Togethr",
+        description: "DappStarter implementation of Flow sample project.",
+        category: "Foundations",
+        route: "/core-togethr",
+      },
+    ];
   }
 
-  handleClick = e => {
+  handleClick = (e) => {
     e.preventDefault();
-    localStorage.setItem('dappstarter-page', e.target.dataset.link);
+    localStorage.setItem("dappstarter-page", e.target.dataset.link);
     this.setPageLoader(e.target.dataset.link);
   };
 
@@ -64,14 +64,16 @@ export default class HarnessPage extends LitElement {
       <div class="container m-auto">
         <div class="row fadeIn mt-3 p-2 block">
           <p class="mt-3">
-            Welcome to the UI Harness! Each feature module you selected for your project 
-            has a page that demonstrates all of the module's capabilities with a user interface. You can 
-            try the various features, then copy code selectively to your Dapp page. To continue, 
-            select a feature module.           
+            Welcome to the UI Harness! Each feature module you selected for your
+            project has a page that demonstrates all of the module's
+            capabilities with a user interface. You can try the various
+            features, then copy code selectively to your Dapp page. To continue,
+            select a feature module.
           </p>
         </div>
         <ul class="mt-3 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        ${this.getPages().map(page =>
+          ${this.getPages().map(
+            (page) =>
               html`<li class="col-span-1 bg-white rounded-lg shadow h-64">
                       <div class="flex flex-col items-center p-6 h-full">
                         <div class="font-bold text-xl mb-2">${page.title}</div>
@@ -86,15 +88,11 @@ export default class HarnessPage extends LitElement {
                             </button>
                           </div>
                       </div>
-                    </li>`)
-        }
+                    </li>`
+          )}
         </ul>
       </div>
-    `; 
+    `;
     return content;
-
   }
 }
-
-
-

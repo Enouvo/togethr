@@ -1,14 +1,14 @@
 {
-    "repository": {},
-    "__outputFolder": null,
-    "blocks": [
-        {
-            "category": "foundation",
-            "name": "core-kitty_items",
-            "parameters": {}
-        }
-    ],
-    "blockchain": "flow",
-    "language": "cadence",
-    "framework": "react"
+  "repository": {},
+  "__outputFolder": null,
+  "blocks": [
+    {
+      "category": "foundation",
+      "name": "core-togethr",
+      "parameters": {}
+    }
+  ],
+  "blockchain": "flow",
+  "language": "cadence",
+  "framework": "react"
 }
