@@ -48,6 +48,27 @@ module.exports = class DappLib {
     };
   }
 
+  static async getProject(data) {
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "togethrprojects_get_project",
+      {
+        projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+      }
+    );
+
+    console.log("result", result);
+
+    return {
+      type: DappLib.DAPP_RESULT_STRING,
+      label: "Projects",
+      result: JSON.stringify(Object.values(result.callData)),
+    };
+  }
+
   static async fundProject(data) {
     console.log("data", data);
     let config = DappLib.getConfig();

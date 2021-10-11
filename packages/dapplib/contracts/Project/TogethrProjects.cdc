@@ -48,6 +48,13 @@ pub contract TogethrProjects {
     return self.projects.keys
   } 
 
+  pub fun getProject(projectId: UInt32): {Address: UInt64}? {
+    pre {
+      self.projects[projectId] != nil: "Failed to get project: invalid project id"
+    }
+    return self.projects[projectId]?.funders
+  } 
+
   pub fun fundProject(projectId: UInt32, funder: Address, amount: UInt64) {
     pre {
       self.projects[projectId] != nil: "Failed to fund project: invalid project id"
