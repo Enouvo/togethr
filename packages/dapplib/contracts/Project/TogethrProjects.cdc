@@ -4,6 +4,9 @@ import FungibleToken from "../Flow/FungibleToken.cdc"
 pub contract TogethrProjects {
   access(self) var projects: @{UInt32: Project}
   
+  pub let FundedProjectsStoragePath: StoragePath
+  pub let FundedProjectsPublicPath: PublicPath
+
   pub var nextProjectID: UInt32
 
   pub resource interface IProject { 
@@ -55,15 +58,43 @@ pub contract TogethrProjects {
     return self.projects[projectId]?.funders
   } 
 
-  pub fun fundProject(projectId: UInt32, funder: Address, amount: UInt64) {
+  pub fun fundProject(projectId: UInt32, funder: Address, amount: UInt64, fundedProjects: &TogethrProjects.FundedProjects) {
     pre {
       self.projects[projectId] != nil: "Failed to fund project: invalid project id"
     }
-    self.projects[projectId]?.addFunder(funder: funder, amount: amount)
+    self.projects[projectId].addFunder(funder: funder, amount: amount)
+    fundedProjects?.addProject(projectId: projectId, amount: amount)
+  }
+
+  pub resource interface IFundedProjects {
+    access(contract) fun addProject(projectId: UInt32, amount: UInt64)
+  }
+
+  pub resource FundedProjects: IFundedProjects {
+    pub var fundedProjects: {UInt32: UInt64}
+
+    init() {
+      self.fundedProjects = {}
+    }
+
+    access(contract) fun addProject(projectId: UInt32, amount: UInt64) {
+      if let count = self.fundedProjects[projectId] {
+        self.fundedProjects[projectId] = self.fundedProjects[projectId]! + amount
+      } else {
+        self.fundedProjects[projectId] = amount
+      }
+    }
+  }
+
+  pub fun createEmptyFundedProjects(): @FundedProjects {
+    return <- create FundedProjects()
   }
 
   init() {
     self.projects <- {}
     self.nextProjectID = 1
+
+    self.FundedProjectsStoragePath = /storage/FundedProjects
+    self.FundedProjectsPublicPath = /public/FundedProjects
   }
 }

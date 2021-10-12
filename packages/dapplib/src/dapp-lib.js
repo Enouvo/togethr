@@ -93,6 +93,27 @@ module.exports = class DappLib {
     };
   }
 
+  static async getFundedProjects(data) {
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "togethrprojects_get_funded_projects",
+      {
+        funder: { value: data.funder, type: t.Address },
+      }
+    );
+
+    console.log("result", result);
+
+    return {
+      type: DappLib.DAPP_RESULT_STRING,
+      label: "Projects",
+      result: JSON.stringify(Object.values(result.callData)),
+    };
+  }
+
   /********** Togethr Market **********/
 
   /*
