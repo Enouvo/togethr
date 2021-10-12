@@ -35,6 +35,17 @@ export default class KittyItemsHarness extends LitElement {
         category="${this.category}"
         description="${this.description}"
       >
+        <!-- Flow Token -->
+        <action-card
+          title="Get Balance"
+          description="Get the Flow Token balance of an account"
+          action="getFlowBalance"
+          method="get"
+          fields="account"
+        >
+          <account-widget field="account" label="Account"> </account-widget>
+        </action-card>
+
         <!-- Togethr Projects -->
 
         <action-card

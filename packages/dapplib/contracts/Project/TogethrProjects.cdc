@@ -10,14 +10,14 @@ pub contract TogethrProjects {
   pub var nextProjectID: UInt32
 
   pub resource interface IProject { 
-    access(contract) fun addFunder(funder: Address, amount: UInt64)
+    access(contract) fun addFunder(funder: Address, amount: UFix64)
   }
 
   pub resource Project: IProject{
     pub let projectId: UInt32
     pub let name: String
     pub let creator: Address
-    pub let funders: {Address: UInt64}
+    pub let funders: {Address: UFix64}
     
     init(creator: Address, projectId: UInt32, name: String) {
       self.creator = creator
@@ -26,7 +26,7 @@ pub contract TogethrProjects {
       self.funders = {}
     }
 
-    access(contract) fun addFunder(funder: Address, amount: UInt64) {
+    access(contract) fun addFunder(funder: Address, amount: UFix64) {
       if let count = self.funders[funder] {
         self.funders[funder] = self.funders[funder]! + amount
       } else {
@@ -51,34 +51,37 @@ pub contract TogethrProjects {
     return self.projects.keys
   } 
 
-  pub fun getProject(projectId: UInt32): {Address: UInt64}? {
+  pub fun getProject(projectId: UInt32): {Address: UFix64}? {
     pre {
       self.projects[projectId] != nil: "Failed to get project: invalid project id"
     }
     return self.projects[projectId]?.funders
   } 
 
-  pub fun fundProject(projectId: UInt32, funder: Address, amount: UInt64, fundedProjects: &TogethrProjects.FundedProjects) {
+  pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrProjects.FundedProjects, paymentVault: @FungibleToken.Vault) {
     pre {
       self.projects[projectId] != nil: "Failed to fund project: invalid project id"
+      paymentVault.balance >= amount : "Could not mint dappy: payment balance insufficient." 
     }
     self.projects[projectId]?.addFunder(funder: funder, amount: amount)
     fundedProjects.addProject(projectId: projectId, amount: amount)
+    // TODO send to creator
+    destroy paymentVault
   }
 
   pub resource interface IFundedProjects {
-    pub fun getFundedProjects(): {UInt32: UInt64}
-    access(contract) fun addProject(projectId: UInt32, amount: UInt64)
+    pub fun getFundedProjects(): {UInt32: UFix64}
+    access(contract) fun addProject(projectId: UInt32, amount: UFix64)
   }
 
   pub resource FundedProjects: IFundedProjects {
-    pub var fundedProjects: {UInt32: UInt64}
+    pub var fundedProjects: {UInt32: UFix64}
 
     init() {
       self.fundedProjects = {}
     }
 
-    access(contract) fun addProject(projectId: UInt32, amount: UInt64) {
+    access(contract) fun addProject(projectId: UInt32, amount: UFix64) {
       if let count = self.fundedProjects[projectId] {
         self.fundedProjects[projectId] = self.fundedProjects[projectId]! + amount
       } else {
@@ -86,7 +89,7 @@ pub contract TogethrProjects {
       }
     }
 
-    pub fun getFundedProjects(): {UInt32: UInt64} {
+    pub fun getFundedProjects(): {UInt32: UFix64} {
       return self.fundedProjects
     }
   }

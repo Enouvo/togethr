@@ -7,6 +7,27 @@ const manifest = require("../manifest.json");
 const t = require("@onflow/types");
 
 module.exports = class DappLib {
+  /********** FLOW TOKEN **********/
+
+  static async getFlowBalance(data) {
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "flow_get_balance",
+      {
+        account: { value: data.account, type: t.Address },
+      }
+    );
+
+    return {
+      type: DappLib.DAPP_RESULT_BIG_NUMBER,
+      label: "FlowToken Balance",
+      result: result.callData,
+    };
+  }
+
   /********** Togethr Projects **********/
 
   static async createProject(data) {
@@ -83,7 +104,7 @@ module.exports = class DappLib {
       {
         projectId: { value: parseInt(data.projectId), type: t.UInt32 },
         funder: { value: data.funder, type: t.Address },
-        amount: { value: parseInt(data.amount), type: t.UInt64 },
+        amount: { value: data.amount, type: t.UFix64 },
       }
     );
     return {
