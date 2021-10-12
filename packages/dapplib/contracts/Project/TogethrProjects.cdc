@@ -1,5 +1,6 @@
 
 import FungibleToken from "../Flow/FungibleToken.cdc"
+import FlowToken from Flow.FlowToken
 
 pub contract TogethrProjects {
   access(self) var projects: @{UInt32: Project}
@@ -19,7 +20,11 @@ pub contract TogethrProjects {
     pub let creator: Address
     pub let funders: {Address: UFix64}
     
-    init(creator: Address, projectId: UInt32, name: String) {
+    pub let vault: Capability<&FlowToken.Vault{FungibleToken.Receiver}>
+    // access(self) let vault: Capability<&FlowToken.Vault{FungibleToken.Receiver}> TODO fix access by passing vault to fun addFunder
+
+    init(vault: Capability<&FlowToken.Vault{FungibleToken.Receiver}>, creator: Address, projectId: UInt32, name: String) {
+      self.vault = vault
       self.creator = creator
       self.projectId = projectId
       self.name = name
@@ -35,13 +40,13 @@ pub contract TogethrProjects {
     }
   }
 
-  pub fun addProject(creator: Address, name: String) {
+  pub fun addProject(vault: Capability<&FlowToken.Vault{FungibleToken.Receiver}>, creator: Address, name: String) {
     pre {
       name.length > 0 : "Failed to create project: project name is required."
     }
     
     let projectId = self.nextProjectID
-    let project <- create Project(creator: creator, projectId: projectId, name: name)
+    let project <- create Project(vault: vault, creator: creator, projectId: projectId, name: name)
 
     let newProject <- self.projects[projectId] <- project
     destroy newProject
@@ -65,8 +70,15 @@ pub contract TogethrProjects {
     }
     self.projects[projectId]?.addFunder(funder: funder, amount: amount)
     fundedProjects.addProject(projectId: projectId, amount: amount)
+
+    // let vaultRef = self.projects[projectId]?.vault.borrow()
+
+    let vaultRef = self.projects[projectId]?.vault?.borrow()
+                ?? panic("Could not borrow reference to owner token vault")
+
+    vaultRef!.deposit(from: <-paymentVault)
     // TODO send to creator
-    destroy paymentVault
+    // destroy paymentVault
   }
 
   pub resource interface IFundedProjects {
