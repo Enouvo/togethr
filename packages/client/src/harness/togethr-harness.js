@@ -87,9 +87,9 @@ export default class KittyItemsHarness extends LitElement {
           description="Get all funded project by a user"
           action="getFundedProjects"
           method="get"
-          fields="funder"
+          fields="address"
         >
-          <account-widget field="funder" label="Funder" placeholder="Funder">
+          <account-widget field="address" label="Address" placeholder="Address">
           </account-widget>
         </action-card>
 

@@ -76,7 +76,7 @@ module.exports = class DappLib {
       {
         config: config,
         roles: {
-          proposer: config.accounts[0],
+          proposer: data.funder,
         },
       },
       "togethrprojects_fund_project",
@@ -101,7 +101,7 @@ module.exports = class DappLib {
       },
       "togethrprojects_get_funded_projects",
       {
-        funder: { value: data.funder, type: t.Address },
+        address: { value: data.address, type: t.Address },
       }
     );
 

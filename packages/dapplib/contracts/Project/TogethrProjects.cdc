@@ -62,11 +62,12 @@ pub contract TogethrProjects {
     pre {
       self.projects[projectId] != nil: "Failed to fund project: invalid project id"
     }
-    self.projects[projectId].addFunder(funder: funder, amount: amount)
-    fundedProjects?.addProject(projectId: projectId, amount: amount)
+    self.projects[projectId]?.addFunder(funder: funder, amount: amount)
+    fundedProjects.addProject(projectId: projectId, amount: amount)
   }
 
   pub resource interface IFundedProjects {
+    pub fun getFundedProjects(): {UInt32: UInt64}
     access(contract) fun addProject(projectId: UInt32, amount: UInt64)
   }
 
@@ -83,6 +84,10 @@ pub contract TogethrProjects {
       } else {
         self.fundedProjects[projectId] = amount
       }
+    }
+
+    pub fun getFundedProjects(): {UInt32: UInt64} {
+      return self.fundedProjects
     }
   }
 
