@@ -1,6 +1,6 @@
 import NonFungibleToken from "../../../contracts/Flow/NonFungibleToken.cdc"
-import TogethrProject from "../../../contracts/Project/TogethrProject.cdc"
+import TogethrCreator from "../../../contracts/Project/TogethrCreator.cdc"
 
 pub fun main(projectId: UInt32): Address? {
-    return TogethrProject.getProjectCreatorAddress(projectId: projectId)
+    return TogethrCreator.getProjectCreatorAddress(projectId: projectId)
 }

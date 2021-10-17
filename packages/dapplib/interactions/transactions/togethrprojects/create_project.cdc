@@ -1,26 +1,26 @@
-import TogethrProject from "../../../contracts/Project/TogethrProject.cdc"
+import TogethrCreator from "../../../contracts/Project/TogethrCreator.cdc"
 import FungibleToken from "../../../contracts/Flow/FungibleToken.cdc"
 import FlowToken from Flow.FlowToken
 
 transaction(name: String) {
 
-  let collection: &TogethrProject.Collection
+  let collection: &TogethrCreator.Collection
     
   prepare(signer: AuthAccount) {
     // if the account doesn't already have a collection
-    if signer.borrow<&TogethrProject.Collection>(from: TogethrProject.CollectionStoragePath) == nil {
+    if signer.borrow<&TogethrCreator.Collection>(from: TogethrCreator.CollectionStoragePath) == nil {
 
         // create a new empty collection
-        let collection <- TogethrProject.createEmptyCollection(address: signer.address)
+        let collection <- TogethrCreator.createEmptyCollection(address: signer.address)
         
         // save it to the account
-        signer.save(<-collection, to: TogethrProject.CollectionStoragePath)
+        signer.save(<-collection, to: TogethrCreator.CollectionStoragePath)
 
         // create a public capability for the collection
-        signer.link<&TogethrProject.Collection{TogethrProject.ICollectionPublic}>(TogethrProject.CollectionPublicPath, target: TogethrProject.CollectionStoragePath)
+        signer.link<&TogethrCreator.Collection{TogethrCreator.PublicCreator}>(TogethrCreator.CollectionPublicPath, target: TogethrCreator.CollectionStoragePath)
     }
 
-    self.collection = signer.borrow<&TogethrProject.Collection>(from: TogethrProject.CollectionStoragePath)!
+    self.collection = signer.borrow<&TogethrCreator.Collection>(from: TogethrCreator.CollectionStoragePath)!
   }
 
   execute { 

@@ -3,7 +3,7 @@ import FungibleToken from "../Flow/FungibleToken.cdc"
 import TogethrFunder from "./TogethrFunder.cdc"
 import FlowToken from Flow.FlowToken
 
-pub contract TogethrProject {
+pub contract TogethrCreator {
 
   pub let CollectionStoragePath: StoragePath
   pub let CollectionPublicPath: PublicPath
@@ -11,11 +11,11 @@ pub contract TogethrProject {
   pub var nextProjectID: UInt32
   pub let projects: {UInt32: Address}
 
-  pub resource interface IProject { 
+  pub resource interface ProjectInterface { 
     access(contract) fun addFunder(funder: Address, amount: UFix64)
   }
 
-  pub resource Project: IProject{
+  pub resource Project: ProjectInterface {
     pub let projectId: UInt32
     pub let name: String
     pub let funders: {Address: UFix64}
@@ -35,12 +35,12 @@ pub contract TogethrProject {
     }
   }
 
-  pub resource interface ICollectionPublic {
+  pub resource interface PublicCreator {
     pub fun getProjectMetadata(projectId: UInt32): String?
     pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrFunder.Collection, paymentVault: @FungibleToken.Vault)
   }
 
-  pub resource Collection: ICollectionPublic {
+  pub resource Collection: PublicCreator {
     pub let creator: Address
     pub var projects: @{UInt32: Project}
 
@@ -54,12 +54,12 @@ pub contract TogethrProject {
         name.length > 0 : "Failed to create project: project name is required."
       }
     
-      let projectId = TogethrProject.nextProjectID
+      let projectId = TogethrCreator.nextProjectID
       let project <- create Project(projectId: projectId, name: name)
       let newProject <- self.projects[projectId] <- project
 
-      TogethrProject.nextProjectID = TogethrProject.nextProjectID + 1
-      TogethrProject.projects[projectId] = self.creator
+      TogethrCreator.nextProjectID = TogethrCreator.nextProjectID + 1
+      TogethrCreator.projects[projectId] = self.creator
       destroy newProject
     }
 
