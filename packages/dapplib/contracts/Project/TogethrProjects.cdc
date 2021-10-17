@@ -79,7 +79,7 @@ pub contract TogethrProjects {
 
   pub resource interface IFundedProjects {
     pub fun getFundedProjects(): {UInt32: UFix64}
-    access(contract) fun addProject(projectId: UInt32, amount: UFix64)
+    pub fun addProject(projectId: UInt32, amount: UFix64)
   }
 
   pub resource FundedProjects: IFundedProjects {
@@ -89,7 +89,7 @@ pub contract TogethrProjects {
       self.fundedProjects = {}
     }
 
-    access(contract) fun addProject(projectId: UInt32, amount: UFix64) {
+    pub fun addProject(projectId: UInt32, amount: UFix64) {
       if let count = self.fundedProjects[projectId] {
         self.fundedProjects[projectId] = self.fundedProjects[projectId]! + amount
       } else {

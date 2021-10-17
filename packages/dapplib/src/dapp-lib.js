@@ -36,12 +36,11 @@ module.exports = class DappLib {
       {
         config: config,
         roles: {
-          proposer: config.accounts[0],
+          proposer: data.creator,
         },
       },
       "togethrprojects_create_project",
       {
-        creator: { value: data.creator, type: t.Address },
         name: { value: data.name, type: t.String },
       }
     );
@@ -70,6 +69,7 @@ module.exports = class DappLib {
   }
 
   static async getProject(data) {
+    console.log("data", data);
     let result = await Blockchain.get(
       {
         config: DappLib.getConfig(),
