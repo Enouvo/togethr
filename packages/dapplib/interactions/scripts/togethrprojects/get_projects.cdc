@@ -1,6 +1,6 @@
 import NonFungibleToken from "../../../contracts/Flow/NonFungibleToken.cdc"
-import TogethrProjects from "../../../contracts/Project/TogethrProjects.cdc"
+import TogethrFunder from "../../../contracts/Project/TogethrFunder.cdc"
 
 pub fun main(): [UInt32] {
-    return TogethrProjects.getProjects()
+    return TogethrFunder.getProjects()
 }

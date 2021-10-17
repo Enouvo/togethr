@@ -1,6 +1,6 @@
 
 import FungibleToken from "../Flow/FungibleToken.cdc"
-import TogethrProjects from "./TogethrProjects.cdc"
+import TogethrFunder from "./TogethrFunder.cdc"
 import FlowToken from Flow.FlowToken
 
 pub contract TogethrProject {
@@ -37,7 +37,7 @@ pub contract TogethrProject {
 
   pub resource interface ICollectionPublic {
     pub fun getProjectMetadata(projectId: UInt32): String?
-    pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrProjects.FundedProjects, paymentVault: @FungibleToken.Vault)
+    pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrFunder.Collection, paymentVault: @FungibleToken.Vault)
   }
 
   pub resource Collection: ICollectionPublic {
@@ -71,7 +71,7 @@ pub contract TogethrProject {
       return self.projects[projectId]?.name
     }
 
-    pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrProjects.FundedProjects, paymentVault: @FungibleToken.Vault) {
+    pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrFunder.Collection, paymentVault: @FungibleToken.Vault) {
       pre {
         self.projects[projectId] != nil: "Failed to fund project: invalid project id"
         paymentVault.balance >= amount : "Could not mint dappy: payment balance insufficient." 
