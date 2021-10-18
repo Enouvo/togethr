@@ -190,7 +190,8 @@ module.exports = class DappLib {
       },
       "togethrmarket_buy_project",
       {
-        projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+        itemID: { value: parseInt(data.projectId), type: t.UInt64 }, // TODO projectId is UInt32
+        seller: { value: data.seller, type: t.Address },
       }
     );
     return {

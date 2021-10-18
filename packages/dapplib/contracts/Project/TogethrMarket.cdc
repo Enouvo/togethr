@@ -12,7 +12,7 @@ pub contract TogethrMarket {
     pub let PublicPath: PublicPath
 
     pub resource interface SalePublic {
-        pub fun purchase(itemID: UInt64, recipient: &TogethrNFT.Collection{NonFungibleToken.CollectionPublic}, buyTokens: @FungibleToken.Vault)
+        pub fun purchase(itemID: UInt64, recipient: &TogethrNFT.Collection{TogethrNFT.CollectionPublic}, buyTokens: @FungibleToken.Vault)
         pub fun idPrice(itemID: UInt64): UFix64?
         pub fun getIDs(): [UInt64]
     }
@@ -36,8 +36,11 @@ pub contract TogethrMarket {
                     "Cannot list a NFT for 0.0"
             }
 
+            log("list for sale")
+            log(itemID)
             var ownedNFTs = self.ownerCollection.borrow()!.getIDs()
-            
+            log(ownedNFTs)
+            log("===")
             if (ownedNFTs.contains(itemID)) {
                 self.forSale[itemID] = price
                 emit ForSale(itemID: itemID, price: price)
@@ -50,7 +53,7 @@ pub contract TogethrMarket {
             emit SaleWithdrawn(itemID: itemID)
         }
 
-        pub fun purchase(itemID: UInt64, recipient: &TogethrNFT.Collection{NonFungibleToken.CollectionPublic}, buyTokens: @FungibleToken.Vault) {
+        pub fun purchase(itemID: UInt64, recipient: &TogethrNFT.Collection{TogethrNFT.CollectionPublic}, buyTokens: @FungibleToken.Vault) {
             pre {
                 buyTokens.isInstance(Type<@FlowToken.Vault>()):
                     "Only Flow Tokens are supported for purchase."
@@ -87,6 +90,11 @@ pub contract TogethrMarket {
         }
 
         pub fun idPrice(itemID: UInt64): UFix64? {
+           log("=====")
+            log(itemID)
+            log("=====")
+            log(self.forSale[itemID])
+            log("=====")
             return self.forSale[itemID]
         }
 

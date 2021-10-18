@@ -163,8 +163,11 @@ export default class KittyItemsHarness extends LitElement {
           description="Buy project"
           action="buyProject"
           method="post"
-          fields="buyer projectId"
+          fields="seller buyer projectId"
         >
+          <account-widget field="seller" label="Seller" placeholder="Seller">
+          </account-widget>
+
           <account-widget field="buyer" label="Buyer" placeholder="Buyer">
           </account-widget>
           <text-widget
