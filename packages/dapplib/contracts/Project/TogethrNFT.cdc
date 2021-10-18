@@ -1,4 +1,5 @@
 import NonFungibleToken from "../Flow/NonFungibleToken.cdc"
+import TogethrCreator from "./TogethrCreator.cdc"
 
 pub contract TogethrNFT: NonFungibleToken {
 
@@ -9,16 +10,16 @@ pub contract TogethrNFT: NonFungibleToken {
 
     pub let CollectionStoragePath: StoragePath
     pub let CollectionPublicPath: PublicPath
-    pub let MinterStoragePath: StoragePath
+    // pub let MinterStoragePath: StoragePath
 
     pub var totalSupply: UInt64
 
     pub resource NFT: NonFungibleToken.INFT {
         pub let id: UInt64
-        pub let typeID: UInt64
-        init(initID: UInt64, initTypeID: UInt64) {
-            self.id = initID
-            self.typeID = initTypeID
+        pub let projectId: UInt32
+        init(id: UInt64, projectId: UInt32) {
+            self.id = id
+            self.projectId = projectId
         }
     }
 
@@ -65,26 +66,32 @@ pub contract TogethrNFT: NonFungibleToken {
         return <- create Collection()
     }
 
-	pub resource NFTMinter {
 
-		pub fun mintNFT(recipient: &{NonFungibleToken.CollectionPublic}, typeID: UInt64) {
-            emit Minted(id: TogethrNFT.totalSupply, typeID: typeID)
+  pub fun mintNFT(recipient: Address, projectId: UInt32) {
+      pre {
+        TogethrCreator.projects[projectId] == recipient: "Invalid project id"
+        TogethrCreator.projects[projectId] != nil: "Nil project id"
+      }
 
-			recipient.deposit(token: <-create TogethrNFT.NFT(initID: TogethrNFT.totalSupply, initTypeID: typeID))
+      let collection = getAccount(recipient)
+          .getCapability(TogethrNFT.CollectionPublicPath)
+          .borrow<&TogethrNFT.Collection{TogethrNFT.CollectionPublic}>()
+          ?? panic("Could not borrow Balance reference to the Vault")
+
+			collection.deposit(token: <-create TogethrNFT.NFT(id: TogethrNFT.totalSupply, projectId: projectId))
 
       TogethrNFT.totalSupply = TogethrNFT.totalSupply + (1 as UInt64)
 		}
-	}
 
 	init() {
       self.CollectionStoragePath = /storage/TogethrNFTCollection
       self.CollectionPublicPath = /public/TogethrNFTCollection
-      self.MinterStoragePath = /storage/TogethrNFTMinter
+      // self.MinterStoragePath = /storage/TogethrNFTMinter
 
       self.totalSupply = 0
 
-      let minter <- create NFTMinter()
-      self.account.save(<-minter, to: self.MinterStoragePath)
+      // let minter <- create NFTMinter()
+      // self.account.save(<-minter, to: self.MinterStoragePath)
 
       emit ContractInitialized()
 	}
