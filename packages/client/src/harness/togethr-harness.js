@@ -125,6 +125,54 @@ export default class KittyItemsHarness extends LitElement {
         </action-card>
 
         <!-- Togethr Market -->
+
+        <action-card
+          title="Mint project as NFT"
+          description="Mint project as NFT"
+          action="mintProject"
+          method="post"
+          fields="creator projectId"
+        >
+          <account-widget field="creator" label="Creator" placeholder="Creator">
+          </account-widget>
+          <text-widget
+            field="projectId"
+            label="Project ID"
+            placeholder="Project ID"
+          ></text-widget>
+        </action-card>
+
+        <action-card
+          title="List project for sale"
+          description="List project for sale"
+          action="listProject"
+          method="post"
+          fields="creator projectId"
+        >
+          <account-widget field="creator" label="Creator" placeholder="Creator">
+          </account-widget>
+          <text-widget
+            field="projectId"
+            label="Project ID"
+            placeholder="Project ID"
+          ></text-widget>
+        </action-card>
+
+        <action-card
+          title="Buy project"
+          description="Buy project"
+          action="buyProject"
+          method="post"
+          fields="buyer projectId"
+        >
+          <account-widget field="buyer" label="Buyer" placeholder="Buyer">
+          </account-widget>
+          <text-widget
+            field="projectId"
+            label="Project ID"
+            placeholder="Project ID"
+          ></text-widget>
+        </action-card>
       </page-body>
       <page-panel id="resultPanel"></page-panel>
     `;

@@ -35,12 +35,12 @@ pub contract TogethrCreator {
     }
   }
 
-  pub resource interface PublicCreator {
+  pub resource interface PublicCollection {
     pub fun getProjectMetadata(projectId: UInt32): String?
     pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrFunder.Collection, paymentVault: @FungibleToken.Vault)
   }
 
-  pub resource Collection: PublicCreator {
+  pub resource Collection: PublicCollection {
     pub let creator: Address
     pub var projects: @{UInt32: Project}
 

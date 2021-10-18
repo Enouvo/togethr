@@ -137,6 +137,68 @@ module.exports = class DappLib {
 
   /********** Togethr Market **********/
 
+  static async mintProject(data) {
+    let config = DappLib.getConfig();
+    let result = await Blockchain.post(
+      {
+        config: config,
+        roles: {
+          proposer: data.creator,
+        },
+      },
+      "togethrmarket_mint_project",
+      {
+        projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+      }
+    );
+    return {
+      type: DappLib.DAPP_RESULT_TX_HASH,
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
+  }
+
+  static async listProject(data) {
+    let config = DappLib.getConfig();
+    let result = await Blockchain.post(
+      {
+        config: config,
+        roles: {
+          proposer: data.creator,
+        },
+      },
+      "togethrmarket_list_project",
+      {
+        projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+      }
+    );
+    return {
+      type: DappLib.DAPP_RESULT_TX_HASH,
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
+  }
+
+  static async buyProject(data) {
+    let config = DappLib.getConfig();
+    let result = await Blockchain.post(
+      {
+        config: config,
+        roles: {
+          proposer: data.buyer,
+        },
+      },
+      "togethrmarket_buy_project",
+      {
+        projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+      }
+    );
+    return {
+      type: DappLib.DAPP_RESULT_TX_HASH,
+      label: "Transaction Hash",
+      result: result.callData.transactionId,
+    };
+  }
   /*
     data - an object of key value pairs
     ex. { number: 2, id: 15 }

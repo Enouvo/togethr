@@ -5,7 +5,7 @@ import FlowToken from Flow.FlowToken
 
 transaction(projectId: UInt32, funder: Address, amount: UFix64) {
 
-  let collection: &TogethrCreator.Collection{TogethrCreator.PublicCreator}
+  let collection: &TogethrCreator.Collection{TogethrCreator.PublicCollection}
   let fundedProjects: &TogethrFunder.Collection
   let sentVault: @FungibleToken.Vault
     
@@ -24,7 +24,7 @@ transaction(projectId: UInt32, funder: Address, amount: UFix64) {
     let creator = TogethrCreator.getProjectCreatorAddress(projectId: projectId) ?? panic("Could not borrow FUSD vault")
 
     log(creator)
-    self.collection = getAccount(creator).getCapability<&TogethrCreator.Collection{TogethrCreator.PublicCreator}>(TogethrCreator.CollectionPublicPath)
+    self.collection = getAccount(creator).getCapability<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>(TogethrCreator.CollectionPublicPath)
                             .borrow()
                             ?? panic("Could not borrow capability from public collection")
 

@@ -1,3 +1,4 @@
+
 import TogethrCreator from "../../../contracts/Project/TogethrCreator.cdc"
 import FungibleToken from "../../../contracts/Flow/FungibleToken.cdc"
 import FlowToken from Flow.FlowToken
@@ -17,7 +18,7 @@ transaction(name: String) {
         signer.save(<-collection, to: TogethrCreator.CollectionStoragePath)
 
         // create a public capability for the collection
-        signer.link<&TogethrCreator.Collection{TogethrCreator.PublicCreator}>(TogethrCreator.CollectionPublicPath, target: TogethrCreator.CollectionStoragePath)
+        signer.link<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>(TogethrCreator.CollectionPublicPath, target: TogethrCreator.CollectionStoragePath)
     }
 
     self.collection = signer.borrow<&TogethrCreator.Collection>(from: TogethrCreator.CollectionStoragePath)!
