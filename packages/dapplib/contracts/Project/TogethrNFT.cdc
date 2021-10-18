@@ -26,6 +26,14 @@ pub contract TogethrNFT: NonFungibleToken {
     pub resource interface CollectionPublic {
         pub fun deposit(token: @NonFungibleToken.NFT)
         pub fun getIDs(): [UInt64]
+        pub fun borrowEntireNFT(id: UInt64): &NFT? {
+            // If the result isn't nil, the id of the returned reference
+            // should be the same as the argument to the function
+            post {
+                (result == nil) || (result?.id == id): 
+                    "Cannot borrow NFT reference: The ID of the returned reference is incorrect"
+            }
+        }
     }
 
     pub resource Collection: CollectionPublic, NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic {
@@ -47,6 +55,15 @@ pub contract TogethrNFT: NonFungibleToken {
 
         pub fun getIDs(): [UInt64] {
             return self.ownedNFTs.keys
+        }
+
+        pub fun borrowEntireNFT(id: UInt64): &NFT? {
+            if self.ownedNFTs[id] != nil {
+                let ref = &self.ownedNFTs[id] as auth &NonFungibleToken.NFT
+                return ref as! &NFT
+            } else {
+                return nil
+            }
         }
 
         pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT {

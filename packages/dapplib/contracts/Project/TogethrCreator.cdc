@@ -37,6 +37,7 @@ pub contract TogethrCreator {
 
   pub resource interface PublicCollection {
     pub fun getProjectMetadata(projectId: UInt32): String?
+    pub fun getProjectFunders(projectId: UInt32):  {Address: UFix64}?
     pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrFunder.Collection, paymentVault: @FungibleToken.Vault)
   }
 
@@ -61,6 +62,14 @@ pub contract TogethrCreator {
       TogethrCreator.nextProjectID = TogethrCreator.nextProjectID + 1
       TogethrCreator.projects[projectId] = self.creator
       destroy newProject
+    }
+
+    pub fun getProjectFunders(projectId: UInt32):  {Address: UFix64}? {      
+      pre {
+        self.projects[projectId] != nil: "Failed to get project: invalid project id"
+      } // TODO remove pre and use panic?
+
+      return self.projects[projectId]?.funders
     }
 
     pub fun getProjectMetadata(projectId: UInt32): String? {

@@ -18,7 +18,7 @@ transaction(projectId: UInt32) {
       let ownerCollection = signer.getCapability<&TogethrNFT.Collection>(/private/privateTogethrNFTCollection)
       assert(ownerCollection.borrow() != nil, message: "Missing or mis-typed Kitty Items Collection")
    
-      let saleCollection <- TogethrMarket.createSaleCollection(ownerVault: vault, ownerCollection: ownerCollection)
+      let saleCollection <- TogethrMarket.createSaleCollection(address: signer.address, ownerVault: vault, ownerCollection: ownerCollection)
       signer.save(<-saleCollection, to: TogethrMarket.StoragePath)
       signer.link<&TogethrMarket.SaleCollection{TogethrMarket.SalePublic}>(TogethrMarket.PublicPath, target: TogethrMarket.StoragePath)
     

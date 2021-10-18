@@ -1,5 +1,6 @@
 import FungibleToken from "../Flow/FungibleToken.cdc"
 import TogethrNFT from "./TogethrNFT.cdc"
+import TogethrCreator from "./TogethrCreator.cdc"
 import FlowToken from Flow.FlowToken
 import NonFungibleToken from "../Flow/NonFungibleToken.cdc"
 
@@ -21,11 +22,13 @@ pub contract TogethrMarket {
 
         pub var forSale: {UInt64: UFix64}
 
+        access(self) let address: Address
         access(self) let ownerVault: Capability<&FlowToken.Vault{FungibleToken.Receiver}>
         access(self) let ownerCollection: Capability<&TogethrNFT.Collection>
 
-        init (_vault: Capability<&FlowToken.Vault{FungibleToken.Receiver}>, _collection: Capability<&TogethrNFT.Collection>) {
+        init (_address: Address, _vault: Capability<&FlowToken.Vault{FungibleToken.Receiver}>, _collection: Capability<&TogethrNFT.Collection>) {
             self.forSale = {}
+            self.address = _address
             self.ownerVault = _vault
             self.ownerCollection = _collection
         }
@@ -36,11 +39,11 @@ pub contract TogethrMarket {
                     "Cannot list a NFT for 0.0"
             }
 
-            log("list for sale")
-            log(itemID)
+            log("====")
+            log(self.ownerCollection.borrow()!.borrowEntireNFT(id: itemID))
+            log("====")
+
             var ownedNFTs = self.ownerCollection.borrow()!.getIDs()
-            log(ownedNFTs)
-            log("===")
             if (ownedNFTs.contains(itemID)) {
                 self.forSale[itemID] = price
                 emit ForSale(itemID: itemID, price: price)
@@ -63,10 +66,26 @@ pub contract TogethrMarket {
                     "Not enough tokens to buy the NFT!"
             }
 
-            // get project by id
-            // get Flow Vault of the creator
-            // get funders flow wallet
+          let projects = getAccount(self.address)
+              .getCapability(TogethrCreator.CollectionPublicPath)
+              .borrow<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>()
+              ?? panic("Could not borrow creator projects")
 
+
+          let projectId = self.ownerCollection.borrow()!.borrowEntireNFT(id: itemID)!.projectId
+
+           let funders = projects.getProjectFunders(projectId: projectId);
+
+           log(funders!.keys[0])
+
+           let funderVault <- buyTokens.withdraw(amount: UFix64(1))
+
+           let funderVaultRef = getAccount(funders!.keys[0])
+              .getCapability(/public/flowTokenReceiver)
+              .borrow<&FlowToken.Vault{FungibleToken.Receiver}>()
+              ?? panic("Could not borrow Balance reference to the Vault")
+
+            funderVaultRef.deposit(from: <-funderVault)
 
             // get the value out of the optional
             let price = self.forSale[itemID]!
@@ -90,12 +109,7 @@ pub contract TogethrMarket {
         }
 
         pub fun idPrice(itemID: UInt64): UFix64? {
-           log("=====")
-            log(itemID)
-            log("=====")
-            log(self.forSale[itemID])
-            log("=====")
-            return self.forSale[itemID]
+           return self.forSale[itemID]
         }
 
         pub fun getIDs(): [UInt64] {
@@ -103,8 +117,8 @@ pub contract TogethrMarket {
         }
     }
 
-    pub fun createSaleCollection(ownerVault: Capability<&FlowToken.Vault{FungibleToken.Receiver}>, ownerCollection: Capability<&TogethrNFT.Collection>): @SaleCollection {
-        return <- create SaleCollection(_vault: ownerVault, _collection: ownerCollection)
+    pub fun createSaleCollection(address: Address, ownerVault: Capability<&FlowToken.Vault{FungibleToken.Receiver}>, ownerCollection: Capability<&TogethrNFT.Collection>): @SaleCollection {
+        return <- create SaleCollection(_address: address, _vault: ownerVault, _collection: ownerCollection)
     }
 
     init() {
