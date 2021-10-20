@@ -1,12 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import React from "react";
+import PropTypes from "prop-types";
+import { Button } from "antd";
+import Header from "../components/Header";
+import HomeFeaturing from "../components/Home/HomeFeaturingContent";
+import HomeHotCollectionContent from "../components/Home/HomeHotCollectionContent";
+import Footer from "../components/Footer";
 
 const Home = () => {
   return (
-    <div>
-      I'm Home <Button> Click Here </Button>
-    </div>
+    <>
+      <HomeFeaturing />
+      <HomeHotCollectionContent />
+    </>
   );
 };
 

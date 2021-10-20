@@ -1,17 +1,25 @@
-import React, { Component } from 'react';
-import { Button } from 'antd';
-import Home from './pages/home';
-import './components/top-navigation';
-import './components/page-loader';
-import './pages/dapp';
-
+import React, { Component } from "react";
+import { Button } from "antd";
+import Home from "./pages/home";
+import ProjectDetail from "./pages/project-detail";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import "./components/top-navigation";
+import "./components/page-loader";
+import "./pages/dapp";
+import "./App.css";
 class App extends Component {
   render() {
     return (
-      <div className="flexible-content">
+      <div className="flex flex-col h-screen">
         {/* <top-navigation collapse="true" /> */}
         {/* <page-loader id="page-loader" /> */}
-        <Home />
+        <Header />
+        <div className="flex-grow">
+          {/* <Home /> */}
+          <ProjectDetail />
+        </div>
+        <Footer />
       </div>
     );
   }

@@ -1,0 +1,29 @@
+:root{
+  font-family: 'Manrope';
+}
+.ant-input-affix-wrapper {
+  border-radius: 90px;
+  border-width: 2px;
+}
+
+.ant-progress-inner {
+  background-color: #d9f6ee;
+}
+
+.footer-input {
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid #5c5c8b;
+}
+.footer-input > input.ant-input {
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+}
+.ant-btn {
+  border-radius: 90px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.footer {
+  background-color: #070632;
+}
