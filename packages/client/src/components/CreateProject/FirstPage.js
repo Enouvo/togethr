@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { CreateProjectContext } from "../../pages/create-project";
 import banner from "../../assets/create_project_banner.svg";
 import upload from "../../assets/upload.svg";
 
 const FirstPage = () => {
+  const { setCurrentPage } = useContext(CreateProjectContext);
   return (
     <div className="flex flex-col justify-center">
       <img src={banner} />
@@ -53,6 +55,7 @@ const FirstPage = () => {
             type="primary"
             style={{ height: 46, display: "flex" }}
             className="flex-row items-center"
+            onClick={() => setCurrentPage(2)}
           >
             <span>Next</span>
             <ArrowRightOutlined />

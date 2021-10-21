@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { CreateProjectContext } from "../../pages/create-project";
 import banner from "../../assets/create_project_banner.svg";
 
 const SecondPage = () => {
+  const { setCurrentPage } = useContext(CreateProjectContext);
   return (
     <div className="flex flex-col justify-center">
       <img src={banner} />
@@ -37,16 +39,17 @@ const SecondPage = () => {
           </div>
         </div>
         <div className="flex flex-col my-2 flex-1">
-          <span className="text-gray-700 mb-2">PERCENTAGE OF PROFIT CREATOR WILL SHARE WITH THE SUPPORTS</span>
-          <input
-            className="border-2 border-gray-300 rounded-lg py-2 px-3 focus:outline-none font-extrabold"
-          />
+          <span className="text-gray-700 mb-2">
+            PERCENTAGE OF PROFIT CREATOR WILL SHARE WITH THE SUPPORTS
+          </span>
+          <input className="border-2 border-gray-300 rounded-lg py-2 px-3 focus:outline-none font-extrabold" />
         </div>
         <div className="flex flex-row justify-between items-center mt-8">
           <Button
             type="primary"
             style={{ height: 46, display: "flex" }}
             className="flex-row items-center"
+            onClick={() => setCurrentPage(3)}
           >
             <span>Next</span>
             <ArrowRightOutlined />

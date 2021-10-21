@@ -1,12 +1,11 @@
 import React from "react";
-import { Button } from "antd";
 import featuring from "../../assets/featuring.png";
 
 const HomeHotCollectionContent = () => {
   return (
-    <>
-      <h1 className="text-center font-bold text-4xl">Hot Collections</h1>
-      <div className="flex flex-row justify-center px-40 py-32">
+    <div className="p-40">
+      <h1 className="text-center font-bold text-4xl mb-8">Hot Collections</h1>
+      <div className="flex flex-row justify-center px-40">
         <div className="flex flex-col mr-8">
           <img
             src={featuring}
@@ -101,7 +100,7 @@ const HomeHotCollectionContent = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

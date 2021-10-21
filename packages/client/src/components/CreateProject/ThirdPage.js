@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Avatar } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import banner from "../../assets/create_project_thirdpage_banner.svg";
 import avatar from "../../assets/dappstarter.png";
 import avatarUpload from "../../assets/avatar_upload.svg";
@@ -12,7 +13,12 @@ const ThirdPage = () => {
       <form className="w-2/5 mt-4 mb-10 justify-center flex flex-col m-auto">
         <div className="text-center">
           <Avatar src={avatar} size={130} />
-          <Avatar src={avatarUpload} size={40} className="avatar-btn" />
+          <Avatar
+            src={avatarUpload}
+            size={40}
+            className="avatar-btn"
+            onClick={() => alert("clicked")}
+          />
         </div>
         <div className="flex flex-col my-2 flex-1">
           <span className="text-gray-700 mb-2">NAME</span>
@@ -30,14 +36,16 @@ const ThirdPage = () => {
           />
         </div>
         <div className="flex flex-row justify-between items-center mt-8">
-          <Button
-            type="primary"
-            style={{ height: 46, display: "flex" }}
-            className="flex-row items-center"
-          >
-            <span>Finish</span>
-            <ArrowRightOutlined />
-          </Button>
+          <Link to="/">
+            <Button
+              type="primary"
+              style={{ height: 46, display: "flex" }}
+              className="flex-row items-center"
+            >
+              <span>Finish</span>
+              <ArrowRightOutlined />
+            </Button>
+          </Link>
           <div>
             <span className="text-blue-700 font-bold text-xl">3/</span>
             <span className="font-bold text-xl">3</span>

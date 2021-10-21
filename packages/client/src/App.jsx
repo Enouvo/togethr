@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "antd";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/home";
 import ProjectDetail from "./pages/project-detail";
 import CreateProject from "./pages/create-project";
@@ -12,17 +13,23 @@ import "./App.css";
 class App extends Component {
   render() {
     return (
-      <div className="flex flex-col h-screen">
-        {/* <top-navigation collapse="true" /> */}
-        {/* <page-loader id="page-loader" /> */}
-        <Header />
-        <div className="flex-grow">
-          {/* <Home /> */}
-          {/* <ProjectDetail /> */}
-          <CreateProject />
-        </div>
-        <Footer />
-      </div>
+      <Router>
+        <Switch>
+          <div className="flex flex-col h-screen">
+            {/* <top-navigation collapse="true" /> */}
+            {/* <page-loader id="page-loader" /> */}
+            <Header />
+            <div className="flex-grow">
+              <Route path="/" component={Home} exact/>
+              <Route path="/project-detail" component={ProjectDetail} exact />
+              <Route path="/create-project" component={CreateProject} exact />
+              {/* <ProjectDetail /> */}
+              {/* <CreateProject /> */}
+            </div>
+            <Footer />
+          </div>
+        </Switch>
+      </Router>
     );
   }
 }
