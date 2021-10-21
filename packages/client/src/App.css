@@ -1,5 +1,5 @@
-:root{
-  font-family: 'Manrope';
+:root {
+  font-family: "Manrope";
 }
 .ant-input-affix-wrapper {
   border-radius: 90px;
@@ -26,4 +26,14 @@
 
 .footer {
   background-color: #070632;
+}
+
+.avatar-btn {
+  position: relative;
+  right: 40px;
+  top: 45px;
+  cursor: pointer;
+}
+.avatar-btn:hover {
+  background-color: rgba(255, 255, 255, 1);
 }

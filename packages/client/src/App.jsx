@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "antd";
 import Home from "./pages/home";
 import ProjectDetail from "./pages/project-detail";
+import CreateProject from "./pages/create-project";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./components/top-navigation";
@@ -17,7 +18,8 @@ class App extends Component {
         <Header />
         <div className="flex-grow">
           {/* <Home /> */}
-          <ProjectDetail />
+          {/* <ProjectDetail /> */}
+          <CreateProject />
         </div>
         <Footer />
       </div>

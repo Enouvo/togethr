@@ -16,17 +16,29 @@ const Footer = () => {
         <div className="mb-5">
           <h2 className="text-gray-300 text-lg font-bold">Candies Crypto</h2>
           <div className="flex flex-col items-start">
-            <button className="text-gray-300 focus:outline-none mb-3">Discover</button>
-            <button className="text-gray-300 focus:outline-none mb-3">Connect wallet</button>
-            <button className="text-gray-300 focus:outline-none mb-3">Create item</button>
+            <button className="text-gray-300 focus:outline-none mb-3">
+              Discover
+            </button>
+            <button className="text-gray-300 focus:outline-none mb-3">
+              Connect wallet
+            </button>
+            <button className="text-gray-300 focus:outline-none mb-3">
+              Create item
+            </button>
           </div>
         </div>
         <div className="mb-5">
           <h2 className="text-gray-300 text-lg font-bold">Info</h2>
           <div className="flex flex-col items-start">
-            <button className="text-gray-300 focus:outline-none mb-3">Download</button>
-            <button className="text-gray-300 focus:outline-none mb-3">Demos</button>
-            <button className="text-gray-300 focus:outline-none mb-3">Support</button>
+            <button className="text-gray-300 focus:outline-none mb-3">
+              Download
+            </button>
+            <button className="text-gray-300 focus:outline-none mb-3">
+              Demos
+            </button>
+            <button className="text-gray-300 focus:outline-none mb-3">
+              Support
+            </button>
           </div>
         </div>
         <div className="flex flex-col items-start">
@@ -45,12 +57,12 @@ const Footer = () => {
           />
         </div>
       </div>
-      <Divider className="bg-white" />
+      <Divider className="bg-gray-700" />
       <div className="flex flex-row justify-between">
-        <span className="text-gray-300 text-sm">
+        <span className="text-gray-500 text-sm">
           Copyright &copy; . All rights reserved
         </span>
-        <div className="text-white flex flex-row">
+        <div className="flex flex-row">
           <span className="text-white text-sm">
             We use cookie for better service.
           </span>
