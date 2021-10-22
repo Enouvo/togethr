@@ -31,10 +31,11 @@ const HomeFeaturingContent = () => {
           </div>
           <div className="flex flex-col rounded-lg border-gray-500 border-2 p-8 mt-8 flex-wrap max-w-md">
             <p className="text-xl mb-0">
-              <span className="font-extrabold">1000</span> FUSD
+              <span className="font-bold mr-2">1000</span> 
+              <span className="text-gray-1000">FUSD</span>
             </p>
             <Progress percent={50} strokeColor="#00C48C" showInfo={false} />
-            <p className="text-gray-700 text-lg">
+            <p className="text-gray-1000 text-base">
               The National Endowment for the Arts is committed to diversity,
               equity, inclusion, and fostering mutual respect for the diverse
               beliefs and values of all individuals and groups.The Arts

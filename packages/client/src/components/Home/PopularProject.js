@@ -50,7 +50,7 @@ const listItem = [
 const PopularProjects = () => {
   return (
     <>
-      <div className="px-64 pb-64 pt-24 flex flex-col bg-gray-200 items-center justify-start">
+      <div className="px-48 pb-48 pt-24 flex flex-col bg-gray-200 items-center justify-start">
         <h1 className="text-4xl font-bold mb-8">Popular Projects</h1>
         <div className="flex flex-row items-center">
           <Button

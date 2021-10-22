@@ -10,9 +10,9 @@ const FirstPage = () => {
   const { setCurrentPage } = useContext(CreateProjectContext);
 
   const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+    { value: "chocolate" },
+    { value: "strawberry" },
+    { value: "vanilla" },
   ];
 
   return (

@@ -76,7 +76,7 @@ const Discover = ({ items }) => {
   const [type, setType] = useState("All items");
 
   return (
-    <div className="p-40">
+    <div className="px-32 py-24">
       <div className="flex flex-row justify-between mb-10">
         <Typography className="text-4xl font-extrabold">Discover</Typography>
         <div className="flex items-center">
@@ -101,7 +101,7 @@ const Discover = ({ items }) => {
         </div>
       </div>
 
-      <Row gutter={[100, 100]}>
+      <Row justify="center" gutter={[60, 40]}>
         {listItem.map((item) => {
           if (item.type === type || type === "All items") {
             return (

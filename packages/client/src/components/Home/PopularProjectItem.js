@@ -18,13 +18,13 @@ const PopularProjectItem = ({
       <p className="text-gray-700">{description}</p>
       <div>
         <span className="text-lg font-bold">{`${money} `}</span>
-        <span className="text-lg text-gray-600">{currency}</span>
+        <span className="text-lg text-gray-1000">{currency}</span>
       </div>
       <Progress percent={50} strokeColor="#00C48C" showInfo={false} />
 
       <div className="flex flex-row items-center">
         <ClockCircleOutlined style={{ color: "#5C5C8B" }} />
-        <span className="ml-2 text-gray-600">{`${daysRemaining} days remaining`}</span>
+        <span className="ml-2 text-gray-1000">{`${daysRemaining} days remaining`}</span>
       </div>
     </div>
   );
