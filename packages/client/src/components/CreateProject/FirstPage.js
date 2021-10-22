@@ -1,12 +1,20 @@
 import React, { useContext } from "react";
 import { Button } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import Selector from "../Selector";
 import { CreateProjectContext } from "../../pages/create-project";
 import banner from "../../assets/create_project_banner.svg";
 import upload from "../../assets/upload.svg";
 
 const FirstPage = () => {
   const { setCurrentPage } = useContext(CreateProjectContext);
+
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+
   return (
     <div className="flex flex-col justify-center">
       <img src={banner} />
@@ -20,15 +28,7 @@ const FirstPage = () => {
         </div>
         <div className="flex flex-col my-2">
           <span className="text-gray-700 mb-1">PROJECT CATEGORY</span>
-          <select
-            className="border-2 border-gray-300 rounded-lg py-2 px-4 focus:outline-none bg-transparent font-extrabold"
-            placeholder="Choose type of your project"
-          >
-            <option value="test1">Test1</option>
-            <option value="test2">Test2</option>
-            <option value="test3">Test3</option>
-            <option value="test4">Test4</option>
-          </select>
+          <Selector options={options} />
         </div>
         <div className="flex flex-col my-2">
           <span className="text-gray-700 mb-2">DESCRIPTION</span>
