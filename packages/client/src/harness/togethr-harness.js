@@ -100,6 +100,15 @@ export default class KittyItemsHarness extends LitElement {
         </action-card>
 
         <action-card
+          title="Get all project"
+          description="Get all project"
+          action="getAllProjects"
+          method="get"
+          fields=""
+        >
+        </action-card>
+
+        <action-card
           title="Fund a new project"
           description="Fund a new project"
           action="fundProject"

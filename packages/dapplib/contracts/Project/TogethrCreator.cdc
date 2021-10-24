@@ -34,17 +34,12 @@ pub contract TogethrCreator {
   pub resource Project: ProjectInterface {
     pub let projectId: UInt32
     pub let data: ProjectData
-    pub let name: String
-    pub let ipfsHash: String
-    pub let tokenPrice: UFix64
-    pub let tokenCount: UInt32
-    pub let profitSharePercent: UInt32
     pub let funders: {Address: UFix64}
   
     
     init(projectId: UInt32, name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
       self.projectId = projectId
-      self.data = ProjectData(name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32)      
+      self.data = ProjectData(name: name, ipfsHash: ipfsHash, tokenPrice: tokenPrice, tokenCount: tokenCount, profitSharePercent: profitSharePercent)      
       self.funders = {}
     }
 
@@ -58,7 +53,7 @@ pub contract TogethrCreator {
   }
 
   pub resource interface PublicCollection {
-    pub fun getProjectMetadata(projectId: UInt32): String?
+    pub fun getProjectMetadata(projectId: UInt32): ProjectData
     pub fun getProjectFunders(projectId: UInt32):  {Address: UFix64}?
     pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrFunder.Collection, paymentVault: @FungibleToken.Vault)
   }
@@ -94,12 +89,12 @@ pub contract TogethrCreator {
       return self.projects[projectId]?.funders
     }
 
-    pub fun getProjectMetadata(projectId: UInt32): String? {
+    pub fun getProjectMetadata(projectId: UInt32): ProjectData {
       pre {
         self.projects[projectId] != nil: "Failed to get project: invalid project id"
       } // TODO remove pre and use panic?
 
-      return self.projects[projectId]?.name
+      return self.projects[projectId]?.data!
     }
 
     pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrFunder.Collection, paymentVault: @FungibleToken.Vault) {
@@ -131,8 +126,8 @@ pub contract TogethrCreator {
     return self.projects[projectId]
   } 
 
-  pub fun getProjects() {UInt32: Address} {
-    return projects
+  pub fun getProjects(): {UInt32: Address} {
+    return self.projects
   }
 
   init() {
