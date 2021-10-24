@@ -58,13 +58,13 @@
       "key": "885c0760303d4dae348d84ff872e40370c467c680184495b6e5a54b726336aa3"
     },
     "testnet-account": {
-      "address": "0x85f17e07cb3a009c",
+      "address": "0x507f5f6b3c05028b",
       "key": {
         "type": "hex",
         "index": 0,
         "signatureAlgorithm": "ECDSA_secp256k1",
         "hashAlgorithm": "SHA3_256",
-        "privateKey": "2231fb6b5530b64079c1dc5a8688929c93de66f7d40d2f53cf1124cf694ddbcf"
+        "privateKey": "57a8eded89f1194b7cdb47aad7dce45c01fab0dc12d5042c48ff60343f465dee"
       }
     }
   },
