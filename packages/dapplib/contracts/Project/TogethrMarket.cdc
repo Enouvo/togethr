@@ -1,7 +1,7 @@
 import FungibleToken from "../Flow/FungibleToken.cdc"
 import TogethrNFT from "./TogethrNFT.cdc"
 import TogethrCreator from "./TogethrCreator.cdc"
-import FlowToken from Flow.FlowToken
+import FlowToken from "../Flow/FlowToken.cdc"
 import NonFungibleToken from "../Flow/NonFungibleToken.cdc"
 
 pub contract TogethrMarket {

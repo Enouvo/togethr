@@ -29,7 +29,6 @@ module.exports = class DappLib {
   }
 
   /********** Togethr Projects **********/
-
   static async createProject(data) {
     let config = DappLib.getConfig();
     let result = await Blockchain.post(
@@ -42,6 +41,13 @@ module.exports = class DappLib {
       "togethrprojects_create_project",
       {
         name: { value: data.name, type: t.String },
+        ipfsHash: { value: data.ipfsHash, type: t.String },
+        tokenPrice: { value: data.tokenPrice.toString(), type: t.UFix64 },
+        tokenCount: { value: parseInt(data.tokenCount), type: t.UInt32 },
+        profitSharePercent: {
+          value: parseInt(data.profitSharePercent),
+          type: t.UInt32,
+        },
       }
     );
     return {

@@ -3,7 +3,7 @@ import TogethrCreator from "../../../contracts/Project/TogethrCreator.cdc"
 import FungibleToken from "../../../contracts/Flow/FungibleToken.cdc"
 import FlowToken from Flow.FlowToken
 
-transaction(name: String) {
+transaction(name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
 
   let collection: &TogethrCreator.Collection
     
@@ -25,7 +25,7 @@ transaction(name: String) {
   }
 
   execute { 
-    self.collection.addProject(name: name)
+    self.collection.addProject(name: name, ipfsHash: ipfsHash, tokenPrice: tokenPrice, tokenCount: tokenCount, profitSharePercent: profitSharePercent)
   }
 
 }

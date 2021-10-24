@@ -1,7 +1,7 @@
 
 import FungibleToken from "../Flow/FungibleToken.cdc"
 import TogethrFunder from "./TogethrFunder.cdc"
-import FlowToken from Flow.FlowToken
+import FlowToken from "../Flow/FlowToken.cdc"
 
 pub contract TogethrCreator {
 
@@ -15,14 +15,36 @@ pub contract TogethrCreator {
     access(contract) fun addFunder(funder: Address, amount: UFix64)
   }
 
+  pub struct ProjectData {
+    pub let name: String
+    pub let ipfsHash: String
+    pub let tokenPrice: UFix64
+    pub let tokenCount: UInt32
+    pub let profitSharePercent: UInt32
+
+    init(name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
+      self.name = name
+      self.ipfsHash = ipfsHash;
+      self.tokenPrice = tokenPrice;
+      self.tokenCount = tokenCount;
+      self.profitSharePercent = profitSharePercent;
+    }
+  }
+
   pub resource Project: ProjectInterface {
     pub let projectId: UInt32
+    pub let data: ProjectData
     pub let name: String
+    pub let ipfsHash: String
+    pub let tokenPrice: UFix64
+    pub let tokenCount: UInt32
+    pub let profitSharePercent: UInt32
     pub let funders: {Address: UFix64}
+  
     
-    init(projectId: UInt32, name: String) {
+    init(projectId: UInt32, name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
       self.projectId = projectId
-      self.name = name
+      self.data = ProjectData(name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32)      
       self.funders = {}
     }
 
@@ -50,13 +72,13 @@ pub contract TogethrCreator {
       self.projects <- {}
     }
 
-    pub fun addProject(name: String) {
+    pub fun addProject(name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
       pre {
         name.length > 0 : "Failed to create project: project name is required."
       }
     
       let projectId = TogethrCreator.nextProjectID
-      let project <- create Project(projectId: projectId, name: name)
+      let project <- create Project(projectId: projectId, name: name, ipfsHash: ipfsHash, tokenPrice: tokenPrice, tokenCount: tokenCount, profitSharePercent: profitSharePercent)
       let newProject <- self.projects[projectId] <- project
 
       TogethrCreator.nextProjectID = TogethrCreator.nextProjectID + 1
@@ -108,6 +130,10 @@ pub contract TogethrCreator {
   pub fun getProjectCreatorAddress(projectId: UInt32): Address? {
     return self.projects[projectId]
   } 
+
+  pub fun getProjects() {UInt32: Address} {
+    return projects
+  }
 
   init() {
     self.nextProjectID = 1

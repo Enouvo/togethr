@@ -47,13 +47,14 @@ export default class KittyItemsHarness extends LitElement {
         </action-card>
 
         <!-- Togethr Projects -->
-
+        ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32,
+        profitSharePercent: UInt32
         <action-card
           title="Create a new project"
           description="Create a new project"
           action="createProject"
           method="post"
-          fields="creator name"
+          fields="creator name ipfsHash tokenPrice tokenCount profitSharePercent"
         >
           <account-widget field="creator" label="Creator" placeholder="Creator">
           </account-widget>
@@ -61,6 +62,26 @@ export default class KittyItemsHarness extends LitElement {
             field="name"
             label="Project name"
             placeholder="Project name"
+          ></text-widget>
+          <text-widget
+            field="ipfsHash"
+            label="IPFS Hash"
+            placeholder="IPFS Hash"
+          ></text-widget>
+          <text-widget
+            field="tokenPrice"
+            label="Token Price"
+            placeholder="Token Price"
+          ></text-widget>
+          <text-widget
+            field="tokenCount"
+            label="Token Count"
+            placeholder="Token Count"
+          ></text-widget>
+          <text-widget
+            field="profitSharePercent"
+            label="Profit Share Percent"
+            placeholder="Profit Share Percent"
           ></text-widget>
         </action-card>
 
