@@ -70,7 +70,7 @@ module.exports = class DappLib {
     return {
       type: DappLib.DAPP_RESULT_STRING,
       label: "Projects",
-      result: JSON.stringify(Object.values(result.callData)),
+      result: JSON.stringify(result.callData),
     };
   }
 
