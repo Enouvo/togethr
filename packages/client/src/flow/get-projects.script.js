@@ -1,6 +1,6 @@
 export const GET_PROJECTS = `
-  import NonFungibleToken from 0x631e88ae7f1d7c20
-  import TogethrCreator from 0x507f5f6b3c05028b
+  import NonFungibleToken from 0xNonFungibleToken
+  import TogethrCreator from 0xTogethr
 
   pub fun main(): [TogethrCreator.ProjectData] {
     let projects = TogethrCreator.getProjects()
