@@ -3,10 +3,9 @@ import TogethrFunder from "../../../contracts/Project/TogethrFunder.cdc"
 import FungibleToken from "../../../contracts/Flow/FungibleToken.cdc"
 import FlowToken from Flow.FlowToken
 
-transaction(projectId: UInt32, funder: Address, amount: UFix64) {
+transaction(projectId: UInt32, funder: Address, tokenCount: UInt32) {
 
   let collection: &TogethrCreator.Collection{TogethrCreator.PublicCollection}
-  let fundedProjects: &TogethrFunder.Collection
   let sentVault: @FungibleToken.Vault
     
   prepare(signer: AuthAccount) {
@@ -16,8 +15,8 @@ transaction(projectId: UInt32, funder: Address, amount: UFix64) {
         signer.link<&TogethrFunder.Collection{TogethrFunder.PublicCollection}>(TogethrFunder.PublicPath, target: TogethrFunder.StoragePath)
     }
 
-    self.fundedProjects = signer.borrow<&TogethrFunder.Collection>(from: TogethrFunder.StoragePath)!
-    
+    let projectMetadata = TogethrCreator.getProjectMetadata(projectId: projectId);
+    let amount = projectMetadata.price * tokenCount
     let vaultRef = signer.borrow<&FlowToken.Vault>(from: /storage/flowTokenVault) ?? panic("Could not borrow FUSD vault")
     self.sentVault <- vaultRef.withdraw(amount: amount)
 
@@ -27,12 +26,10 @@ transaction(projectId: UInt32, funder: Address, amount: UFix64) {
     self.collection = getAccount(creator).getCapability<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>(TogethrCreator.CollectionPublicPath)
                             .borrow()
                             ?? panic("Could not borrow capability from public collection")
-
-        
   }
 
   execute { 
-    self.collection.fundProject(projectId: projectId, funder: funder, amount: amount, fundedProjects: self.fundedProjects, paymentVault: <-self.sentVault)
+    self.collection.fundProject(funder: funder, projectId: projectId,  tokenCount: tokenCount, paymentVault: <-self.sentVault)
   }
 
 }

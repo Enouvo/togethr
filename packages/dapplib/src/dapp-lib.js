@@ -110,7 +110,7 @@ module.exports = class DappLib {
       {
         projectId: { value: parseInt(data.projectId), type: t.UInt32 },
         funder: { value: data.funder, type: t.Address },
-        amount: { value: data.amount, type: t.UFix64 },
+        tokenCount: { value: data.tokenCount, type: t.UInt32 },
       }
     );
     return {

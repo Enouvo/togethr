@@ -113,7 +113,7 @@ export default class KittyItemsHarness extends LitElement {
           description="Fund a new project"
           action="fundProject"
           method="post"
-          fields="funder projectId amount"
+          fields="funder projectId tokenCount"
         >
           <account-widget field="funder" label="Funder" placeholder="Funder">
           </account-widget>
@@ -123,9 +123,9 @@ export default class KittyItemsHarness extends LitElement {
             placeholder="Project ID"
           ></text-widget>
           <text-widget
-            field="amount"
-            label="Amount"
-            placeholder="Amount"
+            field="tokenCount"
+            label="Token Count"
+            placeholder="Token Count"
           ></text-widget>
         </action-card>
 
