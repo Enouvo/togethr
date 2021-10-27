@@ -21,6 +21,7 @@ pub contract TogethrCreator {
     pub let tokenPrice: UFix64
     pub let tokenCount: UInt32
     pub let profitSharePercent: UInt32
+    pub(set) var status: String
 
     init(name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
       self.name = name
@@ -28,6 +29,7 @@ pub contract TogethrCreator {
       self.tokenPrice = tokenPrice;
       self.tokenCount = tokenCount;
       self.profitSharePercent = profitSharePercent;
+      self.status = "CREATED"
     }
   }
 
@@ -35,7 +37,7 @@ pub contract TogethrCreator {
     pub let projectId: UInt32
     pub let data: ProjectData
     pub let funders: {Address: UInt32}
-  
+
     init(projectId: UInt32, name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
       self.projectId = projectId
       self.data = ProjectData(name: name, ipfsHash: ipfsHash, tokenPrice: tokenPrice, tokenCount: tokenCount, profitSharePercent: profitSharePercent)      
@@ -47,6 +49,15 @@ pub contract TogethrCreator {
         self.funders[funder] = self.funders[funder]! + tokenCount
       } else {
         self.funders[funder] = tokenCount
+      }
+
+      var totalTokens = (0 as UInt32);
+      for value in self.funders.values {
+        totalTokens = totalTokens + value
+      }
+
+      if(self.data.tokenCount == totalTokens) {
+        self.data.status = "FUNDED"
       }
     }
   }
