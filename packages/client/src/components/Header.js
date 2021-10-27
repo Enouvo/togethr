@@ -34,9 +34,7 @@ const Header = () => {
           </Button>
         ) : (
           <Dropdown overlay={menu}>
-            <strong className="ml-3 mb-0 cursor-pointer" style={{ width: 200 }}>
-              Hi, Son
-            </strong>
+            <strong className="ml-3 mb-0 cursor-pointer">Hi, {user.addr}</strong>
           </Dropdown>
         )}
       </div>

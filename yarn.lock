@@ -2633,6 +2633,21 @@
     "@onflow/util-template" "0.0.1"
     "@onflow/util-uid" "0.0.1"
 
+"@onflow/fcl@^0.0.73":
+  version "0.0.73"
+  resolved "https://registry.yarnpkg.com/@onflow/fcl/-/fcl-0.0.73.tgz#c90b86af4527559ddc0e2e2592203edbfbda926d"
+  integrity sha512-A6HNPgfck51uBMyhuKoOQaH9Ro1Ma7iE45Q5imrjeAT0Jk1DLUgG78M28oFpt+mlCwhYFsLuyMVmVPwGsAL64w==
+  dependencies:
+    "@onflow/interaction" "0.0.11"
+    "@onflow/rlp" "0.0.3"
+    "@onflow/sdk" "0.0.50"
+    "@onflow/types" "^0.0.4"
+    "@onflow/util-actor" "0.0.2"
+    "@onflow/util-address" "0.0.0"
+    "@onflow/util-invariant" "0.0.0"
+    "@onflow/util-template" "0.0.1"
+    "@onflow/util-uid" "0.0.1"
+
 "@onflow/interaction@0.0.11":
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/@onflow/interaction/-/interaction-0.0.11.tgz#4db8f4304039e33d6fc3b14c38b392d724113374"
@@ -2661,6 +2676,21 @@
     "@onflow/config" "^0.0.2"
     "@onflow/protobuf" "^0.1.8"
     "@onflow/rlp" "^0.0.3"
+    "@onflow/util-address" "^0.0.0"
+    "@onflow/util-invariant" "^0.0.0"
+    "@onflow/util-template" "0.0.1"
+    deepmerge "^4.2.2"
+
+"@onflow/sdk@0.0.50":
+  version "0.0.50"
+  resolved "https://registry.yarnpkg.com/@onflow/sdk/-/sdk-0.0.50.tgz#86dbd252c76b7d3b6860e52254e683004bb32a31"
+  integrity sha512-A3g43Qx7OgeFfpgz9Tk4bJIE2xJ6zWe6FPGAm6Al+5OP+TNU5vdLcxKNgR+Pk2u+QVCYBaA0Jf4pncF9+K+pVw==
+  dependencies:
+    "@improbable-eng/grpc-web" "^0.14.0"
+    "@improbable-eng/grpc-web-node-http-transport" "^0.14.0"
+    "@onflow/protobuf" "^0.1.8"
+    "@onflow/rlp" "^0.0.3"
+    "@onflow/util-actor" "0.0.2"
     "@onflow/util-address" "^0.0.0"
     "@onflow/util-invariant" "^0.0.0"
     "@onflow/util-template" "0.0.1"

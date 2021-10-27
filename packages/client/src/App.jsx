@@ -10,6 +10,7 @@ import './components/top-navigation';
 import './components/page-loader';
 import './pages/dapp';
 import './App.css';
+import ProjectsProvider from './providers/ProjectProvider';
 
 class App extends Component {
   render() {
