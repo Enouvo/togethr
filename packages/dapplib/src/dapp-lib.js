@@ -159,7 +159,30 @@ module.exports = class DappLib {
     return {
       type: DappLib.DAPP_RESULT_STRING,
       label: "Projects",
-      result: JSON.stringify(Object.values(result.callData)),
+      result: JSON.stringify(result.callData),
+    };
+  }
+
+  /********** Togethr Funders **********/
+
+  static async getFunders(data) {
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "togethrprojects_get_funders",
+      {
+        projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+      }
+    );
+
+    console.log("result", result);
+
+    return {
+      type: DappLib.DAPP_RESULT_OBJECT,
+      label: "Projects",
+      result: result.callData,
     };
   }
 

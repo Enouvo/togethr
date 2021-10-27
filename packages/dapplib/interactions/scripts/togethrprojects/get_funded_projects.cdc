@@ -6,5 +6,5 @@ pub fun main(address: Address): {UInt32: UInt32} {
                               .borrow<&TogethrFunder.Collection{TogethrFunder.PublicCollection}>()
                               ?? panic("Could not borrow TogethrFunder")
 
-  return fundedProjectsRef.getFundedProjects()
+  return fundedProjectsRef.getFundedProjects()!
 }

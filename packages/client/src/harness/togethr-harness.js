@@ -157,7 +157,7 @@ export default class KittyItemsHarness extends LitElement {
         <action-card
           title="Get list of funders"
           description="Get addresses of funders funded a project"
-          action="getProject"
+          action="getFunders"
           method="get"
           fields="projectId"
         >
