@@ -100,6 +100,20 @@ export default class KittyItemsHarness extends LitElement {
         </action-card>
 
         <action-card
+          title="Get project remaining token count"
+          description="Get project remaining token count"
+          action="getProjectRemainingTokenCount"
+          method="get"
+          fields="projectId"
+        >
+          <text-widget
+            field="projectId"
+            label="Project ID"
+            placeholder="Project ID"
+          ></text-widget>
+        </action-card>
+
+        <action-card
           title="Get all project"
           description="Get all project"
           action="getAllProjects"
@@ -142,7 +156,7 @@ export default class KittyItemsHarness extends LitElement {
 
         <action-card
           title="Get list of funders"
-          description="Get list of funders funded a project"
+          description="Get addresses of funders funded a project"
           action="getProject"
           method="get"
           fields="projectId"

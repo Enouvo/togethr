@@ -21,10 +21,6 @@ transaction(projectId: UInt32, funder: Address, tokenCount: UInt32) {
     self.sentVault <- vaultRef.withdraw(amount: amount)
 
     let creator = TogethrCreator.getProjectCreatorAddress(projectId: projectId) ?? panic("Could not borrow FUSD vault")
-
-    log("=======")
-    log(TogethrCreator.getRemainingTokenCount(projectId: projectId))
-    log("=======")
     self.collection = getAccount(creator).getCapability<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>(TogethrCreator.CollectionPublicPath)
                             .borrow()
                             ?? panic("Could not borrow capability from public collection")

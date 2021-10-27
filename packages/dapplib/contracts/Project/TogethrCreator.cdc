@@ -151,9 +151,9 @@ pub contract TogethrCreator {
     let funders =  TogethrCreator.getProjectFunders(projectId: projectId)!
     let projectData =  TogethrCreator.getProjectMetadata(projectId: projectId)! 
 
-    var totalTokens = UInt32(0);
-    for key in funders.keys {
-      totalTokens = totalTokens + funders[key]!
+    var totalTokens = (0 as UInt32);
+    for value in funders.values {
+      totalTokens = totalTokens + value
     }
 
     return projectData.tokenCount - totalTokens

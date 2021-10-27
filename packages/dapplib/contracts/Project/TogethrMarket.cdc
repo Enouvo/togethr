@@ -39,10 +39,6 @@ pub contract TogethrMarket {
                     "Cannot list a NFT for 0.0"
             }
 
-            log("====")
-            log(self.ownerCollection.borrow()!.borrowEntireNFT(id: itemID))
-            log("====")
-
             var ownedNFTs = self.ownerCollection.borrow()!.getIDs()
             if (ownedNFTs.contains(itemID)) {
                 self.forSale[itemID] = price
