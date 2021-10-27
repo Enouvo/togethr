@@ -1,18 +1,21 @@
 import NonFungibleToken from "../../../contracts/Flow/NonFungibleToken.cdc"
 import TogethrCreator from "../../../contracts/Project/TogethrCreator.cdc"
 
-pub fun main(): [TogethrCreator.ProjectData] {
+pub fun main(): {UInt32: TogethrCreator.ProjectData} {
   let projects = TogethrCreator.getProjects()
-  let projectMetaData: [TogethrCreator.ProjectData] = []
+  // let projectList: [TogethrCreator.ProjectData] = []
+  let projectMap: {UInt32: TogethrCreator.ProjectData} = {}
   for key in projects.keys {
     let address = projects[key]!
     let collection = getAccount(address).getCapability<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>(TogethrCreator.CollectionPublicPath)
                             .borrow()
                             ?? panic("Could not borrow capability from public collection")
+    let projectMetaData = collection.getProjectMetadata(projectId: key)
 
-    log(collection.getProjectMetadata(projectId: key)) 
-    projectMetaData.append(collection.getProjectMetadata(projectId: key))                           
+    log(projectMetaData) 
+    // projectList.append(projectMetaData)   
+    projectMap[key] = collection.getProjectMetadata(projectId: key)                       
   }
 
-  return projectMetaData
+  return projectMap
 }
