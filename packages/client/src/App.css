@@ -1,9 +1,17 @@
 :root {
-  font-family: 'Manrope';
+  font-family: "Manrope";
 }
 .ant-input-affix-wrapper {
   border-radius: 90px;
   border-width: 2px;
+}
+
+.project-detail-input {
+  border-radius: 90px;
+  border-width: 2px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  width: 100%;
 }
 
 .ant-progress-inner {
