@@ -10,7 +10,7 @@ import { useUserContext } from "../../providers/UserProvider";
 
 const ProjectDetailsFeaturing = () => {
   const [tokenCount, setTokenCount] = useState("");
-  const [inputError, setInputError] = useState(false);
+  const [inputError, setInputError] = useState(true);
   const { user } = useUserContext();
   const { id: projectId } = useParams();
 
@@ -22,6 +22,7 @@ const ProjectDetailsFeaturing = () => {
           funder: user.addr,
           tokenCount: Number(tokenCount),
         };
+        console.log(fundProjectData);
         const res = await fundProject(fundProjectData);
         console.log(res);
       } catch (err) {
@@ -30,7 +31,7 @@ const ProjectDetailsFeaturing = () => {
   };
 
   useEffect(() => {
-    if (tokenCount && Number(tokenCount) <= 0 && typeof tokenCount === "number")
+    if (typeof tokenCount !== "number" && Number(tokenCount) <= 0)
       setInputError(true);
     else setInputError(false);
   }, [tokenCount]);
@@ -90,13 +91,16 @@ const ProjectDetailsFeaturing = () => {
           <div className="flex flex-col my-10">
             <Input
               placeholder="Enter"
-              className="mr-5 project-detail-input"
+              className={`mr-5 project-detail-input ${
+                inputError && "border-red-700"
+              }`}
               onChange={(e) => setTokenCount(e.target.value)}
               type="number"
+              value={tokenCount}
             />
             {inputError && (
               <Typography.Text type="danger" className="font-bold">
-                Please input correctly
+                Do not enter the number below zero
               </Typography.Text>
             )}
             <Button
@@ -104,6 +108,7 @@ const ProjectDetailsFeaturing = () => {
               type="primary"
               onClick={onSubmit}
               size="large"
+              disabled={inputError}
             >
               Fund Project
             </Button>
