@@ -221,6 +221,7 @@ module.exports = class DappLib {
       "togethrmarket_list_project",
       {
         nftId: { value: parseInt(data.nftId), type: t.UInt64 },
+        price: { value: data.price.toString(), type: t.UFix64 },
       }
     );
     return {

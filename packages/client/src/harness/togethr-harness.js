@@ -47,8 +47,7 @@ export default class KittyItemsHarness extends LitElement {
         </action-card>
 
         <!-- Togethr Projects -->
-        ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32,
-        profitSharePercent: UInt32
+
         <action-card
           title="Create a new project"
           description="Create a new project"
@@ -200,7 +199,7 @@ export default class KittyItemsHarness extends LitElement {
           description="List project for sale"
           action="listProject"
           method="post"
-          fields="creator nftId"
+          fields="creator nftId price"
         >
           <account-widget field="creator" label="Creator" placeholder="Creator">
           </account-widget>
@@ -208,6 +207,11 @@ export default class KittyItemsHarness extends LitElement {
             field="nftId"
             label="NFT ID"
             placeholder="NFT ID"
+          ></text-widget>
+          <text-widget
+            field="price"
+            label="Price"
+            placeholder="Price"
           ></text-widget>
         </action-card>
 

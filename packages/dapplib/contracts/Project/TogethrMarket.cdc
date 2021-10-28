@@ -63,13 +63,20 @@ pub contract TogethrMarket {
                     "Not enough tokens to buy the NFT!"
             }
 
+            let price = self.forSale[itemID]!
+
+
             let projectId = self.ownerCollection.borrow()!.borrowEntireNFT(id: itemID)!.projectId
             let projectData = TogethrCreator.getProjectMetadata(projectId: projectId);
             let projectFunders = TogethrCreator.getProjectFunders(projectId: projectId);
 
+            let amountToShare = price * UFix64(projectData.profitSharePercent) / 100.0;
+            let sharePerToken = amountToShare / UFix64(projectData.tokenCount)
+
             for funderAddress in projectFunders.keys {
               let tokenCount = projectFunders[funderAddress]!
-              let amount = projectData.tokenPrice * UFix64(tokenCount)
+              
+              let amount =  sharePerToken * UFix64(tokenCount)
               let funderVault <- buyTokens.withdraw(amount: amount)
 
               log("Funder ".concat(funderAddress.toString()).concat(" paid amount ").concat(amount.toString()))
@@ -83,7 +90,6 @@ pub contract TogethrMarket {
             }
 
             // get the value out of the optional
-            let price = self.forSale[itemID]!
             let vaultRef = self.ownerVault.borrow()
                 ?? panic("Could not borrow reference to owner token vault")
             
