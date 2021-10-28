@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Avatar, Progress, Button, Input, Typography, InputNumber } from "antd";
+import { Avatar, Progress, Button, Input, Typography } from "antd";
 import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import { SearchOutlined } from "@ant-design/icons";
 import featuring from "../../assets/project_detail_featuring.png";
@@ -39,7 +39,11 @@ const ProjectDetailsFeaturing = () => {
   return (
     <div className="flex flex-col justify-center">
       <div className="flex flex-row justify-around p-32">
-        <img src={featuring} className="object-fit rounded-lg w-2/5" />
+        <img
+          src={featuring}
+          className="object-fit rounded-lg w-2/5"
+          style={{ height: "45rem" }}
+        />
         <div className="flex flex-col max-w-md">
           <h1 className="font-extrabold text-5xl">
             SuperBase Pro: Fastest Recharge IoT Power Station

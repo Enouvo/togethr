@@ -1,6 +1,6 @@
-import { query } from '@onflow/fcl';
-import { useEffect, useState } from 'react';
-import { GET_PROJECTS } from '../flow/scripts/projects.script';
+import { query } from "@onflow/fcl";
+import { useEffect, useState } from "react";
+import { GET_PROJECTS } from "../flow/scripts/projects.script";
 
 export default function useProjects() {
   const [projects, setProjects] = useState({});
@@ -13,7 +13,6 @@ export default function useProjects() {
         let response = await query({
           cadence: GET_PROJECTS,
         });
-        console.log('response', response);
         setProjects(response);
       } catch (err) {
         console.log(err);
@@ -24,5 +23,5 @@ export default function useProjects() {
     fetchProjects();
   }, []);
 
-  return { projects };
+  return { projects, loading };
 }

@@ -1,8 +1,5 @@
-import React, { useState, createContext, useContext } from 'react';
-import FirstPage from '../components/CreateProject/FirstPage';
-import SecondPage from '../components/CreateProject/SecondPage';
-import ThirdPage from '../components/CreateProject/ThirdPage';
-import useCurrentUser from '../hooks/useCurrentUser';
+import React, { useState, createContext, useContext } from "react";
+import useCurrentUser from "../hooks/useCurrentUser";
 
 export const UserProviderContext = createContext({});
 

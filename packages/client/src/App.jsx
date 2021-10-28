@@ -10,28 +10,35 @@ import "./pages/dapp";
 import Home from "./pages/home";
 import ProjectDetail from "./pages/project-detail";
 import { UserProvider } from "./providers/UserProvider";
-
+import { ProjectsProvider } from "./providers/ProjectProvider";
+import PrivateRoute from "./components/PrivateRoute";
 class App extends Component {
   render() {
     return (
       <UserProvider>
-        <Router>
-          <Switch>
-            <div className="flex flex-col h-screen">
-              <Header />
-              <div className="flex-grow">
-                <Route path="/" component={Home} exact />
-                <Route
-                  path="/project-detail/:id"
-                  component={ProjectDetail}
-                  exact
-                />
-                <Route path="/create-project" component={CreateProject} exact />
+        <ProjectsProvider>
+          <Router>
+            <Switch>
+              <div className="flex flex-col h-screen">
+                <Header />
+                <div className="flex-grow">
+                  <Route path="/" component={Home} exact />
+                  <PrivateRoute
+                    path="/project-detail/:id"
+                    component={ProjectDetail}
+                    exact
+                  />
+                  <PrivateRoute
+                    path="/create-project"
+                    component={CreateProject}
+                    exact
+                  />
+                </div>
+                <Footer />
               </div>
-              <Footer />
-            </div>
-          </Switch>
-        </Router>
+            </Switch>
+          </Router>
+        </ProjectsProvider>
       </UserProvider>
     );
   }
