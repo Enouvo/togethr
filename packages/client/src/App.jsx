@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Button } from 'antd';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './App.css';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import './components/page-loader';
+import './components/top-navigation';
+import CreateProject from './pages/create-project';
+import './pages/dapp';
 import Home from './pages/home';
 import ProjectDetail from './pages/project-detail';
-import CreateProject from './pages/create-project';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import './components/top-navigation';
-import './components/page-loader';
-import './pages/dapp';
-import './App.css';
-import ProjectsProvider from './providers/ProjectProvider';
 
 class App extends Component {
   render() {
@@ -18,8 +16,6 @@ class App extends Component {
       <Router>
         <Switch>
           <div className="flex flex-col h-screen">
-            {/* <top-navigation collapse="true" /> */}
-            {/* <page-loader id="page-loader" /> */}
             <Header />
             <div className="flex-grow">
               <Route path="/" component={Home} exact />

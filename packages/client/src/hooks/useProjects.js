@@ -1,22 +1,10 @@
-import { query, mutate } from '@onflow/fcl';
+import { query } from '@onflow/fcl';
 import { useEffect, useState } from 'react';
-import { GET_PROJECTS } from '../flow/projects.script';
-import { CREATE_PROJECT } from '../flow/projects.tx';
+import { GET_PROJECTS } from '../flow/scripts/projects.script';
 
 export default function useProjects() {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState({});
   const [loading, setLoading] = useState(false);
-
-  const createProject = async () => {
-    try {
-      let response = await mutate({
-        cadence: CREATE_PROJECT,
-      });
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -25,6 +13,7 @@ export default function useProjects() {
         let response = await query({
           cadence: GET_PROJECTS,
         });
+        console.log('response', response);
         setProjects(response);
       } catch (err) {
         console.log(err);
@@ -35,5 +24,5 @@ export default function useProjects() {
     fetchProjects();
   }, []);
 
-  return { createProject, projects };
+  return { projects };
 }

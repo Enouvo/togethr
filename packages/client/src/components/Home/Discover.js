@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { Button, Col, Row, Typography } from 'antd';
 import PropTypes from 'prop-types';
-import { Tabs, Typography, Button, Row, Col } from 'antd';
-import DiscoverItem from './DiscoverItem';
+import React, { useState } from 'react';
 import feature from '../../assets/featuring.png';
-import { useProjectsContext } from '../../providers/ProjectProvider';
+import useProjects from '../../hooks/useProjects';
+import DiscoverItem from './DiscoverItem';
 
 const listItem = [
   {
@@ -73,7 +73,8 @@ const listItem = [
 ];
 
 const Discover = ({ items }) => {
-  const { projects } = useProjectsContext();
+  const { projects } = useProjects();
+  console.log(projects);
   const categories = [...new Set(items?.map((item) => item?.type))];
   const [type, setType] = useState('All items');
 

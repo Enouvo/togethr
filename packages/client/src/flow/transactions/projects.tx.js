@@ -1,7 +1,7 @@
 export const CREATE_PROJECT = `
   import FungibleToken from 0xFungibleToken
   import TogethrCreator from 0xTogethr
-  import FlowToken from Flow.FlowToken
+  import FlowToken from 0xFlowToken
 
   transaction(name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
 
