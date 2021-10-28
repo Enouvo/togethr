@@ -9,23 +9,26 @@ import CreateProject from './pages/create-project';
 import './pages/dapp';
 import Home from './pages/home';
 import ProjectDetail from './pages/project-detail';
+import { UserProvider } from './providers/UserProvider';
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <Switch>
-          <div className="flex flex-col h-screen">
-            <Header />
-            <div className="flex-grow">
-              <Route path="/" component={Home} exact />
-              <Route path="/project-detail" component={ProjectDetail} exact />
-              <Route path="/create-project" component={CreateProject} exact />
+      <UserProvider>
+        <Router>
+          <Switch>
+            <div className="flex flex-col h-screen">
+              <Header />
+              <div className="flex-grow">
+                <Route path="/" component={Home} exact />
+                <Route path="/project-detail" component={ProjectDetail} exact />
+                <Route path="/create-project" component={CreateProject} exact />
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
-        </Switch>
-      </Router>
+          </Switch>
+        </Router>
+      </UserProvider>
     );
   }
 }

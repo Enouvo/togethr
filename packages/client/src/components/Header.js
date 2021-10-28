@@ -4,9 +4,10 @@ import { Input, Button, Menu, Dropdown } from 'antd';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import useCurrentUser from '../hooks/useCurrentUser';
+import { useUserContext } from '../providers/UserProvider';
 
 const Header = () => {
-  const [user, loggedIn, tools] = useCurrentUser();
+  const { user, loggedIn, tools } = useUserContext();
 
   const menu = (
     <Menu>
