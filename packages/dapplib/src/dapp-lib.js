@@ -220,7 +220,7 @@ module.exports = class DappLib {
       },
       "togethrmarket_list_project",
       {
-        projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+        nftId: { value: parseInt(data.nftId), type: t.UInt64 },
       }
     );
     return {
@@ -241,7 +241,7 @@ module.exports = class DappLib {
       },
       "togethrmarket_buy_project",
       {
-        itemID: { value: parseInt(data.projectId), type: t.UInt64 }, // TODO projectId is UInt32
+        itemID: { value: parseInt(data.nftId), type: t.UInt64 }, // TODO projectId is UInt32
         seller: { value: data.seller, type: t.Address },
       }
     );
@@ -249,6 +249,23 @@ module.exports = class DappLib {
       type: DappLib.DAPP_RESULT_TX_HASH,
       label: "Transaction Hash",
       result: result.callData.transactionId,
+    };
+  }
+
+  static async getProjectsOnSale() {
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "togethrmarket_get_projects",
+      {}
+    );
+
+    return {
+      type: DappLib.DAPP_RESULT_STRING,
+      label: "Projects",
+      result: JSON.stringify(result.callData),
     };
   }
   /*
