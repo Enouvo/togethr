@@ -12,7 +12,7 @@ pub contract TogethrCreator {
   pub let projects: {UInt32: Address}
 
   pub resource interface ProjectInterface { 
-    access(contract) fun addFunder(funder: Address, amount: UFix64)
+    access(contract) fun addFunder(funder: Address, tokenCount: UInt32)
   }
 
   pub struct ProjectData {
@@ -21,6 +21,7 @@ pub contract TogethrCreator {
     pub let tokenPrice: UFix64
     pub let tokenCount: UInt32
     pub let profitSharePercent: UInt32
+    pub(set) var status: String
 
     init(name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
       self.name = name
@@ -28,34 +29,43 @@ pub contract TogethrCreator {
       self.tokenPrice = tokenPrice;
       self.tokenCount = tokenCount;
       self.profitSharePercent = profitSharePercent;
+      self.status = "CREATED"
     }
   }
 
   pub resource Project: ProjectInterface {
     pub let projectId: UInt32
     pub let data: ProjectData
-    pub let funders: {Address: UFix64}
-  
-    
+    pub let funders: {Address: UInt32}
+
     init(projectId: UInt32, name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
       self.projectId = projectId
       self.data = ProjectData(name: name, ipfsHash: ipfsHash, tokenPrice: tokenPrice, tokenCount: tokenCount, profitSharePercent: profitSharePercent)      
       self.funders = {}
     }
 
-    access(contract) fun addFunder(funder: Address, amount: UFix64) {
+    access(contract) fun addFunder(funder: Address, tokenCount: UInt32) {
       if let count = self.funders[funder] {
-        self.funders[funder] = self.funders[funder]! + amount
+        self.funders[funder] = self.funders[funder]! + tokenCount
       } else {
-        self.funders[funder] = amount
+        self.funders[funder] = tokenCount
+      }
+
+      var totalTokens = (0 as UInt32);
+      for value in self.funders.values {
+        totalTokens = totalTokens + value
+      }
+
+      if(self.data.tokenCount == totalTokens) {
+        self.data.status = "FUNDED"
       }
     }
   }
 
   pub resource interface PublicCollection {
     pub fun getProjectMetadata(projectId: UInt32): ProjectData
-    pub fun getProjectFunders(projectId: UInt32):  {Address: UFix64}?
-    pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrFunder.Collection, paymentVault: @FungibleToken.Vault)
+    pub fun getProjectFunders(projectId: UInt32):  {Address: UInt32}?
+    pub fun fundProject(funder: Address, projectId: UInt32, tokenCount: UInt32, paymentVault: @FungibleToken.Vault)
   }
 
   pub resource Collection: PublicCollection {
@@ -81,7 +91,7 @@ pub contract TogethrCreator {
       destroy newProject
     }
 
-    pub fun getProjectFunders(projectId: UInt32):  {Address: UFix64}? {      
+    pub fun getProjectFunders(projectId: UInt32):  {Address: UInt32}? {      
       pre {
         self.projects[projectId] != nil: "Failed to get project: invalid project id"
       } // TODO remove pre and use panic?
@@ -97,13 +107,19 @@ pub contract TogethrCreator {
       return self.projects[projectId]?.data!
     }
 
-    pub fun fundProject(projectId: UInt32, funder: Address, amount: UFix64, fundedProjects: &TogethrFunder.Collection, paymentVault: @FungibleToken.Vault) {
+    pub fun fundProject(funder: Address, projectId: UInt32, tokenCount: UInt32, paymentVault: @FungibleToken.Vault) {
       pre {
         self.projects[projectId] != nil: "Failed to fund project: invalid project id"
-        paymentVault.balance >= amount : "Could not mint dappy: payment balance insufficient." 
+        tokenCount > 0 : "Invalid token count" 
+        TogethrCreator.getRemainingTokenCount(projectId: projectId) >= tokenCount : "Invalid token count" 
+        paymentVault.balance >= TogethrCreator.getProjectMetadata(projectId: projectId)!.tokenPrice * UFix64(tokenCount)  : "Could not mint dappy: payment balance insufficient." 
       }
-      self.projects[projectId]?.addFunder(funder: funder, amount: amount)
-      fundedProjects.addProject(projectId: projectId, amount: amount)
+      self.projects[projectId]?.addFunder(funder: funder, tokenCount: tokenCount)
+      
+      let funderCollection = getAccount(funder).getCapability<&TogethrFunder.Collection{TogethrFunder.PublicCollection}>(TogethrFunder.CollectionPublicPath)
+                            .borrow()
+                            ?? panic("Could not borrow capability from public collection")
+      funderCollection.addProject(projectId: projectId, tokenCount: tokenCount)
 
       let vaultRef = getAccount(self.creator)
           .getCapability(/public/flowTokenReceiver)
@@ -124,6 +140,34 @@ pub contract TogethrCreator {
 
   pub fun getProjectCreatorAddress(projectId: UInt32): Address? {
     return self.projects[projectId]
+  } 
+
+  pub fun getProjectMetadata(projectId: UInt32): TogethrCreator.ProjectData {
+    let creator = self.projects[projectId]!
+    let collection = getAccount(creator).getCapability<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>(TogethrCreator.CollectionPublicPath)
+                            .borrow()
+                            ?? panic("Could not borrow capability from public collection")
+    return collection.getProjectMetadata(projectId: projectId)!
+  } 
+
+  pub fun getProjectFunders(projectId: UInt32): {Address: UInt32} {
+    let creator = self.projects[projectId]!
+    let collection = getAccount(creator).getCapability<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>(TogethrCreator.CollectionPublicPath)
+                            .borrow()
+                            ?? panic("Could not borrow capability from public collection")
+    return collection.getProjectFunders(projectId: projectId)!
+  } 
+
+  pub fun getRemainingTokenCount(projectId: UInt32): UInt32 {
+    let funders =  TogethrCreator.getProjectFunders(projectId: projectId)!
+    let projectData =  TogethrCreator.getProjectMetadata(projectId: projectId)! 
+
+    var totalTokens = (0 as UInt32);
+    for value in funders.values {
+      totalTokens = totalTokens + value
+    }
+
+    return projectData.tokenCount - totalTokens
   } 
 
   pub fun getProjects(): {UInt32: Address} {

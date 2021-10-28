@@ -96,6 +96,28 @@ module.exports = class DappLib {
     };
   }
 
+  static async getProjectRemainingTokenCount(data) {
+    console.log("data", data);
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "togethrprojects_get_project_remaining_token_count",
+      {
+        projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+      }
+    );
+
+    console.log("result", result);
+
+    return {
+      type: DappLib.DAPP_RESULT_BIG_NUMBER,
+      label: "Projects",
+      result: result.callData,
+    };
+  }
+
   static async fundProject(data) {
     console.log("data", data);
     let config = DappLib.getConfig();
@@ -110,7 +132,7 @@ module.exports = class DappLib {
       {
         projectId: { value: parseInt(data.projectId), type: t.UInt32 },
         funder: { value: data.funder, type: t.Address },
-        amount: { value: data.amount, type: t.UFix64 },
+        tokenCount: { value: parseInt(data.tokenCount), type: t.UInt32 },
       }
     );
     return {
@@ -137,7 +159,30 @@ module.exports = class DappLib {
     return {
       type: DappLib.DAPP_RESULT_STRING,
       label: "Projects",
-      result: JSON.stringify(Object.values(result.callData)),
+      result: JSON.stringify(result.callData),
+    };
+  }
+
+  /********** Togethr Funders **********/
+
+  static async getFunders(data) {
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "togethrprojects_get_funders",
+      {
+        projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+      }
+    );
+
+    console.log("result", result);
+
+    return {
+      type: DappLib.DAPP_RESULT_OBJECT,
+      label: "Projects",
+      result: result.callData,
     };
   }
 
