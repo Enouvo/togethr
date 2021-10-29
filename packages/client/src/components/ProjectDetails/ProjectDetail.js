@@ -14,7 +14,7 @@ const ProjectDetail = ({ project }) => {
   const [inputError, setInputError] = useState(true);
   const { user, loggedIn, tools } = useUserContext();
   const [projectDetail, setProjectDetail] = useState(project);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [fundedLoading, setFundLoading] = useState(false);
 
   const onSubmit = async () => {
@@ -49,7 +49,6 @@ const ProjectDetail = ({ project }) => {
     const fetchProject = async () => {
       try {
         setLoading(true);
-        console.log(project.projectId);
         const [remainningToken, funders] = await Promise.all([
           getRemainingTokenCount(Number(project.projectId)),
           getFunders(Number(project.projectId)),
@@ -74,7 +73,6 @@ const ProjectDetail = ({ project }) => {
   }, [tokenCount]);
 
   const percent = ((projectDetail.tokenCount - projectDetail.remainningToken) / projectDetail.tokenCount) * 100;
-
   console.log(projectDetail);
   return (
     <>

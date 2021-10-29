@@ -6,14 +6,14 @@ const SkeletonLoading = () => {
     <>
       <ContentLoader
         speed={2}
-        width={567}
+        width={720}
         height={768}
-        viewBox="0 0 567 768"
+        viewBox="0 0 720 788"
         backgroundColor="#f3f3f3"
         foregroundColor="#ecebeb"
       >
         <rect x="394" y="170" rx="0" ry="0" width="0" height="1" />
-        <rect x="30" y="1" rx="0" ry="0" width="567" height="788" />
+        <rect x="30" y="1" rx="0" ry="0" width="720" height="788" />
       </ContentLoader>
       <ContentLoader
         speed={2}
