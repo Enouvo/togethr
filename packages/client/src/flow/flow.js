@@ -5,7 +5,7 @@ import { CREATE_PROJECT, FUND_PROJECT } from './transactions/projects.tx';
 export const createProject = async ({ tokenName, ipfsHash, tokenPrice, tokenCount, profitSharePercent }) => {
   let createProjectPromise = await mutate({
     cadence: CREATE_PROJECT,
-    limit: 100,
+    limit: 250,
     args: (arg, t) => [
       arg(tokenName, t.String),
       arg(ipfsHash, t.String),
@@ -20,7 +20,7 @@ export const createProject = async ({ tokenName, ipfsHash, tokenPrice, tokenCoun
 export const fundProject = async ({ projectId, funder, tokenCount }) => {
   let fundProjectPromise = await mutate({
     cadence: FUND_PROJECT,
-    limit: 100,
+    limit: 250,
     args: (arg, t) => [arg(projectId, t.UInt32), arg(funder, t.Address), arg(tokenCount, t.UInt32)],
   });
   return tx(fundProjectPromise).onceSealed();

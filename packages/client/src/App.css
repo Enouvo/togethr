@@ -1,5 +1,5 @@
 :root {
-  font-family: "Manrope";
+  font-family: 'Manrope';
 }
 .ant-input-affix-wrapper {
   border-radius: 90px;
@@ -110,9 +110,9 @@
 }
 
 .discover-category-span {
-  position: relative !important;
-  right: -245px;
-  top: -40px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
 }
 
 .discover-image:hover {

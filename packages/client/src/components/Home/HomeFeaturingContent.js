@@ -1,12 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import banner from '../../assets/home_content_banner.svg';
-import { useProjectContext } from '../../providers/ProjectProvider';
-import { getIpfs } from '../../utils/ipfs';
 import ProjectDetail from '../ProjectDetails/ProjectDetail';
 
-const HomeFeaturingContent = () => {
-  const { projects } = useProjectContext();
+const HomeFeaturingContent = ({ projects }) => {
+  const [tokenCount, setTokenCount] = useState('');
   const latestProject = projects[projects.length - 1];
 
   return (

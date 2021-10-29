@@ -18,21 +18,30 @@ const ProjectDetail = ({ project }) => {
   const [fundedLoading, setFundLoading] = useState(false);
 
   const onSubmit = async () => {
-    if (inputError) return;
-    try {
-      setFundLoading(true);
-      const fundProjectData = {
-        projectId: Number(project.projectId),
-        funder: user.addr,
-        tokenCount: Number(tokenCount),
-      };
-      await fundProject(fundProjectData);
-      notification.success({ message: 'Funded project success!' });
-    } catch (err) {
-      console.error(err);
-      showError(err);
-    } finally {
-      setFundLoading(false);
+    if (projectDetail.remainningToken === 0) {
+      return showError({ message: 'Remainning token is not enough!' });
+    } else {
+      if (inputError) return;
+      try {
+        setFundLoading(true);
+        const fundProjectData = {
+          projectId: Number(project.projectId),
+          funder: user.addr,
+          tokenCount: Number(tokenCount),
+        };
+
+        await fundProject(fundProjectData);
+        setProjectDetail((currentProject) => ({
+          ...currentProject,
+          remainningToken: project.remainningToken - Number(tokenCount),
+        }));
+        notification.success({ message: 'Funded project success!' });
+      } catch (err) {
+        console.error(err);
+        showError(err);
+      } finally {
+        setFundLoading(false);
+      }
     }
   };
 
@@ -40,11 +49,12 @@ const ProjectDetail = ({ project }) => {
     const fetchProject = async () => {
       try {
         setLoading(true);
+        console.log(project.projectId);
         const [remainningToken, funders] = await Promise.all([
           getRemainingTokenCount(Number(project.projectId)),
           getFunders(Number(project.projectId)),
         ]);
-        setProjectDetail((project) => ({
+        setProjectDetail((currentProject) => ({
           ...project,
           remainningToken: remainningToken,
           funders: Object.values(funders),
@@ -64,15 +74,17 @@ const ProjectDetail = ({ project }) => {
   }, [tokenCount]);
 
   const percent = ((projectDetail.tokenCount - projectDetail.remainningToken) / projectDetail.tokenCount) * 100;
+
+  console.log(projectDetail);
   return (
     <>
       <Loading active={fundedLoading} />
-      <div className="flex flex-row justify-around p-32">
+      <div className="flex flex-row justify-between p-48">
         {loading ? (
           <SkeletonLoading />
         ) : (
           <>
-            <img src={projectDetail?.imageURL} className="object-fit rounded-lg w-2/5" style={{ height: '45rem' }} />
+            <img src={projectDetail?.imageURL} className="object-fit rounded-lg w-1/2" style={{ height: '45rem' }} />
             <div className="flex flex-col max-w-md">
               <h1 className="font-extrabold text-5xl">{projectDetail?.projectName}</h1>
               <div className="flex flex-row justify-between">
@@ -103,7 +115,7 @@ const ProjectDetail = ({ project }) => {
                   <h1 className="font-extrabold text-2xl mb-0">{projectDetail?.funders?.length ?? 0}</h1>
                   <span className="text-xl text-center text-gray-700">Funder</span>
                 </div>
-                <div className="flex justify-start flex-col items-center w-24">
+                <div className="flex justify-start flex-col items-center w-40">
                   <h1 className="font-extrabold text-2xl mb-0">{`${projectDetail?.profitSharePercent}%`}</h1>
                   <span className="text-xl text-center text-gray-700">Profit of supporter</span>
                 </div>
