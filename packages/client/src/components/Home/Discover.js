@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import feature from '../../assets/featuring.png';
 import useProjects from '../../hooks/useProjects';
+import { categories } from '../../utils/tootls';
 import DiscoverItem from './DiscoverItem';
 
 const listItem = [
@@ -74,9 +75,8 @@ const listItem = [
 
 const Discover = ({ items }) => {
   const { projects } = useProjects();
-  console.log(projects);
-  const categories = [...new Set(items?.map((item) => item?.type))];
   const [type, setType] = useState('All items');
+  console.log(Object.values(projects));
 
   return (
     <div className="px-32 py-24">
@@ -88,8 +88,8 @@ const Discover = ({ items }) => {
           </Button>
           {categories.map((item) => {
             return (
-              <Button type={type === item && 'primary'} className="mx-2" onClick={() => setType(item)}>
-                {item}
+              <Button type={type === item.value && 'primary'} className="mx-2" onClick={() => setType(item.value)}>
+                {item.value}
               </Button>
             );
           })}

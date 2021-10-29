@@ -1,5 +1,5 @@
 import { mutate, tx, query } from '@onflow/fcl';
-import { GET_REMAINNING_TOKEN_COUNT } from './scripts/projects.script';
+import { GET_FUNDERS, GET_REMAINNING_TOKEN_COUNT } from './scripts/projects.script';
 import { CREATE_PROJECT, FUND_PROJECT } from './transactions/projects.tx';
 
 export const createProject = async ({ tokenName, ipfsHash, tokenPrice, tokenCount, profitSharePercent }) => {
@@ -29,5 +29,11 @@ export const fundProject = async ({ projectId, funder, tokenCount }) => {
 export const getRemainingTokenCount = (projectId) =>
   query({
     cadence: GET_REMAINNING_TOKEN_COUNT,
+    args: (arg, t) => [arg(projectId, t.UInt32)],
+  });
+
+export const getFunders = (projectId) =>
+  query({
+    cadence: GET_FUNDERS,
     args: (arg, t) => [arg(projectId, t.UInt32)],
   });

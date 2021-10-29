@@ -7,13 +7,12 @@ import upload from '../../assets/upload.svg';
 import { createProject } from '../../flow/flow';
 import { CreateProjectContext } from '../../pages/create-project';
 import { getIpfs, ipfs } from '../../utils/ipfs';
+import { categories } from '../../utils/tootls';
 
 const FirstPage = () => {
   const { setCurrentPage, setForm } = useContext(CreateProjectContext);
   const [imagePath, setImagePath] = useState('');
   const [imageLoading, setImageLoading] = useState(false);
-
-  const options = [{ value: 'Art' }, { value: 'Film' }, { value: 'Game' }, { value: 'Tech' }];
 
   const uploadImage = async (data) => {
     try {
@@ -62,7 +61,7 @@ const FirstPage = () => {
                 },
               ]}
             >
-              <Select options={options} />
+              <Select options={categories} />
             </Form.Item>
           </div>
           <div className="flex flex-col my-2">
