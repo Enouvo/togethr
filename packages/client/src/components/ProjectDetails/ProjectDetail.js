@@ -49,11 +49,12 @@ const ProjectDetail = ({ project }) => {
     const fetchProject = async () => {
       try {
         setLoading(true);
+        console.log(project.projectId);
         const [remainningToken, funders] = await Promise.all([
           getRemainingTokenCount(Number(project.projectId)),
           getFunders(Number(project.projectId)),
         ]);
-        setProjectDetail((project) => ({
+        setProjectDetail((currentProject) => ({
           ...project,
           remainningToken: remainningToken,
           funders: Object.values(funders),
@@ -73,6 +74,8 @@ const ProjectDetail = ({ project }) => {
   }, [tokenCount]);
 
   const percent = ((projectDetail.tokenCount - projectDetail.remainningToken) / projectDetail.tokenCount) * 100;
+
+  console.log(projectDetail);
   return (
     <>
       <Loading active={fundedLoading} />

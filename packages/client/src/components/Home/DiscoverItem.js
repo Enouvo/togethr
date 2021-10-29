@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Progress } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import { getRemainingTokenCount } from '../../flow/flow';
 
 const DiscoverItem = ({ project }) => {
   const history = useHistory();
+  const [percent, setPercent] = useState(0);
+
+  useEffect(() => {
+    const fetchRemainningTokenCount = async () => {
+      try {
+        const remainningToken = await getRemainingTokenCount(Number(project.projectId));
+        console.log('remainningToken', remainningToken);
+        const newPercent = ((project.tokenCount - remainningToken) / project.tokenCount) * 100;
+        setPercent(newPercent);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchRemainningTokenCount();
+  }, []);
 
   const redirectToProjectDetail = () => {
     history.push(`/projects/${project.projectId}`);
@@ -18,12 +34,12 @@ const DiscoverItem = ({ project }) => {
           {project?.projectCategory}
         </span>
       </div>
-      <h2 className="text-xl font-bold">{project?.projectName}</h2>
+      <h2 className="text-xl font-bold mt-1">{project?.projectName}</h2>
       <div>
         <span className="text-lg font-bold">{project?.tokenPrice + ' '} </span>
         <span className="text-lg text-gray-600">FLOW</span>
       </div>
-      <Progress percent={50} strokeColor="#00C48C" showInfo={false} />
+      <Progress percent={percent} strokeColor="#00C48C" showInfo={false} />
     </div>
   );
 };

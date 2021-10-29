@@ -16,7 +16,6 @@ export default function useProject(projectId) {
           cadence: GET_PROJECT,
           args: (arg, t) => [arg(projectId, t.UInt32)],
         });
-        console.log('response', response);
         const res = await axios.get(getIpfs(response?.ipfsHash));
         setProject({
           projectId: projectId,

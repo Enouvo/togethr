@@ -24,8 +24,8 @@ export const GET_PROJECTS = `
 export const GET_PROJECT = `
   import NonFungibleToken from 0xNonFungibleToken
   import TogethrCreator from 0xTogethrCreator
-  pub fun main(projectId: UInt32): Address? {
-      return TogethrCreator.getProjectCreatorAddress(projectId: projectId)
+  pub fun main(projectId: UInt32): TogethrCreator.ProjectData {
+    return TogethrCreator.getProjectMetadata(projectId: projectId)
   }
 `;
 
