@@ -38,8 +38,8 @@
 
 .avatar-btn {
   position: relative;
-  right: 40px;
-  top: 45px;
+  right: -43px;
+  top: -40px;
   cursor: pointer;
 }
 .avatar-btn:hover {
@@ -48,7 +48,7 @@
 .ant-select-selector {
   border-radius: 0.5rem !important;
   border-width: 2px !important;
-  border-color: #e2e8f0 !important;
+  border-color: #e2e8f0;
   /* /* padding-top: 0.5rem !important; */
   padding-top: 0.2rem !important;
   padding-bottom: 0.2rem !important;
@@ -57,6 +57,35 @@
   /* padding: 20px !important; */
   height: 2.5rem !important;
 }
+
+.form-input {
+  border-radius: 0.5rem !important;
+  border-width: 2px !important;
+  border-color: #e2e8f0;
+  /* /* padding-top: 0.5rem !important; */
+  padding-top: 0.2rem !important;
+  padding-bottom: 0.2rem !important;
+  /* padding-right: 0.75rem !important;
+  padding-left: 0.75rem !important; */
+  /* padding: 20px !important; */
+  height: 2.5rem !important;
+}
+
 .ant-select-selection-item {
   font-weight: bold;
+  color: #4a5568;
+}
+
+.ant-form-item-label label {
+  color: #4a5568;
+  margin-bottom: 0.25rem;
+}
+
+.form-input {
+  font-weight: bold;
+  color: #4a5568;
+}
+
+.ant-input-number{
+  width: 100%;
 }

@@ -57,7 +57,6 @@ const HomeFeaturingContent = () => {
     else setInputError(false);
   }, [tokenCount]);
 
-  console.log("latest", latestProject);
   return (
     <div className="flex flex-col justify-center">
       <img src={banner} />
