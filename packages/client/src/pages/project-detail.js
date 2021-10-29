@@ -3,7 +3,7 @@ import ProjectDetailsFeaturing from '../components/ProjectDetails/ProjectDetails
 import ProjectDetailsMainContent from '../components/ProjectDetails/ProjectDetailsMainContent';
 import { useUserContext } from '../providers/UserProvider';
 
-const ProjectDetail = () => {
+const ProjectDetailPage = () => {
   const { user } = useUserContext();
   return (
     <>
@@ -13,4 +13,4 @@ const ProjectDetail = () => {
   );
 };
 
-export default ProjectDetail;
+export default ProjectDetailPage;

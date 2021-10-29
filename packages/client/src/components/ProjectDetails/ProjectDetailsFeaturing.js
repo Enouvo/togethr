@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Avatar, Progress, Button, Input, Typography } from "antd";
-import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
-import { SearchOutlined } from "@ant-design/icons";
-import featuring from "../../assets/project_detail_featuring.png";
-import creator from "../../assets/dappstarter.png";
-import { fundProject } from "../../flow/flow";
-import { useUserContext } from "../../providers/UserProvider";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Avatar, Progress, Button, Input, Typography } from 'antd';
+import { ArrowRightOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
+import featuring from '../../assets/project_detail_featuring.png';
+import creator from '../../assets/dappstarter.png';
+import { fundProject } from '../../flow/flow';
+import { useUserContext } from '../../providers/UserProvider';
 
 const ProjectDetailsFeaturing = () => {
-  const [tokenCount, setTokenCount] = useState("");
+  const [tokenCount, setTokenCount] = useState('');
   const [inputError, setInputError] = useState(true);
   const { user } = useUserContext();
   const { id: projectId } = useParams();
@@ -31,23 +31,16 @@ const ProjectDetailsFeaturing = () => {
   };
 
   useEffect(() => {
-    if (typeof tokenCount !== "number" && Number(tokenCount) <= 0)
-      setInputError(true);
+    if (typeof tokenCount !== 'number' && Number(tokenCount) <= 0) setInputError(true);
     else setInputError(false);
   }, [tokenCount]);
 
   return (
     <div className="flex flex-col justify-center">
       <div className="flex flex-row justify-around p-32">
-        <img
-          src={featuring}
-          className="object-fit rounded-lg w-2/5"
-          style={{ height: "45rem" }}
-        />
+        <img src={featuring} className="object-fit rounded-lg w-2/5" style={{ height: '45rem' }} />
         <div className="flex flex-col max-w-md">
-          <h1 className="font-extrabold text-5xl">
-            SuperBase Pro: Fastest Recharge IoT Power Station
-          </h1>
+          <h1 className="font-extrabold text-5xl">SuperBase Pro: Fastest Recharge IoT Power Station</h1>
           <div className="flex flex-row justify-between">
             <div className="flex flex-row align-center items-center mr-12">
               <Avatar src={creator} size={40} />
@@ -70,16 +63,13 @@ const ProjectDetailsFeaturing = () => {
             </p>
             <Progress percent={50} strokeColor="#00C48C" showInfo={false} />
             <p className="text-gray-700 text-lg">
-              Charge to 80% in 1 hour via AC, EV or Solar/2,096Wh & 2,000W
-              Output/Built-in 4G IoT &App/14 Outputs
+              Charge to 80% in 1 hour via AC, EV or Solar/2,096Wh & 2,000W Output/Built-in 4G IoT &App/14 Outputs
             </p>
           </div>
           <div className="flex flex-row justify-between content-center mt-8">
             <div className="flex justify-start flex-col items-center w-24">
               <h1 className="font-extrabold text-2xl mb-0">19</h1>
-              <span className="text-xl text-center text-gray-700">
-                Days left
-              </span>
+              <span className="text-xl text-center text-gray-700">Days left</span>
             </div>
             <div className="flex justify-start flex-col items-center w-24">
               <h1 className="font-extrabold text-2xl mb-0">24</h1>
@@ -87,17 +77,13 @@ const ProjectDetailsFeaturing = () => {
             </div>
             <div className="flex justify-start flex-col items-center w-24">
               <h1 className="font-extrabold text-2xl mb-0">10%</h1>
-              <span className="text-xl text-center text-gray-700">
-                Profit of supporter
-              </span>
+              <span className="text-xl text-center text-gray-700">Profit of supporter</span>
             </div>
           </div>
           <div className="flex flex-col my-10">
             <Input
               placeholder="Enter"
-              className={`mr-5 project-detail-input ${
-                inputError && "border-red-700"
-              }`}
+              className={`mr-5 project-detail-input ${inputError && 'border-red-700'}`}
               onChange={(e) => setTokenCount(e.target.value)}
               type="number"
               value={tokenCount}
@@ -107,13 +93,7 @@ const ProjectDetailsFeaturing = () => {
                 Do not enter the number below zero
               </Typography.Text>
             )}
-            <Button
-              className="mb-4 mt-4"
-              type="primary"
-              onClick={onSubmit}
-              size="large"
-              disabled={inputError}
-            >
+            <Button className="mb-4 mt-4" type="primary" onClick={onSubmit} size="large" disabled={inputError}>
               Fund Project
             </Button>
           </div>
