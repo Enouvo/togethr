@@ -1,23 +1,19 @@
-import { ArrowRightOutlined } from "@ant-design/icons";
-import { Button, notification, Form, Select, Upload, Image, Spin } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import React, { useContext, useState } from "react";
-import banner from "../../assets/create_project_banner.svg";
-import upload from "../../assets/upload.svg";
-import { createProject } from "../../flow/flow";
-import { CreateProjectContext } from "../../pages/create-project";
-import { getIpfs, ipfs } from "../../utils/ipfs";
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { Button, notification, Form, Select, Upload, Image, Spin } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import React, { useContext, useState } from 'react';
+import banner from '../../assets/create_project_banner.svg';
+import upload from '../../assets/upload.svg';
+import { createProject } from '../../flow/flow';
+import { CreateProjectContext } from '../../pages/create-project';
+import { getIpfs, ipfs } from '../../utils/ipfs';
 
 const FirstPage = () => {
   const { setCurrentPage, setForm } = useContext(CreateProjectContext);
-  const [imagePath, setImagePath] = useState("");
+  const [imagePath, setImagePath] = useState('');
   const [imageLoading, setImageLoading] = useState(false);
 
-  const options = [
-    { value: "chocolate" },
-    { value: "strawberry" },
-    { value: "vanilla" },
-  ];
+  const options = [{ value: 'chocolate' }, { value: 'strawberry' }, { value: 'vanilla' }];
 
   const uploadImage = async (data) => {
     try {
@@ -49,15 +45,12 @@ const FirstPage = () => {
     setForm((prev) => {
       return {
         ...prev,
-        firstPage: {
-          ...values,
-          image: imagePath,
-        },
+        ...values,
+        image: imagePath,
       };
     });
     setCurrentPage(2);
   };
-  console.log(imagePath);
   return (
     <div className="flex flex-col justify-center">
       <img src={banner} />
@@ -90,21 +83,12 @@ const FirstPage = () => {
           </div>
           <div className="flex flex-col my-2">
             <span className="text-gray-700 mb-1">UPLOAD FILE</span>
-            <span className="text-gray-700 mb-2">
-              Drag or choose your file to upload
-            </span>
+            <span className="text-gray-700 mb-2">Drag or choose your file to upload</span>
 
             {(() => {
               if (imageLoading) return <Spin />;
 
-              if (imagePath)
-                return (
-                  <Image
-                    src={imagePath}
-                    className="mb-2 w-full h-auto"
-                    preview={false}
-                  />
-                );
+              if (imagePath) return <Image src={imagePath} className="mb-2 w-full h-auto" preview={false} />;
 
               return (
                 <div className="flex flex-col p-40 justify-center text-center items-center bg-gray-100 rounded-lg mt-4">
@@ -121,12 +105,11 @@ const FirstPage = () => {
                 </div>
               );
             })()}
-
           </div>
           <div className="flex flex-row justify-between items-center">
             <Button
               type="primary"
-              style={{ height: 46, display: "flex" }}
+              style={{ height: 46, display: 'flex' }}
               className="flex-row items-center"
               htmlType="submit"
             >

@@ -5,7 +5,6 @@ import { useUserContext } from '../providers/UserProvider';
 
 const ProjectDetail = () => {
   const { user } = useUserContext();
-  console.log(user);
   return (
     <>
       <ProjectDetailsFeaturing />

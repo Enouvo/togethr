@@ -1,9 +1,9 @@
-import React from "react";
-import { SearchOutlined } from "@ant-design/icons";
-import { Input, Button, Menu, Dropdown } from "antd";
-import { Link } from "react-router-dom";
-import logo from "../assets/logo.svg";
-import { useUserContext } from "../providers/UserProvider";
+import React from 'react';
+import { SearchOutlined } from '@ant-design/icons';
+import { Input, Button, Menu, Dropdown } from 'antd';
+import { Link } from 'react-router-dom';
+import logo from '../assets/logo.svg';
+import { useUserContext } from '../providers/UserProvider';
 
 const Header = () => {
   const { user, loggedIn, tools } = useUserContext();
@@ -22,14 +22,10 @@ const Header = () => {
         <img src={logo} />
       </Link>
       <div className="flex flex-row items-center">
-        <Input
-          prefix={<SearchOutlined />}
-          placeholder="Search"
-          className="mr-5"
-        />
+        <Input prefix={<SearchOutlined />} placeholder="Search" className="mr-5" />
 
         {loggedIn && (
-          <Link to="/create-project" style={{ height: "34px" }}>
+          <Link to="/create-project" style={{ height: '34px' }}>
             <Button type="primary" className="h-full">
               Start a project
             </Button>
@@ -37,11 +33,7 @@ const Header = () => {
         )}
 
         {!loggedIn ? (
-          <Button
-            type="primary"
-            className="h-full ml-2"
-            onClick={() => tools?.logIn()}
-          >
+          <Button type="primary" className="h-full ml-2" onClick={() => tools?.logIn()}>
             Sign In to start
           </Button>
         ) : (

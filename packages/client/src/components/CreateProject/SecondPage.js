@@ -1,22 +1,22 @@
-import React, { useContext } from "react";
-import { Button, Form, Select } from "antd";
-import { ArrowRightOutlined } from "@ant-design/icons";
-import { CreateProjectContext } from "../../pages/create-project";
-import banner from "../../assets/create_project_banner.svg";
+import React, { useContext } from 'react';
+import { Button, Form, Select } from 'antd';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { CreateProjectContext } from '../../pages/create-project';
+import banner from '../../assets/create_project_banner.svg';
 
 const SecondPage = () => {
   const { setCurrentPage, setForm } = useContext(CreateProjectContext);
   const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
   ];
 
   const onSubmit = (values) => {
     setForm((prev) => {
       return {
         ...prev,
-        secondPage: values,
+        ...values,
       };
     });
     setCurrentPage(3);
@@ -54,9 +54,7 @@ const SecondPage = () => {
             </div>
           </div>
           <div className="flex flex-col my-2 flex-1">
-            <span className="text-gray-700 mb-2">
-              PERCENTAGE OF PROFIT CREATOR WILL SHARE WITH THE SUPPORTS
-            </span>
+            <span className="text-gray-700 mb-2">PERCENTAGE OF PROFIT CREATOR WILL SHARE WITH THE SUPPORTS</span>
             <Form.Item name="percentageOfProfit">
               <input className="border-2 border-gray-300 rounded-lg py-2 px-3 focus:outline-none font-extrabold w-full" />
             </Form.Item>
@@ -64,9 +62,8 @@ const SecondPage = () => {
           <div className="flex flex-row justify-between items-center mt-8">
             <Button
               type="primary"
-              style={{ height: 46, display: "flex" }}
+              style={{ height: 46, display: 'flex' }}
               className="flex-row items-center"
-              // onClick={() => setCurrentPage(3)}
               htmlType="submit"
             >
               <span>Next</span>

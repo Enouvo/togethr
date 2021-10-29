@@ -10,7 +10,7 @@ config({
   'discovery.wallet': 'https://fcl-discovery.onflow.org/testnet/authn',
   '0xNonFungibleToken': '0x631e88ae7f1d7c20',
   '0xFungibleToken': '0x9a0766d93b6608b7',
-  '0xTogethr': '0x507f5f6b3c05028b',
+  '0xTogethr': '0x1b3f2de85f98f603',
   '0xFlowToken': '0x7e60df042a9c0868',
 });
 

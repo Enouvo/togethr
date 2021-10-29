@@ -1,25 +1,24 @@
-import React, { useContext } from "react";
-import { Button, Avatar, Form } from "antd";
-import { ArrowRightOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { CreateProjectContext } from "../../pages/create-project";
-import banner from "../../assets/create_project_thirdpage_banner.svg";
-import avatar from "../../assets/dappstarter.png";
-import avatarUpload from "../../assets/avatar_upload.svg";
+import React, { useContext } from 'react';
+import { Button, Avatar, Form } from 'antd';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import { CreateProjectContext } from '../../pages/create-project';
+import banner from '../../assets/create_project_thirdpage_banner.svg';
+import avatar from '../../assets/dappstarter.png';
+import avatarUpload from '../../assets/avatar_upload.svg';
 
 const ThirdPage = () => {
   const { setForm, form } = useContext(CreateProjectContext);
 
   const onSubmit = (values) => {
-    setForm((prev) => {
-      return {
-        ...prev,
-        thirdPage: values,
-      };
-    });
+    const submitForm = {
+      ...form,
+      ...values,
+    };
+    setForm(submitForm);
+    console.log(submitForm);
   };
 
-  console.log(form);
   return (
     <div className="flex flex-col justify-center">
       <img src={banner} />
@@ -27,12 +26,7 @@ const ThirdPage = () => {
         <Form onFinish={onSubmit}>
           <div className="text-center">
             <Avatar src={avatar} size={130} />
-            <Avatar
-              src={avatarUpload}
-              size={40}
-              className="avatar-btn"
-              onClick={() => alert("clicked")}
-            />
+            <Avatar src={avatarUpload} size={40} className="avatar-btn" onClick={() => alert('clicked')} />
           </div>
           <div className="flex flex-col my-2 flex-1">
             <span className="text-gray-700 mb-2">NAME</span>
@@ -57,7 +51,7 @@ const ThirdPage = () => {
             {/* <Link to="/"> */}
             <Button
               type="primary"
-              style={{ height: 46, display: "flex" }}
+              style={{ height: 46, display: 'flex' }}
               className="flex-row items-center"
               htmlType="submit"
             >
