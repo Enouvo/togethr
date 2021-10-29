@@ -7,6 +7,7 @@ import { getIpfs } from '../../utils/ipfs';
 import axios from 'axios';
 import Loading from '../Loading';
 import { showError } from '../../utils/tootls';
+import SkeletonLoading from './SkeletonLoading';
 
 const ProjectDetail = ({ project }) => {
   const [tokenCount, setTokenCount] = useState('');
@@ -68,7 +69,7 @@ const ProjectDetail = ({ project }) => {
       <Loading active={fundedLoading} />
       <div className="flex flex-row justify-around p-32">
         {loading ? (
-          <Skeleton />
+          <SkeletonLoading />
         ) : (
           <>
             <img src={projectDetail?.imageURL} className="object-fit rounded-lg w-2/5" style={{ height: '45rem' }} />
