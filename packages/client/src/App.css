@@ -1,5 +1,5 @@
 :root {
-  font-family: "Manrope";
+  font-family: 'Manrope';
 }
 .ant-input-affix-wrapper {
   border-radius: 90px;
@@ -82,12 +82,13 @@
 }
 
 .form-input {
-  font-weight: bold;
+  font-weight: bold !important;
   color: #4a5568;
 }
 
 .ant-input-number {
   width: 100%;
+  font-weight: bold !important;
 }
 
 .loading-container {
@@ -106,4 +107,14 @@
   top: 50%;
   left: 50%;
   position: relative !important;
+}
+
+.discover-category-span {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.discover-image:hover {
+  cursor: pointer;
 }

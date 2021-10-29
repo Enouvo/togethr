@@ -7,7 +7,7 @@ const HomeFeaturingContent = ({ projects }) => {
   const latestProject = projects[projects.length - 1];
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col justify-between">
       <img src={banner} />
       <ProjectDetail project={{ ...latestProject }} />
     </div>

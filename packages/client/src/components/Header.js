@@ -22,8 +22,6 @@ const Header = () => {
         <img src={logo} />
       </Link>
       <div className="flex flex-row items-center">
-        <Input prefix={<SearchOutlined />} placeholder="Search" className="mr-5" />
-
         {loggedIn && (
           <Link to="/create-project" style={{ height: '34px' }}>
             <Button type="primary" className="h-full">

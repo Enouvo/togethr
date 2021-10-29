@@ -76,12 +76,12 @@ const ProjectDetail = ({ project }) => {
   return (
     <>
       <Loading active={fundedLoading} />
-      <div className="flex flex-row justify-around p-32">
+      <div className="flex flex-row justify-between p-48">
         {loading ? (
           <SkeletonLoading />
         ) : (
           <>
-            <img src={projectDetail?.imageURL} className="object-fit rounded-lg w-2/5" style={{ height: '45rem' }} />
+            <img src={projectDetail?.imageURL} className="object-fit rounded-lg w-1/2" style={{ height: '45rem' }} />
             <div className="flex flex-col max-w-md">
               <h1 className="font-extrabold text-5xl">{projectDetail?.projectName}</h1>
               <div className="flex flex-row justify-between">
