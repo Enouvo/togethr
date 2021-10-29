@@ -1,21 +1,21 @@
-import React, { useContext } from 'react';
-import { Button, Avatar, Form, notification } from 'antd';
-import { ArrowRightOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import { CreateProjectContext } from '../../pages/create-project';
-import banner from '../../assets/create_project_thirdpage_banner.svg';
-import avatar from '../../assets/dappstarter.png';
-import avatarUpload from '../../assets/avatar_upload.svg';
-import { ipfs } from '../../utils/ipfs';
-import { createProject } from '../../flow/flow';
+import React, { useContext, useState } from "react";
+import { Button, Avatar, Form, notification, Upload, Input } from "antd";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { CreateProjectContext } from "../../pages/create-project";
+import { getIpfs, ipfs } from "../../utils/ipfs";
+import banner from "../../assets/create_project_thirdpage_banner.svg";
+import avatarUpload from "../../assets/avatar_upload.svg";
 
 const ThirdPage = () => {
   const { setForm, form } = useContext(CreateProjectContext);
-
-  const onSubmit = async (values) => {
+  const [userImage, setUserImage] = useState("");
+  
+  const onSubmit = async  (values) => {
     const submitForm = {
       ...form,
       ...values,
+      userImage: userImage,
     };
     setForm(submitForm);
     try {
@@ -41,6 +41,15 @@ const ThirdPage = () => {
       notification.success({ message: 'Create project success!' });
     } catch (error) {
       console.error(error);
+  };
+
+  const uploadImage = async (data) => {
+    try {
+      const image = await ipfs.add(data.file.originFileObj);
+      const imageURL = getIpfs(image.path);
+      setUserImage(imageURL);
+    } catch (error) {
+      notification.error(error.message);
     }
   };
 
@@ -48,18 +57,22 @@ const ThirdPage = () => {
     <div className="flex flex-col justify-center">
       <img src={banner} />
       <div className="w-2/5 mt-4 mb-10 justify-center flex flex-col m-auto">
-        <Form onFinish={onSubmit}>
+        <Form onFinish={onSubmit} layout="vertical">
           <div className="text-center">
-            <Avatar src={avatar} size={130} />
-            <Avatar src={avatarUpload} size={40} className="avatar-btn" onClick={() => alert('clicked')} />
+            <Avatar src={userImage} size={130} />
+            <Form.Item name="userImage">
+              <Upload showUploadList={false} onChange={uploadImage}>
+                <Avatar src={avatarUpload} size={40} className="avatar-btn" />
+              </Upload>
+            </Form.Item>
           </div>
           <div className="flex flex-col my-2 flex-1">
-            <span className="text-gray-700 mb-2">NAME</span>
-            <Form.Item name="userName">
-              <input
-                className="border-2 border-gray-300 rounded-lg py-2 px-3 focus:outline-none font-extrabold w-full"
-                placeholder="Enter your name"
-              />
+            <Form.Item
+              name="userName"
+              label="NAME"
+              rules={[{ required: true, message: "Please enter your name" }]}
+            >
+              <Input className="form-input" placeholder="Enter your name" />
             </Form.Item>
           </div>
           <div className="flex flex-col my-2">
@@ -76,7 +89,7 @@ const ThirdPage = () => {
             {/* <Link to="/"> */}
             <Button
               type="primary"
-              style={{ height: 46, display: 'flex' }}
+              style={{ height: 46, display: "flex" }}
               className="flex-row items-center"
               htmlType="submit"
             >
