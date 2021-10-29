@@ -46,7 +46,7 @@ const SecondPage = () => {
                   },
                 ]}
               >
-                <Input className="form-input" placeholder="Enter token name" />
+                <Input className="form-input" placeholder="(e.g. ENOUVOz2)" />
               </Form.Item>
             </div>
             <div className="flex flex-col my-2 flex-1 mx-3">
@@ -63,15 +63,16 @@ const SecondPage = () => {
                 <Input
                   type="number"
                   className="form-input"
-                  placeholder="Enter price per token"
+                  placeholder="(e.g. 10.00)"
                   suffix="FLOW"
+                  style={{ fontWeight: "bold" }}
                 />
               </Form.Item>
             </div>
             <div className="flex flex-col my-2 flex-1 ml-3">
               <Form.Item
                 name="totalAmountToRaise"
-                label="TOTAL AMOUNT TO RAISE"
+                label="NUMBER OF TOKENS"
                 rules={[
                   {
                     required: true,
@@ -82,7 +83,8 @@ const SecondPage = () => {
                 <Input
                   type="number"
                   className="form-input"
-                  placeholder="Enter total amount"
+                  placeholder="(e.g. 1000)"
+                  style={{ fontWeight: "bold" }}
                 />
               </Form.Item>
             </div>
@@ -90,7 +92,7 @@ const SecondPage = () => {
           <div className="flex flex-col my-2 flex-1">
             <Form.Item
               name="percentageOfProfit"
-              label="PERCENTAGE OF PROFIT CREATOR WILL SHARE WITH THE SUPPORTS"
+              label="PROFIT SHARING PERCENTAGE"
               rules={[
                 {
                   required: true,
@@ -100,9 +102,10 @@ const SecondPage = () => {
             >
               <Input
                 type="number"
-                className="form-input"
-                placeholder="Enter percentage of profit"
+                className="form-input font-bold"
+                placeholder="(e.g. 10%)"
                 suffix="%"
+                style={{ fontWeight: "bold !important" }}
               />
             </Form.Item>
           </div>

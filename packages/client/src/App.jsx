@@ -12,7 +12,6 @@ import ProjectDetail from "./pages/project-detail";
 import { UserProvider } from "./providers/UserProvider";
 import { ProjectsProvider } from "./providers/ProjectProvider";
 import PrivateRoute from "./components/PrivateRoute";
-import Loading from "./components/Loading";
 class App extends Component {
   render() {
     return (
@@ -24,12 +23,12 @@ class App extends Component {
                 <Header />
                 <div className="flex-grow">
                   <Route path="/" component={Home} exact />
-                  <PrivateRoute
+                  <Route
                     path="/project-detail/:id"
                     component={ProjectDetail}
                     exact
                   />
-                  <PrivateRoute
+                  <Route
                     path="/create-project"
                     component={CreateProject}
                     exact

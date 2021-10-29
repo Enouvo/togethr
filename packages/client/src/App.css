@@ -82,12 +82,13 @@
 }
 
 .form-input {
-  font-weight: bold;
+  font-weight: bold !important;
   color: #4a5568;
 }
 
 .ant-input-number {
   width: 100%;
+  font-weight: bold !important;
 }
 
 .loading-container {
@@ -106,4 +107,14 @@
   top: 50%;
   left: 50%;
   position: relative !important;
+}
+
+.discover-category-span {
+  position: relative !important;
+  right: -245px;
+  top: -40px;
+}
+
+.discover-image:hover {
+  cursor: pointer;
 }

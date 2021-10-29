@@ -79,7 +79,7 @@ const Discover = ({ items }) => {
   console.log(projects);
 
   return (
-    <div className="px-32 py-24">
+    <div className="px-48 py-24">
       <div className="flex flex-row justify-between mb-10">
         <Typography className="text-4xl font-extrabold">Discover</Typography>
         <div className="flex items-center">
