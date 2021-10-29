@@ -4,7 +4,7 @@ import { GET_PROJECT, GET_PROJECTS } from '../flow/scripts/projects.script';
 import { getIpfs } from '../utils/ipfs';
 import axios from 'axios';
 
-export default function useProjects(projectId) {
+export default function useProject(projectId) {
   const [project, setProject] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -12,25 +12,25 @@ export default function useProjects(projectId) {
     const fetchProject = async () => {
       try {
         setLoading(true);
-        let response = await query({
+        const response = await query({
           cadence: GET_PROJECT,
           args: (arg, t) => [arg(projectId, t.UInt32)],
         });
-        const res = await Promise.all(Object.values(response).map((project) => axios.get(getIpfs(project?.ipfsHash))));
-        const projects = Object.keys(response).map((key, index) => ({
-          projectId: key,
-          ...response[key],
-          ...res[index]?.data,
-        }));
-        setProjects(projects);
+        console.log('response', response);
+        const res = await axios.get(getIpfs(response?.ipfsHash));
+        setProject({
+          projectId: projectId,
+          ...response,
+          ...res?.data,
+        });
       } catch (err) {
         console.error(err);
       } finally {
         setLoading(false);
       }
     };
-    fetchProjects();
+    fetchProject();
   }, []);
 
-  return { projects, loading };
+  return { project, loading };
 }

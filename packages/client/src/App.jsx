@@ -24,7 +24,7 @@ class App extends Component {
                 <Header />
                 <div className="flex-grow">
                   <Route path="/" component={Home} exact />
-                  <PrivateRoute path="/projects/:id" component={ProjectDetail} exact />
+                  <Route path="/projects/:id" component={ProjectDetail} exact />
                   <PrivateRoute path="/create-project" component={CreateProject} exact />
                 </div>
                 <Footer />

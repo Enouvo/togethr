@@ -31,6 +31,10 @@ const ProjectDetail = ({ project }) => {
         };
 
         await fundProject(fundProjectData);
+        setProjectDetail((currentProject) => ({
+          ...currentProject,
+          remainningToken: project.remainningToken - Number(tokenCount),
+        }));
         notification.success({ message: 'Funded project success!' });
       } catch (err) {
         console.error(err);
