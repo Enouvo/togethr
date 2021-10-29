@@ -1,22 +1,47 @@
 import React, { useContext } from 'react';
-import { Button, Avatar, Form } from 'antd';
+import { Button, Avatar, Form, notification } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { CreateProjectContext } from '../../pages/create-project';
 import banner from '../../assets/create_project_thirdpage_banner.svg';
 import avatar from '../../assets/dappstarter.png';
 import avatarUpload from '../../assets/avatar_upload.svg';
+import { ipfs } from '../../utils/ipfs';
+import { createProject } from '../../flow/flow';
 
 const ThirdPage = () => {
   const { setForm, form } = useContext(CreateProjectContext);
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     const submitForm = {
       ...form,
       ...values,
     };
     setForm(submitForm);
-    console.log(submitForm);
+    try {
+      console.log(submitForm);
+      const dataObject = await ipfs.add(
+        JSON.stringify({
+          imageURL: submitForm.projectImage,
+          projectDescription: submitForm.projectDescription,
+          description: submitForm.description,
+          projectCategory: submitForm.projectCategory,
+          userImage: submitForm.userImage,
+          userName: submitForm.userName,
+          projectName: submitForm.projectName,
+        })
+      );
+      await createProject({
+        tokenName: submitForm.tokenName,
+        ipfsHash: dataObject.path,
+        tokenPrice: String(Number(submitForm.pricePerToken).toFixed(2)),
+        tokenCount: +submitForm.totalAmountToRaise,
+        profitSharePercent: +submitForm.percentageOfProfit,
+      });
+      notification.success({ message: 'Create project success!' });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

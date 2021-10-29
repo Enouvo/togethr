@@ -1,13 +1,14 @@
 import { mutate, tx } from '@onflow/fcl';
 import { CREATE_PROJECT, FUND_PROJECT } from './transactions/projects.tx';
 
-export const createProject = async ({ projectName, ipfsHash, tokenPrice, tokenCount, profitSharePercent }) => {
+export const createProject = async ({ tokenName, ipfsHash, tokenPrice, tokenCount, profitSharePercent }) => {
+  console.log({ tokenName, ipfsHash, tokenPrice, tokenCount, profitSharePercent });
   try {
     let createProjectPromise = await mutate({
       cadence: CREATE_PROJECT,
-      limit: 55,
+      limit: 100,
       args: (arg, t) => [
-        arg(projectName, t.String),
+        arg(tokenName, t.String),
         arg(ipfsHash, t.String),
         arg(tokenPrice, t.UFix64),
         arg(tokenCount, t.UInt32),

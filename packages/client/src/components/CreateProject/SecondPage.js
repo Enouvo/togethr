@@ -33,14 +33,17 @@ const SecondPage = () => {
               <Form.Item name="totalAmountToRaise">
                 <input
                   className="border-2 border-gray-300 rounded-lg py-2 px-3 focus:outline-none font-extrabold"
-                  placeholder="Enter total amount to raise"
+                  placeholder="Enter total amount"
                 />
               </Form.Item>
             </div>
             <div className="flex flex-col my-2 flex-1 mx-3">
-              <span className="text-gray-700 mb-2">FUNGIBLE TOKEN</span>
-              <Form.Item name="fungibleToken">
-                <Select options={options} />
+              <span className="text-gray-700 mb-2">Token Name</span>
+              <Form.Item name="tokenName">
+                <input
+                  className="border-2 border-gray-300 rounded-lg py-2 px-3 focus:outline-none font-extrabold"
+                  placeholder="Enter token name"
+                />
               </Form.Item>
             </div>
             <div className="flex flex-col my-2 flex-1 ml-3">

@@ -13,7 +13,7 @@ const FirstPage = () => {
   const [imagePath, setImagePath] = useState('');
   const [imageLoading, setImageLoading] = useState(false);
 
-  const options = [{ value: 'chocolate' }, { value: 'strawberry' }, { value: 'vanilla' }];
+  const options = [{ value: 'Art' }, { value: 'Film' }, { value: 'Game' }, { value: 'Tech' }];
 
   const uploadImage = async (data) => {
     try {
@@ -21,20 +21,6 @@ const FirstPage = () => {
       const image = await ipfs.add(data.file.originFileObj);
       const imageURL = getIpfs(image.path);
       setImagePath(imageURL);
-      // const dataObject = await ipfs.add(
-      //   JSON.stringify({
-      //     imageURL: imageURL,
-      //     description: "test",
-      //   })
-      // );
-      // await createProject({
-      //   projectName: "asd",
-      //   ipfsHash: dataObject.path,
-      //   tokenPrice: "10.00000000",
-      //   tokenCount: 1,
-      //   profitSharePercent: 1,
-      // });
-      // notification.success({ message: "Create project success!" });
     } catch (error) {
       notification.error(error.message);
     } finally {
@@ -46,7 +32,7 @@ const FirstPage = () => {
       return {
         ...prev,
         ...values,
-        image: imagePath,
+        projectImage: imagePath,
       };
     });
     setCurrentPage(2);
@@ -73,7 +59,7 @@ const FirstPage = () => {
           </div>
           <div className="flex flex-col my-2">
             <span className="text-gray-700 mb-2">DESCRIPTION</span>
-            <Form.Item name="description">
+            <Form.Item name="projectDescription">
               <textarea
                 className="border-2 border-gray-300 rounded-lg py-2 px-3 focus:outline-none bg-transparent font-extrabold resize-none w-full"
                 placeholder="Enter your project name"

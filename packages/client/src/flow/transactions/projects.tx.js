@@ -27,12 +27,10 @@ export const CREATE_PROJECT = `
     execute { 
       self.collection.addProject(name: name, ipfsHash: ipfsHash, tokenPrice: tokenPrice, tokenCount: tokenCount, profitSharePercent: profitSharePercent)
     }
-
   }
 `;
 
 export const FUND_PROJECT = `
-  import TogethrCreator from 0xTogethr
   import TogethrFunder from 0xTogethr
   import FungibleToken from 0xFungibleToken
   import TogethrCreator from 0xTogethr
@@ -66,4 +64,6 @@ export const FUND_PROJECT = `
     }
 
   }
+
+
 `;
