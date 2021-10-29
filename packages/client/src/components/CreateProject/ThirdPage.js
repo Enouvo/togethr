@@ -1,16 +1,15 @@
-import React, { useContext, useState } from 'react';
-import { Button, Avatar, Form, notification, Upload, Input } from 'antd';
-import { ArrowRightOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import { CreateProjectContext } from '../../pages/create-project';
-import { getIpfs, ipfs } from '../../utils/ipfs';
-import banner from '../../assets/create_project_thirdpage_banner.svg';
-import avatarUpload from '../../assets/avatar_upload.svg';
-import { createProject } from '../../flow/flow';
+import React, { useContext, useState } from "react";
+import { Button, Avatar, Form, notification, Upload, Input } from "antd";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import { CreateProjectContext } from "../../pages/create-project";
+import { getIpfs, ipfs } from "../../utils/ipfs";
+import banner from "../../assets/create_project_thirdpage_banner.svg";
+import avatarUpload from "../../assets/avatar_upload.svg";
+import { createProject } from "../../flow/flow";
 
 const ThirdPage = () => {
   const { setForm, form } = useContext(CreateProjectContext);
-  const [userImage, setUserImage] = useState('');
+  const [userImage, setUserImage] = useState("");
 
   const onSubmit = async (values) => {
     const submitForm = {
@@ -38,7 +37,7 @@ const ThirdPage = () => {
         tokenCount: +submitForm.totalAmountToRaise,
         profitSharePercent: +submitForm.percentageOfProfit,
       });
-      notification.success({ message: 'Create project success!' });
+      notification.success({ message: "Create project success!" });
     } catch (error) {
       showError(error);
     }
@@ -68,7 +67,17 @@ const ThirdPage = () => {
             </Form.Item>
           </div>
           <div className="flex flex-col my-2 flex-1">
-            <Form.Item name="userName" label="NAME" rules={[{ required: true, message: 'Please enter your name' }]}>
+            <Form.Item
+              name="userName"
+              label="NAME"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your name",
+                },
+                
+              ]}
+            >
               <Input className="form-input" placeholder="Enter your name" />
             </Form.Item>
           </div>
@@ -83,17 +92,15 @@ const ThirdPage = () => {
             </Form.Item>
           </div>
           <div className="flex flex-row justify-between items-center mt-8">
-            {/* <Link to="/"> */}
             <Button
               type="primary"
-              style={{ height: 46, display: 'flex' }}
+              style={{ height: 46, display: "flex" }}
               className="flex-row items-center"
               htmlType="submit"
             >
               <span>Finish</span>
               <ArrowRightOutlined />
             </Button>
-            {/* </Link> */}
             <div>
               <span className="text-blue-700 font-bold text-xl">3/</span>
               <span className="font-bold text-xl">3</span>

@@ -12,6 +12,7 @@ import ProjectDetail from "./pages/project-detail";
 import { UserProvider } from "./providers/UserProvider";
 import { ProjectsProvider } from "./providers/ProjectProvider";
 import PrivateRoute from "./components/PrivateRoute";
+import Loading from "./components/Loading";
 class App extends Component {
   render() {
     return (

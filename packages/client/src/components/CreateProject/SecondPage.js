@@ -1,17 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { Button, Form, Select, Input, InputNumber } from 'antd';
-import { ArrowRightOutlined } from '@ant-design/icons';
-import { CreateProjectContext } from '../../pages/create-project';
-import banner from '../../assets/create_project_banner.svg';
+import React, { useContext, useState } from "react";
+import { Button, Form, Select, Input, InputNumber } from "antd";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import { CreateProjectContext } from "../../pages/create-project";
+import banner from "../../assets/create_project_banner.svg";
 
 const SecondPage = () => {
   const { setCurrentPage, setForm } = useContext(CreateProjectContext);
   const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
   ];
-  const [totalAmount, setTotalAmount] = useState('');
   const onSubmit = (values) => {
     setForm((prev) => {
       return {
@@ -22,9 +21,6 @@ const SecondPage = () => {
     setCurrentPage(3);
   };
 
-  function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
   return (
     <div className="flex flex-col justify-center">
       <img src={banner} />
@@ -33,68 +29,87 @@ const SecondPage = () => {
           <div className="flex flex-row">
             <div className="flex flex-col my-2 flex-1 mr-3">
               <Form.Item
-                name="totalAmountToRaise"
-                label="TOTAL AMOUNT TO RAISE"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please upload your total amount to raise',
-                  },
-                ]}
-              >
-                <Input type="number" className="form-input" placeholder="Enter total amount" />
-              </Form.Item>
-            </div>
-            <div className="flex flex-col my-2 flex-1 mx-3">
-              <Form.Item
                 name="tokenName"
                 label="TOKEN NAME"
                 rules={[
                   {
                     required: true,
-                    message: 'Please enter your token name',
+                    message: "Please enter your token name",
+                  },
+                  {
+                    max: 10,
+                    message: "Token name must be maximum 10 characters.",
+                  },
+                  {
+                    whitespace: true,
+                    message: "Token name must not has whitespace",
                   },
                 ]}
               >
                 <Input className="form-input" placeholder="Enter token name" />
               </Form.Item>
             </div>
-            <div className="flex flex-col my-2 flex-1 ml-3">
+            <div className="flex flex-col my-2 flex-1 mx-3">
               <Form.Item
                 name="pricePerToken"
                 label="PRICE PER TOKEN"
                 rules={[
                   {
                     required: true,
-                    message: 'Please enter your price per token',
+                    message: "Please enter your price per token",
                   },
                 ]}
               >
-                <Input type="number" className="form-input" placeholder="Enter price per token" suffix="FLOW" />
+                <Input
+                  type="number"
+                  className="form-input"
+                  placeholder="Enter price per token"
+                  suffix="FLOW"
+                />
+              </Form.Item>
+            </div>
+            <div className="flex flex-col my-2 flex-1 ml-3">
+              <Form.Item
+                name="totalAmountToRaise"
+                label="TOTAL AMOUNT TO RAISE"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please upload your total amount to raise",
+                  },
+                ]}
+              >
+                <Input
+                  type="number"
+                  className="form-input"
+                  placeholder="Enter total amount"
+                />
               </Form.Item>
             </div>
           </div>
           <div className="flex flex-col my-2 flex-1">
-            {/* <span className="text-gray-700 mb-2">
-              PERCENTAGE OF PROFIT CREATOR WILL SHARE WITH THE SUPPORTS
-            </span> */}
             <Form.Item
               name="percentageOfProfit"
               label="PERCENTAGE OF PROFIT CREATOR WILL SHARE WITH THE SUPPORTS"
               rules={[
                 {
                   required: true,
-                  message: 'Please enter your percentage of profit',
+                  message: "Please enter your percentage of profit",
                 },
               ]}
             >
-              <Input type="number" className="form-input" placeholder="Enter percentage of profit" suffix="%" />
+              <Input
+                type="number"
+                className="form-input"
+                placeholder="Enter percentage of profit"
+                suffix="%"
+              />
             </Form.Item>
           </div>
           <div className="flex flex-row justify-between items-center mt-8">
             <Button
               type="primary"
-              style={{ height: 46, display: 'flex' }}
+              style={{ height: 46, display: "flex" }}
               className="flex-row items-center"
               htmlType="submit"
             >
