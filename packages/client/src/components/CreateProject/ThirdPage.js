@@ -1,17 +1,18 @@
-import React, { useContext, useState } from "react";
-import { Button, Avatar, Form, notification, Upload, Input } from "antd";
-import { ArrowRightOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { CreateProjectContext } from "../../pages/create-project";
-import { getIpfs, ipfs } from "../../utils/ipfs";
-import banner from "../../assets/create_project_thirdpage_banner.svg";
-import avatarUpload from "../../assets/avatar_upload.svg";
+import React, { useContext, useState } from 'react';
+import { Button, Avatar, Form, notification, Upload, Input } from 'antd';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import { CreateProjectContext } from '../../pages/create-project';
+import { getIpfs, ipfs } from '../../utils/ipfs';
+import banner from '../../assets/create_project_thirdpage_banner.svg';
+import avatarUpload from '../../assets/avatar_upload.svg';
+import { createProject } from '../../flow/flow';
 
 const ThirdPage = () => {
   const { setForm, form } = useContext(CreateProjectContext);
-  const [userImage, setUserImage] = useState("");
-  
-  const onSubmit = async  (values) => {
+  const [userImage, setUserImage] = useState('');
+
+  const onSubmit = async (values) => {
     const submitForm = {
       ...form,
       ...values,
@@ -19,7 +20,6 @@ const ThirdPage = () => {
     };
     setForm(submitForm);
     try {
-      console.log(submitForm);
       const dataObject = await ipfs.add(
         JSON.stringify({
           imageURL: submitForm.projectImage,
@@ -41,6 +41,7 @@ const ThirdPage = () => {
       notification.success({ message: 'Create project success!' });
     } catch (error) {
       console.error(error);
+    }
   };
 
   const uploadImage = async (data) => {
@@ -67,11 +68,7 @@ const ThirdPage = () => {
             </Form.Item>
           </div>
           <div className="flex flex-col my-2 flex-1">
-            <Form.Item
-              name="userName"
-              label="NAME"
-              rules={[{ required: true, message: "Please enter your name" }]}
-            >
+            <Form.Item name="userName" label="NAME" rules={[{ required: true, message: 'Please enter your name' }]}>
               <Input className="form-input" placeholder="Enter your name" />
             </Form.Item>
           </div>
@@ -89,7 +86,7 @@ const ThirdPage = () => {
             {/* <Link to="/"> */}
             <Button
               type="primary"
-              style={{ height: 46, display: "flex" }}
+              style={{ height: 46, display: 'flex' }}
               className="flex-row items-center"
               htmlType="submit"
             >
