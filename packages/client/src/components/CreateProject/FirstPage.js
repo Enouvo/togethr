@@ -76,23 +76,8 @@ const FirstPage = () => {
             </Form.Item>
           </div>
           <div className="flex flex-col my-2">
-            {/* <span className="text-gray-700 mb-1">UPLOAD FILE</span>
-            <span className="text-gray-700 mb-2">
-              Drag or choose your file to upload
-            </span> */}
-
             {(() => {
               if (imageLoading) return <Spin />;
-
-              // if (imagePath)
-              //   return (
-              //     <Image
-              //       src={imagePath}
-              //       className="mb-2 w-full h-auto object-cover"
-              //       preview={false}
-              //     />
-              //   );
-
               return (
                 <Form.Item
                   name="image"

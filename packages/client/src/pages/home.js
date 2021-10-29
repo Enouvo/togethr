@@ -5,17 +5,11 @@ import HomeHotCollectionContent from "../components/Home/HomeHotCollectionConten
 import PopularProjects from "../components/Home/PopularProject";
 import { Spin } from "antd";
 import { useProjectContext } from "../providers/ProjectProvider";
-
+import Loading from "../components/Loading";
 const Home = () => {
   const { loading } = useProjectContext();
 
-  if (loading)
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Spin />
-      </div>
-    );
-
+  if (loading) return <Loading />;
   return (
     <>
       <HomeFeaturing />
