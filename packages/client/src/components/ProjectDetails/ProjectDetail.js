@@ -23,7 +23,7 @@ const ProjectDetail = ({ project }) => {
 
   const onSubmit = async () => {
     if (projectDetail.remainningToken === 0) {
-      return showError({ message: 'Remainning token is not enough!' });
+      return showError({ message: "Remainning token is not enough!" });
     } else {
       if (inputError) return;
       try {
@@ -39,7 +39,7 @@ const ProjectDetail = ({ project }) => {
           ...currentProject,
           remainningToken: project.remainningToken - Number(tokenCount),
         }));
-        notification.success({ message: 'Funded project success!' });
+        notification.success({ message: "Funded project success!" });
       } catch (err) {
         console.error(err);
         showError(err);
@@ -81,20 +81,21 @@ const ProjectDetail = ({ project }) => {
     ((projectDetail.tokenCount - projectDetail.remainningToken) /
       projectDetail.tokenCount) *
     100;
+
   return (
     <>
       <Loading active={fundedLoading} />
-      <div className="flex flex-row justify-between px-48 py-32">
+      <div className="flex xs:flex-col sm:flex-col md:flex-col lg:flex-col xl:flex-row justify-between xs:p-6 sm:p-12 md:p-24 p-48">
         {loading ? (
           <SkeletonLoading />
         ) : (
           <>
             <img
               src={projectDetail?.imageURL}
-              className="object-fit rounded-lg w-1/2"
+              className="md:object-fit object-cover rounded-lg xs:w-full sm:w-full md:w-full lg:w-full xl:w-1/2"
               style={{ height: "45rem" }}
             />
-            <div className="flex flex-col max-w-md">
+            <div className="flex flex-col md:w-full lg:max-w-full xl:max-w-md">
               <h1 className="font-extrabold text-5xl">
                 {projectDetail?.projectName}
               </h1>
@@ -109,7 +110,7 @@ const ProjectDetail = ({ project }) => {
                 <div className="flex flex-row align-center items-center">
                   <div className="ml-5 flex flex-col">
                     <span className="text-lg text-gray-600">
-                      Number of tokens{" "}
+                      Number of tokens
                     </span>
                     <span className="text-base">
                       {projectDetail.tokenCount}
@@ -117,7 +118,7 @@ const ProjectDetail = ({ project }) => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col rounded-lg border-gray-500 border-2 p-8 mt-8 flex-wrap max-w-md">
+              <div className="flex flex-col rounded-lg border-gray-500 border-2 p-8 mt-8 flex-wrap">
                 <p className="text-xl mb-0">
                   <span className="font-bold mr-2">
                     {projectDetail?.tokenPrice}
