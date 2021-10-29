@@ -56,8 +56,8 @@ transaction(itemID: UInt64, seller: Address) {
     }
 
     execute {
-        let cost = self.saleCollection.idPrice(itemID: itemID) ?? panic("A Kitty Item with this itemID is not up for sale")
-        let vault <- self.vault.withdraw(amount: cost)
+        let price = self.saleCollection.idPrice(itemID: itemID) ?? panic("A Kitty Item with this itemID is not up for sale")
+        let vault <- self.vault.withdraw(amount: price)
 
         self.saleCollection.purchase(itemID: itemID, recipient: self.nftCollection, buyTokens: <-vault)
     }

@@ -4,7 +4,7 @@ import NonFungibleToken from "../../../contracts/Flow/NonFungibleToken.cdc"
 import TogethrNFT from "../../../contracts/Project/TogethrNFT.cdc"
 import FlowToken from Flow.FlowToken
 
-transaction(projectId: UInt32) {
+transaction(nftId: UInt64, price: UFix64) {
 
   let saleCollection: &TogethrMarket.SaleCollection
 
@@ -31,7 +31,7 @@ transaction(projectId: UInt32) {
 
   execute {
       // Update to pass price and pass NFT ID not project ID
-      self.saleCollection.listForSale(itemID: UInt64(projectId), price: UFix64(100))
+      self.saleCollection.listForSale(itemID: nftId, price: price)
 
       log("Listed Kitty Items for sale")
   }

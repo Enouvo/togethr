@@ -95,9 +95,8 @@ pub contract TogethrNFT: NonFungibleToken {
           .borrow<&TogethrNFT.Collection{TogethrNFT.CollectionPublic}>()
           ?? panic("Could not borrow Balance reference to the Vault")
 
-			collection.deposit(token: <-create TogethrNFT.NFT(id: TogethrNFT.totalSupply, projectId: projectId))
-
       TogethrNFT.totalSupply = TogethrNFT.totalSupply + (1 as UInt64)
+			collection.deposit(token: <-create TogethrNFT.NFT(id: TogethrNFT.totalSupply, projectId: projectId))
 		}
 
 	init() {

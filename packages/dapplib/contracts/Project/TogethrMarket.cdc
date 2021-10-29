@@ -8,6 +8,7 @@ pub contract TogethrMarket {
     pub event ForSale(itemID: UInt64, price: UFix64)
     pub event NFTPurchased(itemID: UInt64, price: UFix64)
     pub event SaleWithdrawn(itemID: UInt64)
+    pub let projects: {UInt64: Address}
 
     pub let StoragePath: StoragePath
     pub let PublicPath: PublicPath
@@ -19,7 +20,6 @@ pub contract TogethrMarket {
     }
 
     pub resource SaleCollection: SalePublic {
-
         pub var forSale: {UInt64: UFix64}
 
         access(self) let address: Address
@@ -42,13 +42,14 @@ pub contract TogethrMarket {
             var ownedNFTs = self.ownerCollection.borrow()!.getIDs()
             if (ownedNFTs.contains(itemID)) {
                 self.forSale[itemID] = price
+                TogethrMarket.projects[itemID] = self.address
                 emit ForSale(itemID: itemID, price: price)
             }
         }
 
         pub fun unlistSale(itemID: UInt64) {
             self.forSale[itemID] = nil
-
+            TogethrMarket.projects[itemID] = nil
             emit SaleWithdrawn(itemID: itemID)
         }
 
@@ -62,30 +63,33 @@ pub contract TogethrMarket {
                     "Not enough tokens to buy the NFT!"
             }
 
-          let projects = getAccount(self.address)
-              .getCapability(TogethrCreator.CollectionPublicPath)
-              .borrow<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>()
-              ?? panic("Could not borrow creator projects")
-
-
-          let projectId = self.ownerCollection.borrow()!.borrowEntireNFT(id: itemID)!.projectId
-
-           let funders = projects.getProjectFunders(projectId: projectId);
-
-           log(funders!.keys[0])
-
-           let funderVault <- buyTokens.withdraw(amount: UFix64(1))
-
-           let funderVaultRef = getAccount(funders!.keys[0])
-              .getCapability(/public/flowTokenReceiver)
-              .borrow<&FlowToken.Vault{FungibleToken.Receiver}>()
-              ?? panic("Could not borrow Balance reference to the Vault")
-
-            funderVaultRef.deposit(from: <-funderVault)
-
-            // get the value out of the optional
             let price = self.forSale[itemID]!
 
+
+            let projectId = self.ownerCollection.borrow()!.borrowEntireNFT(id: itemID)!.projectId
+            let projectData = TogethrCreator.getProjectMetadata(projectId: projectId);
+            let projectFunders = TogethrCreator.getProjectFunders(projectId: projectId);
+
+            let amountToShare = price * UFix64(projectData.profitSharePercent) / 100.0;
+            let sharePerToken = amountToShare / UFix64(projectData.tokenCount)
+
+            for funderAddress in projectFunders.keys {
+              let tokenCount = projectFunders[funderAddress]!
+              
+              let amount =  sharePerToken * UFix64(tokenCount)
+              let funderVault <- buyTokens.withdraw(amount: amount)
+
+              log("Funder ".concat(funderAddress.toString()).concat(" paid amount ").concat(amount.toString()))
+
+              let funderVaultRef = getAccount(funderAddress)
+                .getCapability(/public/flowTokenReceiver)
+                .borrow<&FlowToken.Vault{FungibleToken.Receiver}>()
+                ?? panic("Could not borrow Balance reference to the Vault")
+
+              funderVaultRef.deposit(from: <-funderVault)                    
+            }
+
+            // get the value out of the optional
             let vaultRef = self.ownerVault.borrow()
                 ?? panic("Could not borrow reference to owner token vault")
             
@@ -113,11 +117,16 @@ pub contract TogethrMarket {
         }
     }
 
+    pub fun getProjects(): {UInt64: Address} {
+      return self.projects
+    }
+
     pub fun createSaleCollection(address: Address, ownerVault: Capability<&FlowToken.Vault{FungibleToken.Receiver}>, ownerCollection: Capability<&TogethrNFT.Collection>): @SaleCollection {
         return <- create SaleCollection(_address: address, _vault: ownerVault, _collection: ownerCollection)
     }
 
     init() {
+        self.projects = {}
         self.StoragePath = /storage/TogethrMarket
         self.PublicPath = /public/TogethrMarket
     }
