@@ -20,8 +20,8 @@ const Home = () => {
     <>
       <HomeFeaturing />
       <Discover />
-      <PopularProjects />
-      <HomeHotCollectionContent />
+      {/* <PopularProjects />
+      <HomeHotCollectionContent /> */}
     </>
   );
 };

@@ -20,7 +20,7 @@ export const createProject = async ({ tokenName, ipfsHash, tokenPrice, tokenCoun
 export const fundProject = async ({ projectId, funder, tokenCount }) => {
   let fundProjectPromise = await mutate({
     cadence: FUND_PROJECT,
-    limit: 55,
+    limit: 100,
     args: (arg, t) => [arg(projectId, t.UInt32), arg(funder, t.Address), arg(tokenCount, t.UInt32)],
   });
   return tx(fundProjectPromise).onceSealed();

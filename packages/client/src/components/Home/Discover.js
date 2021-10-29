@@ -76,7 +76,7 @@ const listItem = [
 const Discover = ({ items }) => {
   const { projects } = useProjects();
   const [type, setType] = useState('All items');
-  console.log(Object.values(projects));
+  console.log(projects);
 
   return (
     <div className="px-32 py-24">
@@ -96,12 +96,12 @@ const Discover = ({ items }) => {
         </div>
       </div>
 
-      <Row justify="center" gutter={[60, 40]}>
-        {listItem.map((item) => {
-          if (item.type === type || type === 'All items') {
+      <Row gutter={[60, 80]}>
+        {projects?.map((item) => {
+          if (item?.projectCategory === type || type === 'All items') {
             return (
-              <Col span={6}>
-                <DiscoverItem items={item} />
+              <Col span={6} key={item.projectId}>
+                <DiscoverItem project={item} />
               </Col>
             );
           }
