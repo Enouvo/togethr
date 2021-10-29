@@ -40,7 +40,7 @@ const ThirdPage = () => {
       });
       notification.success({ message: 'Create project success!' });
     } catch (error) {
-      console.error(error);
+      showError(error);
     }
   };
 

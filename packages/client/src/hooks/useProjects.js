@@ -1,6 +1,6 @@
-import { query } from "@onflow/fcl";
-import { useEffect, useState } from "react";
-import { GET_PROJECTS } from "../flow/scripts/projects.script";
+import { query } from '@onflow/fcl';
+import { useEffect, useState } from 'react';
+import { GET_PROJECTS } from '../flow/scripts/projects.script';
 
 export default function useProjects() {
   const [projects, setProjects] = useState({});
@@ -15,7 +15,7 @@ export default function useProjects() {
         });
         setProjects(response);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       } finally {
         setLoading(false);
       }

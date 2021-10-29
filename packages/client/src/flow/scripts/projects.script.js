@@ -43,3 +43,12 @@ export const GET_FUNDED_PROJECT = `
     return fundedProjectsRef.getFundedProjects()
   }
 `;
+
+export const GET_REMAINNING_TOKEN_COUNT = `
+  import NonFungibleToken from 0xNonFungibleToken
+  import TogethrCreator from 0xTogethrCreator
+
+  pub fun main(projectId: UInt32): UInt32 {
+      return TogethrCreator.getRemainingTokenCount(projectId: projectId)
+  }
+`;
