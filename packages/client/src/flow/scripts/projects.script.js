@@ -1,6 +1,6 @@
 export const GET_PROJECTS = `
   import NonFungibleToken from 0xNonFungibleToken
-  import TogethrCreator from 0xTogethr
+  import TogethrCreator from 0xTogethrCreator
 
   pub fun main(): {UInt32: TogethrCreator.ProjectData} {
     let projects = TogethrCreator.getProjects()
@@ -24,7 +24,7 @@ export const GET_PROJECTS = `
 
 export const GET_PROJECT = `
   import NonFungibleToken from 0xNonFungibleToken
-  import TogethrCreator from 0xTogethr
+  import TogethrCreator from 0xTogethrCreator
 
   pub fun main(projectId: UInt32): Address? {
       return TogethrCreator.getProjectCreatorAddress(projectId: projectId)
@@ -33,7 +33,7 @@ export const GET_PROJECT = `
 
 export const GET_FUNDED_PROJECT = `
   import NonFungibleToken from 0xNonFungibleToken
-  import TogethrCreator from 0xTogethr
+  import TogethrCreator from 0xTogethrCreator
 
   pub fun main(address: Address): {UInt32: UFix64} {
     let fundedProjectsRef = getAccount(address).getCapability(TogethrFunder.PublicPath)

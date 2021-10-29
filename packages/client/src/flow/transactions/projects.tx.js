@@ -1,6 +1,6 @@
 export const CREATE_PROJECT = `
   import FungibleToken from 0xFungibleToken
-  import TogethrCreator from 0xTogethr
+  import TogethrCreator from 0xTogethrCreator
   import FlowToken from 0xFlowToken
 
   transaction(name: String, ipfsHash: String, tokenPrice: UFix64, tokenCount: UInt32, profitSharePercent: UInt32) {
@@ -31,9 +31,9 @@ export const CREATE_PROJECT = `
 `;
 
 export const FUND_PROJECT = `
-  import TogethrFunder from 0xTogethr
+  import TogethrFunder from 0xTogethrFunder
   import FungibleToken from 0xFungibleToken
-  import TogethrCreator from 0xTogethr
+  import TogethrCreator from 0xTogethrCreator
   import FlowToken from 0xFlowToken
 
   transaction(projectId: UInt32, funder: Address, tokenCount: UInt32) {
