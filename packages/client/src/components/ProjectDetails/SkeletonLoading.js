@@ -1,5 +1,5 @@
-import React from "react";
-import ContentLoader from "react-content-loader";
+import React from 'react';
+import ContentLoader from 'react-content-loader';
 
 const SkeletonLoading = () => {
   return (
@@ -32,7 +32,6 @@ const SkeletonLoading = () => {
         <rect x="257" y="348" rx="0" ry="0" width="1" height="13" />
         <rect x="30" y="675" rx="0" ry="0" width="516" height="32" />
         <rect x="28" y="726" rx="0" ry="0" width="516" height="30" />
-        <circle cx="360" cy="160" r="66" />
         <rect x="431" y="108" rx="0" ry="0" width="91" height="21" />
         <rect x="432" y="140" rx="0" ry="0" width="122" height="21" />
       </ContentLoader>

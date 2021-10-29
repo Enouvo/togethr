@@ -18,21 +18,26 @@ const ProjectDetail = ({ project }) => {
   const [fundedLoading, setFundLoading] = useState(false);
 
   const onSubmit = async () => {
-    if (inputError) return;
-    try {
-      setFundLoading(true);
-      const fundProjectData = {
-        projectId: Number(project.projectId),
-        funder: user.addr,
-        tokenCount: Number(tokenCount),
-      };
-      await fundProject(fundProjectData);
-      notification.success({ message: 'Funded project success!' });
-    } catch (err) {
-      console.error(err);
-      showError(err);
-    } finally {
-      setFundLoading(false);
+    if (projectDetail.remainningToken === 0) {
+      return showError({ message: 'Remainning token is not enough!' });
+    } else {
+      if (inputError) return;
+      try {
+        setFundLoading(true);
+        const fundProjectData = {
+          projectId: Number(project.projectId),
+          funder: user.addr,
+          tokenCount: Number(tokenCount),
+        };
+
+        await fundProject(fundProjectData);
+        notification.success({ message: 'Funded project success!' });
+      } catch (err) {
+        console.error(err);
+        showError(err);
+      } finally {
+        setFundLoading(false);
+      }
     }
   };
 
@@ -103,7 +108,7 @@ const ProjectDetail = ({ project }) => {
                   <h1 className="font-extrabold text-2xl mb-0">{projectDetail?.funders?.length ?? 0}</h1>
                   <span className="text-xl text-center text-gray-700">Funder</span>
                 </div>
-                <div className="flex justify-start flex-col items-center w-24">
+                <div className="flex justify-start flex-col items-center w-40">
                   <h1 className="font-extrabold text-2xl mb-0">{`${projectDetail?.profitSharePercent}%`}</h1>
                   <span className="text-xl text-center text-gray-700">Profit of supporter</span>
                 </div>

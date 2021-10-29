@@ -1,11 +1,17 @@
 import React from 'react';
 import { Progress } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 
 const DiscoverItem = ({ project }) => {
-  console.log(project);
+  const history = useHistory();
+
+  const redirectToProjectDetail = () => {
+    history.push(`/projects/${project.projectId}`);
+  };
+
   return (
-    <div className="justify-center">
+    <div className="justify-center" onClick={redirectToProjectDetail}>
       <img src={project?.imageURL} className="m-0 object-cover w-full h-48" />
       <h2 className="text-xl font-bold">{project?.projectName}</h2>
       <div>

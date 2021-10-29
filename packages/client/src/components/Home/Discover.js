@@ -76,7 +76,6 @@ const listItem = [
 const Discover = ({ items }) => {
   const { projects } = useProjects();
   const [type, setType] = useState('All items');
-  console.log(projects);
 
   return (
     <div className="px-32 py-24">

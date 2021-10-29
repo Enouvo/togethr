@@ -7,6 +7,7 @@ import banner from '../../assets/create_project_thirdpage_banner.svg';
 import avatarUpload from '../../assets/avatar_upload.svg';
 import { createProject } from '../../flow/flow';
 import Loading from '../Loading';
+import { showError } from '../../utils/tootls';
 
 const ThirdPage = () => {
   const { setForm, form } = useContext(CreateProjectContext);
@@ -42,6 +43,7 @@ const ThirdPage = () => {
       });
       notification.success({ message: 'Create project success!' });
     } catch (error) {
+      console.error(error);
       showError(error);
     } finally {
       setLoading(false);
