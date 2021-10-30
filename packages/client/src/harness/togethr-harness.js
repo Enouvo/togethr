@@ -99,6 +99,17 @@ export default class KittyItemsHarness extends LitElement {
         </action-card>
 
         <action-card
+          title="Get all project for a user"
+          description="Get all project for a user"
+          action="getProjectsByAddress"
+          method="get"
+          fields="address"
+        >
+          <account-widget field="address" label="Address" placeholder="Address">
+          </account-widget>
+        </action-card>
+
+        <action-card
           title="Get project remaining token count"
           description="Get project remaining token count"
           action="getProjectRemainingTokenCount"

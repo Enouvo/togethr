@@ -57,6 +57,27 @@ module.exports = class DappLib {
     };
   }
 
+  static async getProjectsByAddress(data) {
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "togethrprojects_get_all_project_by_address",
+      {
+        address: { value: data.address, type: t.Address },
+      }
+    );
+
+    console.log("result", result);
+
+    return {
+      type: DappLib.DAPP_RESULT_STRING,
+      label: "Projects",
+      result: JSON.stringify(result.callData),
+    };
+  }
+
   static async getAllProjects() {
     let result = await Blockchain.get(
       {
