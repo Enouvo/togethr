@@ -11,7 +11,7 @@ pub fun main(): {UInt64: String} {
     let collection = getAccount(address)
           .getCapability(TogethrNFT.CollectionPublicPath)
           .borrow<&TogethrNFT.Collection{TogethrNFT.CollectionPublic}>()
-          ?? panic("Could not borrow public NFT collection")
+          ?? panic("Could not borrow capability from public collection")
     let ipfsHash = collection.borrowEntireNFT(id: key)!.ipfsHash
     nftIdAndIpfsHashMap[key] = ipfsHash
   }

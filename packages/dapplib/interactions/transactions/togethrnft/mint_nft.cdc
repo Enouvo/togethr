@@ -10,21 +10,12 @@ transaction(projectId: UInt32, ipfsHash: String) {
   let address: Address
      
   prepare(signer: AuthAccount) {
-    // if the account doesn't already have a collection
     if signer.borrow<&TogethrNFT.Collection>(from: TogethrNFT.CollectionStoragePath) == nil {
-
-        // create a new empty collection
-        let collection <- TogethrNFT.createEmptyCollection()
-        
-        // save it to the account
-        signer.save(<-collection, to: TogethrNFT.CollectionStoragePath)
-
-        // create a public capability for the collection
-        signer.link<&TogethrNFT.Collection{TogethrNFT.CollectionPublic}>(TogethrNFT.CollectionPublicPath, target: TogethrNFT.CollectionStoragePath)
+      let collection <- TogethrNFT.createEmptyCollection()
+      signer.save(<-collection, to: TogethrNFT.CollectionStoragePath)
+      signer.link<&TogethrNFT.Collection{TogethrNFT.CollectionPublic}>(TogethrNFT.CollectionPublicPath, target: TogethrNFT.CollectionStoragePath)
     }
-
     self.address = signer.address
-
   }
 
   execute { 
