@@ -148,7 +148,7 @@ module.exports = class DappLib {
         config: DappLib.getConfig(),
         roles: {},
       },
-      "togethrprojects_get_funded_projects",
+      "togethrfunder_get_funded_projects",
       {
         address: { value: data.address, type: t.Address },
       }
@@ -260,7 +260,7 @@ module.exports = class DappLib {
         config: DappLib.getConfig(),
         roles: {},
       },
-      "togethrmarket_get_nfts",
+      "togethrnft_get_nfts",
       {}
     );
 
