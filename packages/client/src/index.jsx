@@ -10,10 +10,10 @@ config({
   'discovery.wallet': 'https://fcl-discovery.onflow.org/testnet/authn',
   '0xNonFungibleToken': '0x631e88ae7f1d7c20',
   '0xFungibleToken': '0x9a0766d93b6608b7',
-  '0xTogethrCreator': '0x173eb1eabb384ac7',
-  '0xTogethrFunder': '0x173eb1eabb384ac7',
-  '0xTogethrNFT': '0x173eb1eabb384ac7',
-  '0xTogethrMarket': '0x173eb1eabb384ac7',
+  '0xTogethrCreator': '0xecab3beb444ddcce',
+  '0xTogethrFunder': '0xecab3beb444ddcce',
+  '0xTogethrNFT': '0xecab3beb444ddcce',
+  '0xTogethrMarket': '0xecab3beb444ddcce',
   '0xFlowToken': '0x7e60df042a9c0868',
 });
 

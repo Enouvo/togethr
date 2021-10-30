@@ -80,7 +80,7 @@ const Discover = ({ items }) => {
   return (
     <div className="px-48 py-24 xs:p-6 sm:p-12 md:p-24">
       <div className="flex sm:flex-col md:flex-col lg:flex-row justify-between mb-10">
-        <Typography className="text-4xl font-extrabold sm:mt-2 md:mt-2">Discover</Typography>
+        <Typography className="text-3xl font-extrabold sm:mt-2 md:mt-2">Discover Funding Projects</Typography>
         <div className="flex items-center">
           <Button type={type === 'All items' && 'primary'} className="mx-2" onClick={() => setType('All items')}>
             All items

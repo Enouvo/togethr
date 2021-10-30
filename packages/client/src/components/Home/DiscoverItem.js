@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Progress } from 'antd';
+import { Progress, Button } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { getRemainingTokenCount } from '../../flow/flow';
@@ -34,10 +34,13 @@ const DiscoverItem = ({ project }) => {
           {project?.projectCategory}
         </span>
       </div>
-      <h2 className="text-xl font-bold mt-1">{project?.projectName}</h2>
-      <div>
-        <span className="text-lg font-bold">{project?.tokenPrice + ' '} </span>
-        <span className="text-lg text-gray-600">FLOW</span>
+      <h2 className="text-base font-bold mt-1">{project?.projectName}</h2>
+      <div className="flex justify-between">
+        <p>
+          <span className="text-lg font-bold">{Number(project?.tokenPrice ?? 0).toFixed(2) + ' '} </span>
+          <span className="text-lg text-gray-600">FLOW</span>
+        </p>
+        <Button> Fund </Button>
       </div>
       <Progress percent={percent} strokeColor="#00C48C" showInfo={false} />
     </div>

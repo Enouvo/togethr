@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import ScrollToTop from './components/ScrollToTop';
 import './components/page-loader';
 import PrivateRoute from './components/PrivateRoute';
 import './components/top-navigation';
@@ -18,6 +19,7 @@ class App extends Component {
       <UserProvider>
         <ProjectsProvider>
           <Router>
+            <ScrollToTop />
             <Switch>
               <div className="flex flex-col h-screen">
                 <Header />

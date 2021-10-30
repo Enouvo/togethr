@@ -11,9 +11,9 @@ const ProjectDetailPage = () => {
   const { user } = useUserContext();
   const { project, loading } = useProject(Number(projectId));
   return (
-    <>
+    <div className="mt-16">
       <ProjectDetail project={project} loading={loading} showFunders />
-    </>
+    </div>
   );
 };
 

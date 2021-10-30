@@ -50,6 +50,7 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@decentology/dappstarter-dapplib": "^0.1.0",
     "@grubersjoe/slide-menu": "1.2.3",
