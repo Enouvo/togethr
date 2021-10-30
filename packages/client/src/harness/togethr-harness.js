@@ -167,12 +167,12 @@ export default class KittyItemsHarness extends LitElement {
           ></text-widget>
         </action-card>
 
-        <!-- Togethr Market -->
+        <!-- Togethr NFT -->
 
         <action-card
           title="Mint project as NFT"
           description="Mint project as NFT"
-          action="mintProject"
+          action="mintNft"
           method="post"
           fields="creator ipfsHash projectId"
         >
@@ -191,9 +191,22 @@ export default class KittyItemsHarness extends LitElement {
         </action-card>
 
         <action-card
+          title="Get all NFTs"
+          description="Get all NFTs"
+          action="getNfts"
+          method="get"
+          fields="address"
+        >
+          <account-widget field="address" label="Address" placeholder="Address">
+          </account-widget>
+        </action-card>
+
+        <!-- Togethr Market -->
+
+        <action-card
           title="List project for sale"
           description="List project for sale"
-          action="listProject"
+          action="listNft"
           method="post"
           fields="creator nftId price"
         >
@@ -212,7 +225,7 @@ export default class KittyItemsHarness extends LitElement {
         </action-card>
 
         <action-card
-          title="Get all NFT for sale"
+          title="Get all NFT price for sale"
           description="Get all NFT for sale"
           action="getNFTListing"
           method="get"
@@ -232,7 +245,7 @@ export default class KittyItemsHarness extends LitElement {
         <action-card
           title="Buy NFT"
           description="Buy NFT"
-          action="buyProject"
+          action="buyNft"
           method="post"
           fields="seller buyer nftId"
         >

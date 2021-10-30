@@ -1,18 +1,19 @@
-
 import NonFungibleToken from "../../../contracts/Flow/NonFungibleToken.cdc"
 import TogethrNFT from "../../../contracts/Project/TogethrNFT.cdc"
+import TogethrMarket from "../../../contracts/Project/TogethrMarket.cdc"
 
-pub fun main(address: Address): {UInt64: String} {
+pub fun main(): {UInt64: String} {
+  let nfts = TogethrMarket.getProjects()
   let nftIdAndIpfsHashMap: {UInt64: String} = {}
 
-  let collection = getAccount(address)  
+  for key in nfts.keys {
+    let address = nfts[key]!
+    let collection = getAccount(address)
           .getCapability(TogethrNFT.CollectionPublicPath)
           .borrow<&TogethrNFT.Collection{TogethrNFT.CollectionPublic}>()
           ?? panic("Could not borrow public NFT collection")
-
-  for nftId in collection.getIDs() {
-    let ipfsHash = collection.borrowEntireNFT(id: nftId)!.ipfsHash
-    nftIdAndIpfsHashMap[nftId] = ipfsHash
+    let ipfsHash = collection.borrowEntireNFT(id: key)!.ipfsHash
+    nftIdAndIpfsHashMap[key] = ipfsHash
   }
 
   return nftIdAndIpfsHashMap

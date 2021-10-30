@@ -186,9 +186,9 @@ module.exports = class DappLib {
     };
   }
 
-  /********** Togethr Market **********/
+  /********** Togethr NFT **********/
 
-  static async mintProject(data) {
+  static async mintNft(data) {
     let config = DappLib.getConfig();
     let result = await Blockchain.post(
       {
@@ -197,7 +197,7 @@ module.exports = class DappLib {
           proposer: data.creator,
         },
       },
-      "togethrmarket_mint_project",
+      "togethrnft_mint_nft",
       {
         projectId: { value: parseInt(data.projectId), type: t.UInt32 },
         ipfsHash: { value: data.ipfsHash, type: t.String },
@@ -210,7 +210,28 @@ module.exports = class DappLib {
     };
   }
 
-  static async listProject(data) {
+  static async getNfts(data) {
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "togethrnft_get_nfts",
+      {
+        address: { value: data.address, type: t.Address },
+      }
+    );
+
+    return {
+      type: DappLib.DAPP_RESULT_STRING,
+      label: "Projects",
+      result: JSON.stringify(result.callData),
+    };
+  }
+
+  /********** Togethr Market **********/
+
+  static async listNft(data) {
     let config = DappLib.getConfig();
     let result = await Blockchain.post(
       {
@@ -219,7 +240,7 @@ module.exports = class DappLib {
           proposer: data.creator,
         },
       },
-      "togethrmarket_list_project",
+      "togethrmarket_list_nft",
       {
         nftId: { value: parseInt(data.nftId), type: t.UInt64 },
         price: { value: data.price.toString(), type: t.UFix64 },
@@ -232,7 +253,7 @@ module.exports = class DappLib {
     };
   }
 
-  static async buyProject(data) {
+  static async buyNft(data) {
     let config = DappLib.getConfig();
     let result = await Blockchain.post(
       {
@@ -241,7 +262,7 @@ module.exports = class DappLib {
           proposer: data.buyer,
         },
       },
-      "togethrmarket_buy_project",
+      "togethrmarket_buy_nft",
       {
         itemID: { value: parseInt(data.nftId), type: t.UInt64 }, // TODO projectId is UInt32
         seller: { value: data.seller, type: t.Address },
@@ -260,7 +281,7 @@ module.exports = class DappLib {
         config: DappLib.getConfig(),
         roles: {},
       },
-      "togethrnft_get_nfts",
+      "togethrmarket_get_all_nft_for_sale",
       {}
     );
 
