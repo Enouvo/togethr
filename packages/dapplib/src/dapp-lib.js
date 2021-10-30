@@ -254,13 +254,30 @@ module.exports = class DappLib {
     };
   }
 
-  static async getProjectsOnSale() {
+  static async getAllNftIdAndIpfsHash() {
     let result = await Blockchain.get(
       {
         config: DappLib.getConfig(),
         roles: {},
       },
-      "togethrmarket_get_projects",
+      "togethrmarket_get_nfts",
+      {}
+    );
+
+    return {
+      type: DappLib.DAPP_RESULT_STRING,
+      label: "Projects",
+      result: JSON.stringify(result.callData),
+    };
+  }
+
+  static async getNFTListing() {
+    let result = await Blockchain.get(
+      {
+        config: DappLib.getConfig(),
+        roles: {},
+      },
+      "togethrmarket_get_listings",
       {}
     );
 
