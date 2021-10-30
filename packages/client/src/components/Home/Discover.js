@@ -78,7 +78,7 @@ const Discover = ({ items }) => {
   const [type, setType] = useState('All items');
 
   return (
-    <div className="px-48 py-24 xs:p-6 sm:p-12 md:p-24">
+    <div className="px-48 pt-24 xs:px-6 sm:px-12 md:px-24">
       <div className="flex sm:flex-col md:flex-col lg:flex-row justify-between mb-10">
         <Typography className="text-3xl font-extrabold sm:mt-2 md:mt-2">Discover Funding Projects</Typography>
         <div className="flex items-center">

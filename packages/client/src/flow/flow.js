@@ -1,5 +1,6 @@
 import { mutate, tx, query } from '@onflow/fcl';
-import { GET_FUNDERS, GET_REMAINNING_TOKEN_COUNT } from './scripts/projects.script';
+import { GET_NFTS } from './scripts/nfts.script';
+import { GET_FUNDERS, GET_PROJECTS_BY_ADDRESS, GET_REMAINNING_TOKEN_COUNT } from './scripts/projects.script';
 import { CREATE_PROJECT, FUND_PROJECT } from './transactions/projects.tx';
 
 export const createProject = async ({ tokenName, ipfsHash, tokenPrice, tokenCount, profitSharePercent }) => {
@@ -36,4 +37,15 @@ export const getFunders = (projectId) =>
   query({
     cadence: GET_FUNDERS,
     args: (arg, t) => [arg(projectId, t.UInt32)],
+  });
+
+export const getNFTs = () =>
+  query({
+    cadence: GET_NFTS,
+  });
+
+export const getProjectsByAddress = (address) =>
+  query({
+    cadence: GET_PROJECTS_BY_ADDRESS,
+    args: (arg, t) => [arg(address, t.Address)],
   });

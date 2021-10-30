@@ -4,12 +4,17 @@ import { Input, Button, Menu, Dropdown } from 'antd';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import { useUserContext } from '../providers/UserProvider';
+import { useHistory } from 'react-router-dom';
 
 const Header = () => {
+  const history = useHistory();
   const { user, loggedIn, tools } = useUserContext();
 
   const menu = (
     <Menu>
+      <Menu.Item key="My Projects" onClick={() => history.push('/my-projects')}>
+        My Projects
+      </Menu.Item>
       <Menu.Item onClick={() => tools.logOut()} key="logout">
         Logout
       </Menu.Item>

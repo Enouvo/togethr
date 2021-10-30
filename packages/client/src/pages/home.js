@@ -7,6 +7,7 @@ import { Spin } from 'antd';
 import { useProjectContext } from '../providers/ProjectProvider';
 import Loading from '../components/Loading';
 import useProjects from '../hooks/useProjects';
+import NFTs from '../components/Home/NFTs';
 
 const Home = () => {
   const { projects, loading } = useProjects();
@@ -23,6 +24,7 @@ const Home = () => {
     <>
       <HomeFeaturingContent projects={projects} />
       <Discover />
+      <NFTs />
     </>
   );
 };

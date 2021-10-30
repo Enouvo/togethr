@@ -12,7 +12,6 @@ const DiscoverItem = ({ project }) => {
     const fetchRemainningTokenCount = async () => {
       try {
         const remainningToken = await getRemainingTokenCount(Number(project.projectId));
-        console.log('remainningToken', remainningToken);
         const newPercent = ((project.tokenCount - remainningToken) / project.tokenCount) * 100;
         setPercent(newPercent);
       } catch (err) {

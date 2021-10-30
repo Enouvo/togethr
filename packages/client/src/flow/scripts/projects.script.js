@@ -56,3 +56,16 @@ export const GET_FUNDERS = `
       return TogethrCreator.getProjectFunders(projectId: projectId)!
   }
 `;
+
+export const GET_PROJECTS_BY_ADDRESS = `
+  import NonFungibleToken from 0xNonFungibleToken
+  import TogethrCreator from 0xTogethrCreator
+  pub fun main(address: Address): {UInt32: TogethrCreator.ProjectData} {
+    let collectionRef = getAccount(address).getCapability(TogethrCreator.CollectionPublicPath)
+                                .borrow<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>()                              
+    if(collectionRef != nil) {
+      return collectionRef!.getProjects()
+    }
+    return {}
+  }
+`;
