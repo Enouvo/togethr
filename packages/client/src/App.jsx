@@ -10,6 +10,7 @@ import CreateProject from './pages/create-project';
 import './pages/dapp';
 import Home from './pages/home';
 import ProjectDetail from './pages/project-detail';
+import MyProjects from './pages/my-projects';
 import { ProjectsProvider } from './providers/ProjectProvider';
 import { UserProvider } from './providers/UserProvider';
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
                   <Route path="/" component={Home} exact />
                   <Route path="/projects/:id" component={ProjectDetail} exact />
                   <PrivateRoute path="/create-project" component={CreateProject} exact />
+                  <PrivateRoute path="/my-projects" component={MyProjects} exact />
                 </div>
                 <Footer />
               </div>
