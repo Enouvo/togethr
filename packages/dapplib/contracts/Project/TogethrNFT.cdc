@@ -30,7 +30,7 @@ pub contract TogethrNFT: NonFungibleToken {
         pub fun borrowEntireNFT(id: UInt64): &NFT? {
             post {
                 (result == nil) || (result?.id == id): 
-                    "Cannot borrow NFT reference: The ID of the returned reference is incorrect"
+                    "Failed to borrow an NFT: invalid id"
             }
         }
     }
@@ -39,7 +39,7 @@ pub contract TogethrNFT: NonFungibleToken {
         pub var ownedNFTs: @{UInt64: NonFungibleToken.NFT}
 
         pub fun withdraw(withdrawID: UInt64): @NonFungibleToken.NFT {
-            let token <- self.ownedNFTs.remove(key: withdrawID) ?? panic("missing NFT")
+            let token <- self.ownedNFTs.remove(key: withdrawID) ?? panic("Failed to withdraw NFT: NFT with given id not found")
             emit Withdraw(id: token.id, from: self.owner?.address)
             return <-token
         }
@@ -85,14 +85,14 @@ pub contract TogethrNFT: NonFungibleToken {
 
   pub fun mintNFT(recipient: Address, projectId: UInt32, ipfsHash: String) {
       pre {
-        TogethrCreator.projects[projectId] == recipient: "Invalid project id"
-        TogethrCreator.projects[projectId] != nil: "Nil project id"
+        TogethrCreator.projects[projectId] == recipient: "Failed to mint NFT: invalid project id"
+        TogethrCreator.projects[projectId] != nil: "Failed to mint NFT: invalid project id"
       }
 
       let collection = getAccount(recipient)
           .getCapability(TogethrNFT.CollectionPublicPath)
           .borrow<&TogethrNFT.Collection{TogethrNFT.CollectionPublic}>()
-          ?? panic("Could not borrow Balance reference to the Vault")
+          ?? panic("Failed to mint NFT: could not borrow capability from public collection")
 
       TogethrNFT.totalSupply = TogethrNFT.totalSupply + (1 as UInt64)
 			collection.deposit(token: <-create TogethrNFT.NFT(id: TogethrNFT.totalSupply, projectId: projectId, ipfsHash: ipfsHash))

@@ -82,7 +82,6 @@ pub contract TogethrCreator {
       pre {
         name.length > 0 : "Failed to create project: project name is required."
       }
-    
       let projectId = TogethrCreator.nextProjectID
       let project <- create Project(projectId: projectId, name: name, ipfsHash: ipfsHash, tokenPrice: tokenPrice, tokenCount: tokenCount, profitSharePercent: profitSharePercent)
       let newProject <- self.projects[projectId] <- project
@@ -95,37 +94,36 @@ pub contract TogethrCreator {
     pub fun getProjectFunders(projectId: UInt32):  {Address: UInt32}? {      
       pre {
         self.projects[projectId] != nil: "Failed to get project: invalid project id"
-      } // TODO remove pre and use panic?
-
+      } 
       return self.projects[projectId]?.funders
     }
 
     pub fun getProjectMetadata(projectId: UInt32): ProjectData {
       pre {
         self.projects[projectId] != nil: "Failed to get project: invalid project id"
-      } // TODO remove pre and use panic?
-
+      } 
       return self.projects[projectId]?.data!
     }
 
     pub fun fundProject(funder: Address, projectId: UInt32, tokenCount: UInt32, paymentVault: @FungibleToken.Vault) {
       pre {
-        self.projects[projectId] != nil: "Failed to fund project: invalid project id"
-        tokenCount > 0 : "Invalid token count" 
-        TogethrCreator.getRemainingTokenCount(projectId: projectId) >= tokenCount : "Invalid token count" 
-        paymentVault.balance >= TogethrCreator.getProjectMetadata(projectId: projectId)!.tokenPrice * UFix64(tokenCount)  : "Could not mint dappy: payment balance insufficient." 
+        self.projects[projectId] != nil: "Failed to fund the project: project id is invalid"
+        tokenCount > 0 : "Failed to fund the project: invalid token count" 
+        TogethrCreator.getRemainingTokenCount(projectId: projectId) >= tokenCount : "Failed to fund the project: insufficient tokens" 
+        paymentVault.balance >= TogethrCreator.getProjectMetadata(projectId: projectId).tokenPrice * UFix64(tokenCount)  : "Failed to fund the project: insufficient payment balance" 
       }
+
       self.projects[projectId]?.addFunder(funder: funder, tokenCount: tokenCount)
       
       let funderCollection = getAccount(funder).getCapability<&TogethrFunder.Collection{TogethrFunder.PublicCollection}>(TogethrFunder.CollectionPublicPath)
                             .borrow()
-                            ?? panic("Could not borrow capability from public collection")
+                            ?? panic("Failed to fund the project: could not borrow capability from public collection")
       funderCollection.addProject(projectId: projectId, tokenCount: tokenCount)
 
       let vaultRef = getAccount(self.creator)
           .getCapability(/public/flowTokenReceiver)
           .borrow<&FlowToken.Vault{FungibleToken.Receiver}>()
-          ?? panic("Could not borrow Balance reference to the Vault")
+          ?? panic("Failed to fund the project: could not borrow flow token receiver")
 
       vaultRef.deposit(from: <-paymentVault)
     }
@@ -155,7 +153,7 @@ pub contract TogethrCreator {
     let creator = self.projects[projectId]!
     let collection = getAccount(creator).getCapability<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>(TogethrCreator.CollectionPublicPath)
                             .borrow()
-                            ?? panic("Could not borrow capability from public collection")
+                            ?? panic("Failed to get project metadata: could not borrow capability from public collection")
     return collection.getProjectMetadata(projectId: projectId)!
   } 
 
@@ -163,13 +161,13 @@ pub contract TogethrCreator {
     let creator = self.projects[projectId]!
     let collection = getAccount(creator).getCapability<&TogethrCreator.Collection{TogethrCreator.PublicCollection}>(TogethrCreator.CollectionPublicPath)
                             .borrow()
-                            ?? panic("Could not borrow capability from public collection")
+                            ?? panic("Failed to get project funders: could not borrow capability from public collection")
     return collection.getProjectFunders(projectId: projectId)!
   } 
 
   pub fun getRemainingTokenCount(projectId: UInt32): UInt32 {
-    let funders =  TogethrCreator.getProjectFunders(projectId: projectId)!
-    let projectData =  TogethrCreator.getProjectMetadata(projectId: projectId)! 
+    let funders =  TogethrCreator.getProjectFunders(projectId: projectId)
+    let projectData =  TogethrCreator.getProjectMetadata(projectId: projectId)
 
     var totalTokens = (0 as UInt32);
     for value in funders.values {

@@ -2,7 +2,6 @@
 import FungibleToken from "../Flow/FungibleToken.cdc"
 import FlowToken from "../Flow/FlowToken.cdc"
 
-
 pub contract TogethrFunder {
 
   pub let CollectionStoragePath: StoragePath
