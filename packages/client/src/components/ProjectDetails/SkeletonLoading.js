@@ -1,9 +1,9 @@
-import React from 'react';
-import ContentLoader from 'react-content-loader';
+import React from "react";
+import ContentLoader from "react-content-loader";
 
 const SkeletonLoading = () => {
   return (
-    <>
+    <div className="flex flex-row justify-center mt-">
       <ContentLoader
         speed={2}
         width={720}
@@ -35,7 +35,7 @@ const SkeletonLoading = () => {
         <rect x="431" y="108" rx="0" ry="0" width="91" height="21" />
         <rect x="432" y="140" rx="0" ry="0" width="122" height="21" />
       </ContentLoader>
-    </>
+    </div>
   );
 };
 

@@ -6,8 +6,9 @@ import {
   Progress,
   Table,
   Typography,
+  Carousel,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import creator from "../../assets/dappstarter.png";
 import {
   fundProject,
@@ -18,14 +19,24 @@ import { useUserContext } from "../../providers/UserProvider";
 import { showError } from "../../utils/tootls";
 import Loading from "../Loading";
 import SkeletonLoading from "./SkeletonLoading";
+import ProjectDetailCarousel from "./ProjectDetailCarousel";
+import useProjects from "../../hooks/useProjects";
 
-const ProjectDetail = ({ project, showFunders = false, showPageTitle = false }) => {
+const ProjectDetail = ({
+  project,
+  showFunders = false,
+  showPageTitle = false,
+  showCarousel = false,
+}) => {
   const [tokenCount, setTokenCount] = useState("");
   const [inputError, setInputError] = useState(true);
   const { user, loggedIn, tools } = useUserContext();
+  const { projects } = useProjects();
   const [projectDetail, setProjectDetail] = useState(project);
   const [loading, setLoading] = useState(true);
   const [fundedLoading, setFundLoading] = useState(false);
+  const [lastThreeProjectsDetail, setLastThreeProjectsDetail] = useState({});
+  const carouselRef = useRef(null);
 
   const onSubmit = async () => {
     if (projectDetail.remainningToken === 0) {
@@ -91,6 +102,8 @@ const ProjectDetail = ({ project, showFunders = false, showPageTitle = false }) 
     ((projectDetail.tokenCount - projectDetail.remainningToken) /
       projectDetail.tokenCount) *
     100;
+
+  console.log(lastThreeProjectsDetail);
 
   return (
     <>
@@ -204,6 +217,9 @@ const ProjectDetail = ({ project, showFunders = false, showPageTitle = false }) 
           </>
         )}
       </div>
+
+      <button onClick={() => carouselRef.current.prev()}>prev</button>
+      <button onClick={() => carouselRef.current.next()}>next</button>
       {showFunders && (
         <div className="px-48 my-6">
           <Typography className="text-4xl font-extrabold">
