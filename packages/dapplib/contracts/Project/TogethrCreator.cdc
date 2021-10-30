@@ -66,6 +66,7 @@ pub contract TogethrCreator {
     pub fun getProjectMetadata(projectId: UInt32): ProjectData
     pub fun getProjectFunders(projectId: UInt32):  {Address: UInt32}?
     pub fun fundProject(funder: Address, projectId: UInt32, tokenCount: UInt32, paymentVault: @FungibleToken.Vault)
+    pub fun getProjects(): { UInt32: ProjectData }
   }
 
   pub resource Collection: PublicCollection {
@@ -127,6 +128,14 @@ pub contract TogethrCreator {
           ?? panic("Could not borrow Balance reference to the Vault")
 
       vaultRef.deposit(from: <-paymentVault)
+    }
+
+    pub fun getProjects(): { UInt32: ProjectData } {
+      let projectMap: {UInt32: TogethrCreator.ProjectData} = {}
+      for projectId in self.projects.keys {
+        projectMap[projectId] = self.getProjectMetadata(projectId: projectId)
+      }
+      return projectMap
     }
 
     destroy() {
