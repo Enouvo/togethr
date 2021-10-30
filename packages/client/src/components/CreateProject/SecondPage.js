@@ -46,7 +46,7 @@ const SecondPage = () => {
                   },
                 ]}
               >
-                <Input className="form-input" placeholder="(e.g. ENOUVOz2)" />
+                <Input className="form-input" placeholder="(e.g. ENOUVO)" />
               </Form.Item>
             </div>
             <div className="flex flex-col my-2 flex-1 mx-3">
@@ -58,14 +58,20 @@ const SecondPage = () => {
                     required: true,
                     message: "Please enter your price per token",
                   },
+                  {
+                    pattern: /[.]{1}/,
+                    message: "Please enter with the right format",
+                  },
                 ]}
               >
                 <Input
                   type="number"
                   className="form-input"
+                  step="any"
                   placeholder="(e.g. 10.00)"
                   suffix="FLOW"
                   style={{ fontWeight: "bold" }}
+                  min={0}
                 />
               </Form.Item>
             </div>
@@ -83,6 +89,7 @@ const SecondPage = () => {
                 <Input
                   type="number"
                   className="form-input"
+                  step="any"
                   placeholder="(e.g. 1000)"
                   style={{ fontWeight: "bold" }}
                 />

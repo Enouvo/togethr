@@ -79,13 +79,17 @@ const ProjectDetail = ({ project, showFunders = false }) => {
   return (
     <>
       <Loading active={fundedLoading} />
-      <div className="flex flex-row justify-between p-48">
+      <div className="flex xs:flex-col sm:flex-col md:flex-col lg:flex-col xl:flex-row justify-between xs:p-6 sm:p-12 md:p-24 p-48">
         {loading ? (
           <SkeletonLoading />
         ) : (
           <>
-            <img src={projectDetail?.imageURL} className="object-fit rounded-lg w-1/2" style={{ height: '45rem' }} />
-            <div className="flex flex-col max-w-md">
+            <img
+              src={projectDetail?.imageURL}
+              className="md:object-fit object-cover rounded-lg xs:w-full sm:w-full md:w-full lg:w-full xl:w-1/2"
+              style={{ height: '45rem' }}
+            />
+            <div className="flex flex-col md:w-full lg:max-w-full xl:max-w-md">
               <h1 className="font-extrabold text-5xl">{projectDetail?.projectName}</h1>
               <div className="flex flex-row justify-between">
                 <div className="flex flex-row align-center items-center mr-12">
@@ -97,12 +101,12 @@ const ProjectDetail = ({ project, showFunders = false }) => {
                 </div>
                 <div className="flex flex-row align-center items-center">
                   <div className="ml-5 flex flex-col">
-                    <span className="text-lg text-gray-600">Number of tokens </span>
+                    <span className="text-lg text-gray-600">Number of tokens</span>
                     <span className="text-base">{projectDetail.tokenCount}</span>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col rounded-lg border-gray-500 border-2 p-8 mt-8 flex-wrap max-w-md">
+              <div className="flex flex-col rounded-lg border-gray-500 border-2 p-8 mt-8 flex-wrap">
                 <p className="text-xl mb-0">
                   <span className="font-bold mr-2">{projectDetail?.tokenPrice}</span>
                   <span className="text-gray-1000">FLOW Coin</span>

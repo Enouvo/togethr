@@ -1,17 +1,26 @@
-import { ArrowRightOutlined } from '@ant-design/icons';
-import { Button, notification, Form, Select, Upload, Image, Spin, Input } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import React, { useContext, useState } from 'react';
-import banner from '../../assets/create_project_banner.svg';
-import upload from '../../assets/upload.svg';
-import { createProject } from '../../flow/flow';
-import { CreateProjectContext } from '../../pages/create-project';
-import { getIpfs, ipfs } from '../../utils/ipfs';
-import { categories } from '../../utils/tootls';
+import { ArrowRightOutlined } from "@ant-design/icons";
+import {
+  Button,
+  notification,
+  Form,
+  Select,
+  Upload,
+  Image,
+  Spin,
+  Input,
+} from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import React, { useContext, useState } from "react";
+import banner from "../../assets/create_project_banner.svg";
+import upload from "../../assets/upload.svg";
+import { createProject } from "../../flow/flow";
+import { CreateProjectContext } from "../../pages/create-project";
+import { getIpfs, ipfs } from "../../utils/ipfs";
+import { categories } from "../../utils/tootls";
 
 const FirstPage = () => {
   const { setCurrentPage, setForm } = useContext(CreateProjectContext);
-  const [imagePath, setImagePath] = useState('');
+  const [imagePath, setImagePath] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
 
   const uploadImage = async (data) => {
@@ -45,9 +54,14 @@ const FirstPage = () => {
             <Form.Item
               name="projectName"
               label="PROJECT NAME"
-              rules={[{ required: true, message: 'Please input your project name' }]}
+              rules={[
+                { required: true, message: "Please input your project name" },
+              ]}
             >
-              <Input className="form-input" placeholder="Enter your project name" />
+              <Input
+                className="form-input"
+                placeholder="Enter your project name"
+              />
             </Form.Item>
           </div>
           <div className="flex flex-col my-2">
@@ -57,7 +71,7 @@ const FirstPage = () => {
               rules={[
                 {
                   required: true,
-                  message: 'Please input your project category',
+                  message: "Please input your project category",
                 },
               ]}
             >
@@ -84,22 +98,18 @@ const FirstPage = () => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please upload your project picture',
+                      message: "Please upload your project picture",
                     },
                   ]}
                 >
                   <div
                     className={`flex flex-col ${
-                      !imagePath && 'p-40'
+                      !imagePath && "p-40"
                     } justify-center text-center items-center bg-gray-100 rounded-lg mt-4`}
                   >
                     <Upload showUploadList={false} onChange={uploadImage}>
                       {imagePath ? (
-                        <Image
-                          src={imagePath}
-                          // className="mb-2 w-full h-auto"
-                          preview={false}
-                        />
+                        <Image src={imagePath} preview={false} />
                       ) : (
                         <div className="text-center flex flex-col">
                           <img src={upload} className="mb-2 w-8 m-auto" />
@@ -117,7 +127,7 @@ const FirstPage = () => {
           <div className="flex flex-row justify-between items-center">
             <Button
               type="primary"
-              style={{ height: 46, display: 'flex' }}
+              style={{ height: 46, display: "flex" }}
               className="flex-row items-center"
               htmlType="submit"
             >
