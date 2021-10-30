@@ -1,46 +1,51 @@
-# My Dapp
-
-This project is for the blockchain application My Dapp. It contains code for the Smart Contract, web-based dapp and NodeJS server. 
-
-# Pre-requisites
-
-In order to develop and build "My Dapp," the following pre-requisites must be installed:
-
-* [Visual Studio Code](https://code.visualstudio.com/download) (or any IDE for editing Javascript)
-* [NodeJS](https://nodejs.org/en/download/)
-* [Yarn](https://classic.yarnpkg.com/en/docs/install) (DappStarter uses [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces))
-* [Flow CLI](https://docs.onflow.org/flow-cli/install) (https://docs.onflow.org/flow-cli/install) (after installation run `flow cadence install-vscode-extension` to enable code highlighting for Cadence source files)
-
-### Windows Users
-
-Before you proceed with installation, it's important to note that many blockchain libraries either don't work or generate errors on Windows. If you try installation and can't get the startup scripts to completion, this may be the problem. In that case, it's best to install and run DappStarter using Windows Subsystem for Linux (WSL). Here's a [guide to help you install WSL](https://docs.decentology.com/guides/windows-subsystem-for-linux-wsl).
-
-Blockchains known to require WSL: Solana
-# Installation
-
-Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn` This will fetch all required dependencies. The process will take 1-3 minutes and while it is in progress you can move on to the next step.
-
-# Yarn Errors
-
-You might see failures related to the `node-gyp` package when Yarn installs dependencies.
-These failures occur because the node-gyp package requires certain additional build tools
-to be installed on your computer. Follow the [instructions](https://www.npmjs.com/package/node-gyp) for adding build tools and then try running `yarn` again.
-
-# Build, Deploy and Test
-Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn start` This will run all the dev scripts in each project package.json.
 
 
 
-## File Locations
-Here are the locations of some important files:
-* Contract Code: [packages/dapplib/contracts](packages/dapplib/contracts)
-* Dapp Library: [packages/dapplib/src/dapp-lib.js](packages/dapplib/src/dapp-lib.js) 
-* Blockchain Interactions: [packages/dapplib/src/blockchain.js](packages/dapplib/src/blockchain.js)
-* Unit Tests: [packages/dapplib/tests](packages/dapplib/tests)
-* UI Test Harnesses: [packages/client/src/dapp/harness](packages/client/src/dapp/harness)
-
-To view your dapp, open your browser to http://localhost:5000 for the DappStarter Workspace.
-
-We ♥️ developers and want you to have an awesome experience. You should be experiencing Dappiness at this point. If not, let us know and we will help. Join our [Discord](https://discord.gg/ZzaaqwMmVG) or hit us up on Twitter [@Decentology](https://twitter.com/decentology).
 
 
+# [Togethr](https://togethr.xyz)
+
+A crowdfunding platform for creators and artists build on Flow blockchain.
+
+This is team enouvo's submission for [Mercury Hackathon 2021](http://mercuryhackathon2021.com), in track #3 Flow.
+
+## Problem
+
+It is hard for creators and artists to raise funds for a project they are working on. Traditional crowdfunding platforms are centralized and do not offer anonymity, data integrity, and resistance to censorship.
+
+It is also challenging for the creators to find a marketplace to sell their finished project and incentivize supporters.
+
+## Solution
+
+Our solution is to use Flow blockchain to build a decentralized crowdfunding platform that not only allows creators to raise funds but also sells their creations and shares their profits with the funders.
+
+## Start a new crowdfunding project
+Setting up a new project is easy, simply provide information like project name, description, and artwork.
+Then select a name for your custom token, the price for each token and how many tokens would you like to sell. 
+Each token represents a share and a contribution to the project.
+
+Creators can share profits from their project's sale with the funders where each token will be used as a fraction of the project owned by the funder.
+
+## Sell a project 
+After a project is funded, creators can use the money raised to work on the project. Once the project is ready, they can use our marketplace to sell the project as an NFT.
+
+
+## Fractional NFT
+
+We used the concept of fractional NFT to share the ownership of a project. Each funder who contributed to a project by buying the project's token owns a fraction of the project.
+
+For example, a creator working on a music album can start a new funding project on our platform.
+
+The creator decides to sell 100 $MUSIC tokens for 10.00 Flow coins each to raise 1,000.00 Flow coins and share 10% of the profits with the funders.
+
+Once the project is funded and completed, the creator can then use our marketplace to sell the music album as an NFT with the buyer owning all the copyright of the music album.
+
+If the NFT was sold for 100,000.00 Flow coins, 10,000.00 Flow coins are distributed to the funders i.e. 100 Flow coins for each token they own.
+
+## Next steps
+
+- Ability for creators to dynamically create fungible tokens (FT) for their project and use fungible tokens to track the ownership of a project. 
+- Ability for the owners to mark a project as funded even if all tokens are not sold.
+- Improve user experience by making the website responsive.
+- Optimise smart contracts, cadence scripts, and transactions.
+- Get the contract audited and launch the project on the main Flow network :)
