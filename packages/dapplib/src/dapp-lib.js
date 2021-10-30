@@ -200,6 +200,7 @@ module.exports = class DappLib {
       "togethrmarket_mint_project",
       {
         projectId: { value: parseInt(data.projectId), type: t.UInt32 },
+        ipfsHash: { value: data.ipfsHash, type: t.String },
       }
     );
     return {

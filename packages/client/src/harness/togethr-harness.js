@@ -174,7 +174,7 @@ export default class KittyItemsHarness extends LitElement {
           description="Mint project as NFT"
           action="mintProject"
           method="post"
-          fields="creator projectId"
+          fields="creator ipfsHash projectId"
         >
           <account-widget field="creator" label="Creator" placeholder="Creator">
           </account-widget>
@@ -182,6 +182,11 @@ export default class KittyItemsHarness extends LitElement {
             field="projectId"
             label="Project ID"
             placeholder="Project ID"
+          ></text-widget>
+          <text-widget
+            field="ipfsHash"
+            label="IPFS Hash"
+            placeholder="IPFS Hash"
           ></text-widget>
         </action-card>
 
