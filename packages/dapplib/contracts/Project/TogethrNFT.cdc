@@ -10,16 +10,17 @@ pub contract TogethrNFT: NonFungibleToken {
 
     pub let CollectionStoragePath: StoragePath
     pub let CollectionPublicPath: PublicPath
-    // pub let MinterStoragePath: StoragePath
-
+    
     pub var totalSupply: UInt64
 
     pub resource NFT: NonFungibleToken.INFT {
         pub let id: UInt64
         pub let projectId: UInt32
-        init(id: UInt64, projectId: UInt32) {
+        pub let ipfsHash: String
+        init(id: UInt64, projectId: UInt32, ipfsHash: String) {
             self.id = id
             self.projectId = projectId
+            self.ipfsHash = ipfsHash
         }
     }
 
@@ -27,8 +28,6 @@ pub contract TogethrNFT: NonFungibleToken {
         pub fun deposit(token: @NonFungibleToken.NFT)
         pub fun getIDs(): [UInt64]
         pub fun borrowEntireNFT(id: UInt64): &NFT? {
-            // If the result isn't nil, the id of the returned reference
-            // should be the same as the argument to the function
             post {
                 (result == nil) || (result?.id == id): 
                     "Cannot borrow NFT reference: The ID of the returned reference is incorrect"
@@ -84,7 +83,7 @@ pub contract TogethrNFT: NonFungibleToken {
     }
 
 
-  pub fun mintNFT(recipient: Address, projectId: UInt32) {
+  pub fun mintNFT(recipient: Address, projectId: UInt32, ipfsHash: String) {
       pre {
         TogethrCreator.projects[projectId] == recipient: "Invalid project id"
         TogethrCreator.projects[projectId] != nil: "Nil project id"
@@ -96,24 +95,13 @@ pub contract TogethrNFT: NonFungibleToken {
           ?? panic("Could not borrow Balance reference to the Vault")
 
       TogethrNFT.totalSupply = TogethrNFT.totalSupply + (1 as UInt64)
-			collection.deposit(token: <-create TogethrNFT.NFT(id: TogethrNFT.totalSupply, projectId: projectId))
+			collection.deposit(token: <-create TogethrNFT.NFT(id: TogethrNFT.totalSupply, projectId: projectId, ipfsHash: ipfsHash))
 		}
 
 	init() {
       self.CollectionStoragePath = /storage/TogethrNFTCollection
       self.CollectionPublicPath = /public/TogethrNFTCollection
-      // self.MinterStoragePath = /storage/TogethrNFTMinter
-
       self.totalSupply = 0
-
-      // let minter <- create NFTMinter()
-      // self.account.save(<-minter, to: self.MinterStoragePath)
-
       emit ContractInitialized()
 	}
 }
-
-// Mint project as NFT
-// List NFT
-// Get list of all items on sale
-// Purchase (distribute money)

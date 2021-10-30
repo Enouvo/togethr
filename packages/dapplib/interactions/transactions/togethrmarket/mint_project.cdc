@@ -5,10 +5,8 @@ import NonFungibleToken from "../../../contracts/Flow/NonFungibleToken.cdc"
 
 import FlowToken from Flow.FlowToken
 
-transaction(projectId: UInt32) {
+transaction(projectId: UInt32, ipfsHash: String) {
 
-  // let collection: &TogethrNFT.Collection
-  // let minter: &TogethrNFT.NFTMinter
   let address: Address
      
   prepare(signer: AuthAccount) {
@@ -25,19 +23,12 @@ transaction(projectId: UInt32) {
         signer.link<&TogethrNFT.Collection{TogethrNFT.CollectionPublic}>(TogethrNFT.CollectionPublicPath, target: TogethrNFT.CollectionStoragePath)
     }
 
-    // self.collection = signer.borrow<&TogethrNFT.Collection>(from: TogethrNFT.CollectionStoragePath)!
-
-    // borrow a reference to the NFTMinter resource in storage
-    // self.minter = signer.borrow<&TogethrNFT.NFTMinter>(from: TogethrNFT.MinterStoragePath)
-    //                     ?? panic("Could not borrow a reference to the NFT minter")
-
     self.address = signer.address
 
   }
 
   execute { 
-    // self.collection.addProject(name: name)
-    TogethrNFT.mintNFT(recipient: self.address, projectId: projectId)
+    TogethrNFT.mintNFT(recipient: self.address, projectId: projectId, ipfsHash: ipfsHash)
   }
 
 }
