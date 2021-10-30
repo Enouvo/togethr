@@ -1,15 +1,13 @@
-import { Avatar, Button, Input, Progress, notification, Skeleton } from 'antd';
+import { Avatar, Button, Input, notification, Progress, Table, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import creator from '../../assets/dappstarter.png';
 import { fundProject, getFunders, getRemainingTokenCount } from '../../flow/flow';
 import { useUserContext } from '../../providers/UserProvider';
-import { getIpfs } from '../../utils/ipfs';
-import axios from 'axios';
-import Loading from '../Loading';
 import { showError } from '../../utils/tootls';
+import Loading from '../Loading';
 import SkeletonLoading from './SkeletonLoading';
 
-const ProjectDetail = ({ project }) => {
+const ProjectDetail = ({ project, showFunders = false }) => {
   const [tokenCount, setTokenCount] = useState('');
   const [inputError, setInputError] = useState(true);
   const { user, loggedIn, tools } = useUserContext();
@@ -33,7 +31,7 @@ const ProjectDetail = ({ project }) => {
         await fundProject(fundProjectData);
         setProjectDetail((currentProject) => ({
           ...currentProject,
-          remainningToken: project.remainningToken - Number(tokenCount),
+          remainningToken: currentProject.remainningToken - Number(tokenCount),
         }));
         notification.success({ message: 'Funded project success!' });
       } catch (err) {
@@ -53,10 +51,14 @@ const ProjectDetail = ({ project }) => {
           getRemainingTokenCount(Number(project.projectId)),
           getFunders(Number(project.projectId)),
         ]);
+        const formatedFunders = Object.entries(funders).map(([key, value]) => ({
+          address: key,
+          tokenCount: value,
+        }));
         setProjectDetail((currentProject) => ({
           ...project,
           remainningToken: remainningToken,
-          funders: Object.values(funders),
+          funders: formatedFunders,
         }));
       } catch (err) {
         console.error(err);
@@ -73,7 +75,7 @@ const ProjectDetail = ({ project }) => {
   }, [tokenCount]);
 
   const percent = ((projectDetail.tokenCount - projectDetail.remainningToken) / projectDetail.tokenCount) * 100;
-  console.log(projectDetail);
+
   return (
     <>
       <Loading active={fundedLoading} />
@@ -145,6 +147,27 @@ const ProjectDetail = ({ project }) => {
           </>
         )}
       </div>
+      {showFunders && (
+        <div className="px-48 my-6">
+          <Typography className="text-4xl font-extrabold">List of funder</Typography>
+          <Table
+            className="mt-8"
+            columns={[
+              {
+                key: 'address',
+                title: 'Address',
+                dataIndex: 'address',
+              },
+              {
+                key: 'tokenCount',
+                title: 'Number of Token',
+                dataIndex: 'tokenCount',
+              },
+            ]}
+            dataSource={projectDetail?.funders ?? []}
+          />
+        </div>
+      )}
     </>
   );
 };

@@ -12,7 +12,7 @@ const ProjectDetailPage = () => {
   const { project, loading } = useProject(Number(projectId));
   return (
     <>
-      <ProjectDetail project={project} loading={loading} />
+      <ProjectDetail project={project} loading={loading} showFunders />
     </>
   );
 };
