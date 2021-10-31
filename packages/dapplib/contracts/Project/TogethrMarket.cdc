@@ -36,7 +36,7 @@ pub contract TogethrMarket {
         pub fun listForSale(itemID: UInt64, price: UFix64) {
             pre {
                 price > 0.0:
-                    "Cannot list a NFT for 0.0"
+                    "Failed to list an NFT for sale: invalid price"
             }
 
             var ownedNFTs = self.ownerCollection.borrow()!.getIDs()
@@ -56,15 +56,14 @@ pub contract TogethrMarket {
         pub fun purchase(itemID: UInt64, recipient: &TogethrNFT.Collection{TogethrNFT.CollectionPublic}, buyTokens: @FungibleToken.Vault) {
             pre {
                 buyTokens.isInstance(Type<@FlowToken.Vault>()):
-                    "Only Flow Tokens are supported for purchase."
+                    "Failed to purchase NFT: invalid token type, only flow tokens are supported"
                 self.forSale[itemID] != nil:
-                    "No NFT matching this itemID for sale!"
+                    "Failed to purchase NFT: invalid NFT ID"
                 buyTokens.balance >= (self.forSale[itemID]!):
-                    "Not enough tokens to buy the NFT!"
+                    "Failed to purchase NFT: insufficient balance"
             }
 
             let price = self.forSale[itemID]!
-
 
             let projectId = self.ownerCollection.borrow()!.borrowEntireNFT(id: itemID)!.projectId
             let projectData = TogethrCreator.getProjectMetadata(projectId: projectId);
@@ -75,36 +74,23 @@ pub contract TogethrMarket {
 
             for funderAddress in projectFunders.keys {
               let tokenCount = projectFunders[funderAddress]!
-              
               let amount =  sharePerToken * UFix64(tokenCount)
               let funderVault <- buyTokens.withdraw(amount: amount)
 
-              log("Funder ".concat(funderAddress.toString()).concat(" paid amount ").concat(amount.toString()))
-
-              let funderVaultRef = getAccount(funderAddress)
-                .getCapability(/public/flowTokenReceiver)
+              let funderVaultRef = getAccount(funderAddress).getCapability(/public/flowTokenReceiver)
                 .borrow<&FlowToken.Vault{FungibleToken.Receiver}>()
-                ?? panic("Could not borrow Balance reference to the Vault")
+                ?? panic("Failed to purchase NFT: could not borrow flow token receiver")
 
               funderVaultRef.deposit(from: <-funderVault)                    
             }
 
-            // get the value out of the optional
-            let vaultRef = self.ownerVault.borrow()
-                ?? panic("Could not borrow reference to owner token vault")
-            
-            // deposit the user's tokens into the owners vault
+            let vaultRef = self.ownerVault.borrow() ?? panic("Failed to purchase NFT: could not borrow NFT owner's vault")
             vaultRef.deposit(from: <-buyTokens)
             
-            // remove the NFT from the owner's NFT Collection
             let token <- self.ownerCollection.borrow()!.withdraw(withdrawID: itemID)
-
-            // deposit the NFT into the buyers NFT Collection
             recipient.deposit(token: <-token)
 
-            // unlist the sale
             self.unlistSale(itemID: itemID)
-
             emit NFTPurchased(itemID: itemID, price: price)
         }
 
