@@ -1,5 +1,5 @@
 import NonFungibleToken from "../Flow/NonFungibleToken.cdc"
-import TogethrCreator from "./TogethrCreator.cdc"
+import TogethrCreator from 0xecab3beb444ddcce
 
 pub contract TogethrNFT: NonFungibleToken {
 
@@ -83,7 +83,7 @@ pub contract TogethrNFT: NonFungibleToken {
     }
 
 
-  pub fun mintNFT(recipient: Address, projectId: UInt32, ipfsHash: String) {
+  pub fun mintNFT(recipient: Address, projectId: UInt32, ipfsHash: String): UInt64 {
       pre {
         TogethrCreator.projects[projectId] == recipient: "Failed to mint NFT: invalid project id"
         TogethrCreator.projects[projectId] != nil: "Failed to mint NFT: invalid project id"
@@ -95,7 +95,9 @@ pub contract TogethrNFT: NonFungibleToken {
           ?? panic("Failed to mint NFT: could not borrow capability from public collection")
 
       TogethrNFT.totalSupply = TogethrNFT.totalSupply + (1 as UInt64)
-			collection.deposit(token: <-create TogethrNFT.NFT(id: TogethrNFT.totalSupply, projectId: projectId, ipfsHash: ipfsHash))
+      let nftId = TogethrNFT.totalSupply
+			collection.deposit(token: <-create TogethrNFT.NFT(id: nftId, projectId: projectId, ipfsHash: ipfsHash))
+      return nftId
 		}
 
 	init() {
