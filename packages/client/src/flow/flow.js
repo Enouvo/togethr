@@ -28,7 +28,7 @@ export const fundProject = async ({ projectId, funder, tokenCount }) => {
 };
 
 export const mintProject = async ({ projectId, ipfsHash }) => {
-  console.log({ projectId, ipfsHash });
+  console.log('mintProject', projectId, ipfsHash);
   let mintProjectPromise = await mutate({
     cadence: MINT_PROJECT,
     limit: 250,
