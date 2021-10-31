@@ -35,8 +35,6 @@ const ProjectDetail = ({
   const [projectDetail, setProjectDetail] = useState(project);
   const [loading, setLoading] = useState(true);
   const [fundedLoading, setFundLoading] = useState(false);
-  const [lastThreeProjectsDetail, setLastThreeProjectsDetail] = useState({});
-  const carouselRef = useRef(null);
 
   const onSubmit = async () => {
     if (projectDetail.remainningToken === 0) {
@@ -103,8 +101,6 @@ const ProjectDetail = ({
       projectDetail.tokenCount) *
     100;
 
-  console.log(lastThreeProjectsDetail);
-
   return (
     <>
       <Loading active={fundedLoading} />
@@ -123,62 +119,69 @@ const ProjectDetail = ({
               className="md:object-fit object-cover rounded-lg xs:w-full sm:w-full md:w-full lg:w-full xl:w-1/2"
               style={{ height: "45rem" }}
             />
-            <div className="flex flex-col md:w-full lg:max-w-full xl:max-w-md">
-              <h1 className="font-extrabold text-5xl">
-                {projectDetail?.projectName}
-              </h1>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row align-center items-center mr-12">
-                  <Avatar src={projectDetail?.userImage || creator} size={40} />
-                  <div className="ml-5 flex flex-col">
-                    <span className="text-lg text-gray-600">Creator</span>
-                    <span className="text-base">{projectDetail?.userName}</span>
+            <div className="flex flex-col justify-between md:w-full lg:max-w-full xl:max-w-md">
+              <div>
+                <h1 className="font-extrabold text-5xl">
+                  {projectDetail?.projectName}
+                </h1>
+                <div className="flex flex-row justify-between">
+                  <div className="flex flex-row align-center items-center mr-12">
+                    <Avatar
+                      src={projectDetail?.userImage || creator}
+                      size={40}
+                    />
+                    <div className="ml-5 flex flex-col">
+                      <span className="text-lg text-gray-600">Creator</span>
+                      <span className="text-base">
+                        {projectDetail?.userName}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-row align-center items-center">
+                    <div className="ml-5 flex flex-col">
+                      <span className="text-lg text-gray-600">
+                        Number of tokens
+                      </span>
+                      <span className="text-base">
+                        {projectDetail.tokenCount}
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <div className="flex flex-row align-center items-center">
-                  <div className="ml-5 flex flex-col">
-                    <span className="text-lg text-gray-600">
-                      Number of tokens
+                <div className="flex flex-col rounded-lg border-gray-500 border-2 p-8 mt-8 flex-wrap">
+                  <p className="text-xl mb-0">
+                    <span className="font-bold mr-2">
+                      {projectDetail?.tokenPrice}
                     </span>
-                    <span className="text-base">
-                      {projectDetail.tokenCount}
+                    <span className="text-gray-1000">FLOW Coin</span>
+                  </p>
+                  <Progress
+                    percent={percent}
+                    strokeColor="#00C48C"
+                    showInfo={false}
+                  />
+                  <p className="text-gray-1000 text-base">
+                    {projectDetail?.projectDescription}
+                  </p>
+                </div>
+                <div className="flex flex-row justify-between content-center mt-8">
+                  <div className="flex justify-start flex-col items-center w-24">
+                    <h1 className="font-extrabold text-2xl mb-0">
+                      {projectDetail?.funders?.length ?? 0}
+                    </h1>
+                    <span className="text-xl text-center text-gray-700">
+                      Funder
+                    </span>
+                  </div>
+                  <div className="flex justify-start flex-col items-center w-40">
+                    <h1 className="font-extrabold text-2xl mb-0">{`${projectDetail?.profitSharePercent}%`}</h1>
+                    <span className="text-xl text-center text-gray-700">
+                      Profit of supporter
                     </span>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col rounded-lg border-gray-500 border-2 p-8 mt-8 flex-wrap">
-                <p className="text-xl mb-0">
-                  <span className="font-bold mr-2">
-                    {projectDetail?.tokenPrice}
-                  </span>
-                  <span className="text-gray-1000">FLOW Coin</span>
-                </p>
-                <Progress
-                  percent={percent}
-                  strokeColor="#00C48C"
-                  showInfo={false}
-                />
-                <p className="text-gray-1000 text-base">
-                  {projectDetail?.projectDescription}
-                </p>
-              </div>
-              <div className="flex flex-row justify-between content-center mt-8">
-                <div className="flex justify-start flex-col items-center w-24">
-                  <h1 className="font-extrabold text-2xl mb-0">
-                    {projectDetail?.funders?.length ?? 0}
-                  </h1>
-                  <span className="text-xl text-center text-gray-700">
-                    Funder
-                  </span>
-                </div>
-                <div className="flex justify-start flex-col items-center w-40">
-                  <h1 className="font-extrabold text-2xl mb-0">{`${projectDetail?.profitSharePercent}%`}</h1>
-                  <span className="text-xl text-center text-gray-700">
-                    Profit of supporter
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-col my-10">
+              <div className="flex flex-col mt-10">
                 {loggedIn ? (
                   <>
                     <Input
@@ -193,7 +196,7 @@ const ProjectDetail = ({
                       value={tokenCount}
                     />
                     <Button
-                      className="mb-4 mt-4"
+                      className="mt-4"
                       type="primary"
                       onClick={onSubmit}
                       size="large"
@@ -218,8 +221,6 @@ const ProjectDetail = ({
         )}
       </div>
 
-      <button onClick={() => carouselRef.current.prev()}>prev</button>
-      <button onClick={() => carouselRef.current.next()}>next</button>
       {showFunders && (
         <div className="px-48 my-6">
           <Typography className="text-4xl font-extrabold">

@@ -1,5 +1,5 @@
 :root {
-  font-family: 'Manrope';
+  font-family: "Manrope";
 }
 .ant-input-affix-wrapper {
   border-radius: 90px;
@@ -115,6 +115,11 @@
   bottom: 10px;
 }
 
+.discover-image {
+  transition: transform 0.2s;
+}
+
 .discover-image:hover {
   cursor: pointer;
+  transform: scale(1.2);
 }
