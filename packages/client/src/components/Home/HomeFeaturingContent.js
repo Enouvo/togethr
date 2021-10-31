@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import banner from '../../assets/home_content_banner.svg';
 import ProjectDetail from '../ProjectDetails/ProjectDetail';
+import ProjectDetailCarousel from '../ProjectDetails/ProjectDetailCarousel';
 
 const HomeFeaturingContent = ({ projects }) => {
   const history = useHistory();

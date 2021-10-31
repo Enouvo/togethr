@@ -1,19 +1,23 @@
-import { Avatar, Button, Input, Tag, notification, Progress, Table, Typography } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Avatar, Button, Input, notification, Progress, Table, Typography, Tag } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
 import creator from '../../assets/dappstarter.png';
 import { fundProject, getFunders, getRemainingTokenCount } from '../../flow/flow';
+import useProjects from '../../hooks/useProjects';
 import { useUserContext } from '../../providers/UserProvider';
 import { showError } from '../../utils/tootls';
 import Loading from '../Loading';
 import SkeletonLoading from './SkeletonLoading';
 
-const ProjectDetail = ({ project, showFunders = false, onClick }) => {
+const ProjectDetail = ({ project, showFunders = false, showCarousel = false, minProject }) => {
   const [tokenCount, setTokenCount] = useState('');
   const [inputError, setInputError] = useState(true);
   const { user, loggedIn, tools } = useUserContext();
+  const { projects } = useProjects();
   const [projectDetail, setProjectDetail] = useState(project);
   const [loading, setLoading] = useState(true);
   const [fundedLoading, setFundLoading] = useState(false);
+  const [lastThreeProjectsDetail, setLastThreeProjectsDetail] = useState({});
+  const carouselRef = useRef(null);
 
   const onSubmit = async () => {
     if (projectDetail.remainningToken === 0) {
@@ -87,7 +91,7 @@ const ProjectDetail = ({ project, showFunders = false, onClick }) => {
     else setInputError(false);
   }, [tokenCount]);
 
-  const percent = ((projectDetail.tokenCount - projectDetail.remainningToken) / projectDetail.tokenCount) * 100;
+  const percent = ((projectDetail?.tokenCount - projectDetail?.remainningToken) / projectDetail?.tokenCount) * 100;
 
   return (
     <>
@@ -116,7 +120,7 @@ const ProjectDetail = ({ project, showFunders = false, onClick }) => {
                 <div className="flex flex-row align-center items-center">
                   <div className="ml-5 flex flex-col">
                     <span className="text-lg text-gray-600">No. tokens</span>
-                    <strong className="text-base">{projectDetail.tokenCount}</strong>
+                    <strong className="text-base">{projectDetail?.tokenCount}</strong>
                   </div>
                 </div>
               </div>
@@ -154,7 +158,14 @@ const ProjectDetail = ({ project, showFunders = false, onClick }) => {
                       </Button>
                     );
                   }
-                  if (projectDetail.status === 'FUNDED') {
+                  if (minProject) {
+                    return (
+                      <Button className="mt-4" type="primary" size="large" onClick={() => minProject(projectDetail)}>
+                        Mint
+                      </Button>
+                    );
+                  }
+                  if (projectDetail?.status === 'FUNDED') {
                     return (
                       <div
                         className="text-center p-4 rounded-md text-xl"

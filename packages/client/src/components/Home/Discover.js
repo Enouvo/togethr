@@ -1,77 +1,8 @@
 import { Button, Col, Row, Typography } from 'antd';
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import feature from '../../assets/featuring.png';
 import useProjects from '../../hooks/useProjects';
 import { categories } from '../../utils/tootls';
 import DiscoverItem from './DiscoverItem';
-
-const listItem = [
-  {
-    type: 'Art',
-    image: feature,
-    name: 'Amazing digital art',
-    price: '1000 FUSD',
-    progress: 50,
-    daysRemaining: '60',
-  },
-  {
-    type: 'Film',
-    image: feature,
-    name: 'Amazing digital art',
-    price: '1000 FUSD',
-    progress: 50,
-    daysRemaining: '60',
-  },
-  {
-    type: 'Game',
-    image: feature,
-    name: 'Amazing digital art',
-    price: '1000 FUSD',
-    progress: 50,
-    daysRemaining: '60',
-  },
-  {
-    type: 'Game',
-    image: feature,
-    name: 'Amazing digital art',
-    price: '1000 FUSD',
-    progress: 50,
-    daysRemaining: '60',
-  },
-  {
-    type: 'Art',
-    image: feature,
-    name: 'Amazing digital art',
-    price: '1000 FUSD',
-    progress: 50,
-    daysRemaining: '60',
-  },
-  {
-    type: 'Film',
-    image: feature,
-    name: 'Amazing digital art',
-    price: '1000 FUSD',
-    progress: 50,
-    daysRemaining: '60',
-  },
-  {
-    type: 'Tech',
-    image: feature,
-    name: 'Amazing digital art',
-    price: '1000 FUSD',
-    progress: 50,
-    daysRemaining: '60',
-  },
-  {
-    type: 'Film',
-    image: feature,
-    name: 'Amazing digital art',
-    price: '1000 FUSD',
-    progress: 50,
-    daysRemaining: '60',
-  },
-];
 
 const Discover = ({ items }) => {
   const { projects } = useProjects();
@@ -108,14 +39,6 @@ const Discover = ({ items }) => {
       </Row>
     </div>
   );
-};
-
-Discover.propTypes = {
-  items: PropTypes.array,
-};
-
-Discover.defaultProps = {
-  items: listItem,
 };
 
 export default Discover;
