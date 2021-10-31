@@ -5,7 +5,7 @@ import NonFungibleToken from "../../../contracts/Flow/NonFungibleToken.cdc"
 
 import FlowToken from Flow.FlowToken
 
-transaction(projectId: UInt32, ipfsHash: String): UInt64 {
+transaction(projectId: UInt32, ipfsHash: String) {
 
   let address: Address
      
@@ -19,7 +19,7 @@ transaction(projectId: UInt32, ipfsHash: String): UInt64 {
   }
 
   execute { 
-    return TogethrNFT.mintNFT(recipient: self.address, projectId: projectId, ipfsHash: ipfsHash)
+    TogethrNFT.mintNFT(recipient: self.address, projectId: projectId, ipfsHash: ipfsHash)
   }
 
 }
