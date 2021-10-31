@@ -1,7 +1,19 @@
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { getProjectsByAddress } from '../flow/flow';
+import { useUserContext } from '../providers/UserProvider';
 
-const MyProjects = () => {
-  return <div>Hello</div>;
+const MyProjectsPage = () => {
+  const { user } = useUserContext();
+
+  useEffect(() => {
+    const fetchProjectsByAdress = async () => {
+      const data = await getProjectsByAddress(user.addr);
+      console.log(data);
+    };
+    fetchProjectsByAdress();
+  }, []);
+
+  return <>Hello</>;
 };
 
-export default MyProjects;
+export default MyProjectsPage;

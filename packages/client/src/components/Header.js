@@ -1,10 +1,8 @@
+import { Button, Dropdown, Menu } from 'antd';
 import React from 'react';
-import { SearchOutlined } from '@ant-design/icons';
-import { Input, Button, Menu, Dropdown } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import { useUserContext } from '../providers/UserProvider';
-import { useHistory } from 'react-router-dom';
 
 const Header = () => {
   const history = useHistory();
@@ -12,9 +10,6 @@ const Header = () => {
 
   const menu = (
     <Menu>
-      <Menu.Item key="My Projects" onClick={() => history.push('/my-projects')}>
-        My Projects
-      </Menu.Item>
       <Menu.Item onClick={() => tools.logOut()} key="logout">
         Logout
       </Menu.Item>
@@ -28,11 +23,18 @@ const Header = () => {
       </Link>
       <div className="flex flex-row items-center">
         {loggedIn && (
-          <Link to="/create-project" style={{ height: '34px' }}>
-            <Button type="primary" className="h-full">
-              Start a project
-            </Button>
-          </Link>
+          <>
+            <Link to="/my-projects" style={{ height: '34px', margin: '0 15px' }}>
+              <Button type="primary" className="h-full">
+                My projects
+              </Button>
+            </Link>
+            <Link to="/create-project" style={{ height: '34px' }}>
+              <Button type="primary" className="h-full">
+                Start a project
+              </Button>
+            </Link>
+          </>
         )}
 
         {!loggedIn ? (

@@ -1,4 +1,4 @@
-import { Avatar, Button, Input, notification, Progress, Table, Typography, Tag } from 'antd';
+import { Avatar, Button, Input, Tag, notification, Progress, Table, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import creator from '../../assets/dappstarter.png';
 import { fundProject, getFunders, getRemainingTokenCount } from '../../flow/flow';
@@ -104,7 +104,7 @@ const ProjectDetail = ({ project, showFunders = false, onClick }) => {
               onClick={() => onClick?.(projectDetail.projectId)}
             />
             <div className="flex flex-col md:w-full lg:max-w-full xl:max-w-xl 2xl:max-w-2xl">
-              <h1 className="font-extrabold text-5xl">{projectDetail?.projectName}</h1>
+              <h1 className="font-extrabold text-4xl">{projectDetail?.projectName}</h1>
               <div className="flex flex-row justify-between">
                 <div className="flex flex-row align-center items-center mr-12">
                   <Avatar src={projectDetail?.userImage || creator} size={40} />
@@ -122,11 +122,18 @@ const ProjectDetail = ({ project, showFunders = false, onClick }) => {
               </div>
               <div className="flex flex-col rounded-lg border-gray-500 border-2 p-8 mt-8 flex-wrap">
                 <p className="text-xl mb-0">
+                  <span className="text-gray-1000">Token Name:</span>
+                  <strong> {projectDetail?.name}</strong>
+                </p>
+                <p className="text-xl mb-0">
                   <span className="font-bold mr-2">{Number(projectDetail?.tokenPrice ?? 0).toFixed(2)}</span>
                   <span className="text-gray-1000">FLOW Coin</span>
                 </p>
                 <Progress percent={percent} strokeColor="#00C48C" />
                 <p className="text-gray-1000 text-base line-clamp-8">{projectDetail?.projectDescription}</p>
+                <Tag color="#070632" className="font-bold" style={{ width: 60 }}>
+                  {projectDetail?.projectCategory}
+                </Tag>
               </div>
               <div className="flex flex-row justify-between content-center mt-8">
                 <div className="flex justify-start flex-col items-center w-24">
