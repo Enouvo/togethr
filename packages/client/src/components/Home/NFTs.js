@@ -7,7 +7,7 @@ const NFTs = () => {
   useEffect(() => {
     const fetchNFTs = async () => {
       const data = await getNFTs();
-      console.log(data);
+      console.log('nfts', data);
     };
     fetchNFTs();
   }, []);

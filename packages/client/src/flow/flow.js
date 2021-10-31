@@ -1,7 +1,7 @@
 import { mutate, tx, query } from '@onflow/fcl';
 import { GET_NFTS } from './scripts/nfts.script';
 import { GET_FUNDERS, GET_PROJECTS_BY_ADDRESS, GET_REMAINNING_TOKEN_COUNT } from './scripts/projects.script';
-import { CREATE_PROJECT, FUND_PROJECT } from './transactions/projects.tx';
+import { CREATE_PROJECT, FUND_PROJECT, MINT_PROJECT } from './transactions/projects.tx';
 
 export const createProject = async ({ tokenName, ipfsHash, tokenPrice, tokenCount, profitSharePercent }) => {
   let createProjectPromise = await mutate({
@@ -25,6 +25,16 @@ export const fundProject = async ({ projectId, funder, tokenCount }) => {
     args: (arg, t) => [arg(projectId, t.UInt32), arg(funder, t.Address), arg(tokenCount, t.UInt32)],
   });
   return tx(fundProjectPromise).onceSealed();
+};
+
+export const mintProject = async ({ projectId, ipfsHash }) => {
+  console.log({ projectId, ipfsHash });
+  let mintProjectPromise = await mutate({
+    cadence: MINT_PROJECT,
+    limit: 250,
+    args: (arg, t) => [arg(projectId, t.UInt32), arg(ipfsHash, t.String)],
+  });
+  return tx(mintProjectPromise).onceSealed();
 };
 
 export const getRemainingTokenCount = (projectId) =>
